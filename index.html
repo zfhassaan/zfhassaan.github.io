@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio — Full Stack Developer</title>
+    <meta name="description" content="Full Stack Developer — Laravel, Node.js, React, Vue, Next, Nuxt, React Native">
+
+    <!-- Fonts: preconnect first, then load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <!-- Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        mono: ['DM Mono', 'monospace'],
+                        serif: ['Instrument Serif', 'serif'],
+                    },
+                    colors: {
+                        ink: '#0D0D0D', chalk: '#F5F2ED', acid: '#C6FF00',
+                        rust: '#E8440A', dim: '#1A1A1A', muted: '#2E2E2E',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"/> -->
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --ink: #0D0D0D;
+            --chalk: #F5F2ED;
+            --acid: #C6FF00;
+            --rust: #E8440A;
+            --dim: #1A1A1A
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--ink);
+            color: var(--chalk);
+            font-family: 'Syne', sans-serif;
+            overflow-x: hidden;
+            cursor: none
+        }
+
+        /* ── Performance: GPU layers only where needed ── */
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            will-change: transform
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            will-change: opacity, transform
+        }
+
+        .project-card {
+            will-change: border-color
+        }
+
+        /* ── Noise overlay (one fixed el, not ::before on body for perf) ── */
+        #noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9990;
+            opacity: .3;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")
+        }
+
+        /* ── Cursor ── */
+        .cursor-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--acid);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%)
+        }
+
+        .cursor-ring {
+            width: 34px;
+            height: 34px;
+            border: 1.5px solid rgba(198, 255, 0, .45);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%)
+        }
+
+        @media(max-width:768px) {
+
+            .cursor-dot,
+            .cursor-ring {
+                display: none
+            }
+
+            body {
+                cursor: auto
+            }
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 3px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--ink)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--acid);
+            border-radius: 2px
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            mix-blend-mode: difference
+        }
+
+        .nav-menu {
+            display: none
+        }
+
+        @media(max-width:768px) {
+            .nav-links-desktop {
+                display: none !important
+            }
+
+            .nav-menu {
+                display: flex
+            }
+        }
+
+        @media(min-width:769px) {
+            .mobile-menu {
+                display: none !important
+            }
+        }
+
+        /* ── Marquee ── */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 24s linear infinite
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .marquee-track {
+                animation: none
+            }
+        }
+
+        /* ── Grid background ── */
+        .grid-bg {
+            background-image: linear-gradient(rgba(198, 255, 0, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(198, 255, 0, .025) 1px, transparent 1px);
+            background-size: 60px 60px
+        }
+
+        /* ── Skill pill ── */
+        .skill-pill {
+            border: 1px solid rgba(198, 255, 0, .18);
+            transition: border-color .25s, background .25s, color .25s, transform .25s
+        }
+
+        .skill-pill:hover {
+            border-color: var(--acid);
+            background: rgba(198, 255, 0, .07);
+            color: var(--acid);
+            transform: translateY(-2px)
+        }
+
+        /* ── Project card ── */
+        .project-card {
+            border: 1px solid rgba(255, 255, 255, .07);
+            transition: border-color .3s;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(198, 255, 0, .04), transparent 60%);
+            opacity: 0;
+            transition: opacity .35s;
+            pointer-events: none
+        }
+
+        .project-card:hover::before {
+            opacity: 1
+        }
+
+        .project-card:hover {
+            border-color: rgba(198, 255, 0, .28)
+        }
+
+        /* ── Section num ── */
+        .section-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: rgba(198, 255, 0, .6);
+            letter-spacing: .15em
+        }
+
+        /* ── Gradient text ── */
+        .grad-text {
+            background: linear-gradient(135deg, #C6FF00 0%, #fff 60%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        /* ── Magnetic ── */
+        .magnetic {
+            transition: transform .3s cubic-bezier(.23, 1, .32, 1)
+        }
+
+        /* ── Hero ── */
+        .hero-line {
+            display: block
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            contain: strict
+        }
+
+        /* ── Form ── */
+        .form-input {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .1);
+            color: var(--chalk);
+            transition: border-color .3s;
+            width: 100%;
+            padding: .875rem 1rem;
+            border-radius: 4px;
+            font-family: 'Syne', sans-serif;
+            font-size: .9rem;
+            outline: none
+        }
+
+        .form-input:focus {
+            border-color: var(--acid);
+            background: rgba(198, 255, 0, .04)
+        }
+
+        .form-input::placeholder {
+            color: rgba(245, 242, 237, .3)
+        }
+
+        /* ── content-visibility for off-screen sections (layout perf) ── */
+        section:not(#home) {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 600px
+        }
+
+        /* ══════════════════════════════════════════
+3D MODAL
+══════════════════════════════════════════ */
+        #modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        #modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        #modal-box {
+            position: relative;
+            width: min(92vw, 900px);
+            background: #111;
+            border: 1px solid rgba(198, 255, 0, .25);
+            border-radius: 8px;
+            overflow: hidden;
+            transform: scale(.92) translateY(24px);
+            transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        #modal-overlay.open #modal-box {
+            transform: scale(1) translateY(0)
+        }
+
+        /* Three.js canvas inside modal */
+        #modal-canvas-wrap {
+            width: 100%;
+            height: clamp(220px, 40vw, 400px);
+            position: relative;
+            background: #0a0a0a;
+        }
+
+        #modal-canvas-wrap canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important
+        }
+
+        /* Modal controls overlay */
+        #modal-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .ctrl-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, .5);
+            border: 1px solid rgba(198, 255, 0, .2);
+            color: rgba(198, 255, 0, .7);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color .2s, color .2s;
+        }
+
+        .ctrl-btn:hover {
+            border-color: var(--acid);
+            color: var(--acid)
+        }
+
+        #modal-content {
+            padding: 1.5rem 1.75rem 1.75rem
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 0, 0, .5);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, .5);
+            font-size: 18px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: border-color .2s, color .2s;
+        }
+
+        #modal-close:hover {
+            border-color: var(--acid);
+            color: var(--acid)
+        }
+
+        /* view-3d badge on cards */
+        .view-3d-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .1em;
+            color: var(--acid);
+            border: 1px solid rgba(198, 255, 0, .3);
+            padding: 3px 8px;
+            border-radius: 3px;
+            background: rgba(198, 255, 0, .05);
+            transition: background .2s, border-color .2s;
+        }
+
+        .project-card:hover .view-3d-badge {
+            background: rgba(198, 255, 0, .12);
+            border-color: var(--acid)
+        }
+
+        /* Spin badge */
+        @keyframes spin-slow {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spin-slow {
+            animation: spin-slow 12s linear infinite
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite
+        }
+    </style>
+</head>
+
+<body class="grid-bg">
+
+    <!-- Noise -->
+    <div id="noise" aria-hidden="true"></div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ══════════════════════════════════════════
+     3D PROJECT MODAL
+══════════════════════════════════════════ -->
+    <div id="modal-overlay" role="dialog" aria-modal="true" aria-label="3D Project Preview">
+        <div id="modal-box">
+            <button id="modal-close" aria-label="Close modal">✕</button>
+
+            <!-- Three.js canvas -->
+            <div id="modal-canvas-wrap">
+                <div id="modal-controls">
+                    <button class="ctrl-btn" id="ctrl-rotate" title="Toggle auto-rotate">⟳</button>
+                    <button class="ctrl-btn" id="ctrl-wire" title="Toggle wireframe">⬡</button>
+                    <button class="ctrl-btn" id="ctrl-reset" title="Reset view">⊙</button>
+                </div>
+            </div>
+
+            <!-- Project info filled dynamically -->
+            <div id="modal-content">
+                <div class="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                        <p id="modal-num" class="section-num mb-1"></p>
+                        <h3 id="modal-title" class="text-2xl md:text-3xl font-black"></h3>
+                    </div>
+                    <a id="modal-link" href="#" target="_blank"
+                        class="flex-shrink-0 w-10 h-10 border border-chalk/20 rounded-sm flex items-center justify-center hover:border-acid hover:text-acid transition-colors text-chalk/40">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M7 17L17 7M7 7h10v10" />
+                        </svg>
+                    </a>
+                </div>
+                <p id="modal-desc" class="text-chalk/50 text-sm leading-relaxed mb-5"></p>
+                <div id="modal-tags" class="flex flex-wrap gap-2 mb-4"></div>
+                <p class="font-mono text-xs text-chalk/25 tracking-widest">DRAG TO ROTATE · SCROLL TO ZOOM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ NAV ══ -->
+    <nav class="px-6 md:px-10 py-5 flex items-center justify-between">
+        <a href="#" class="font-mono text-xs tracking-widest text-chalk/70 hover:text-acid transition-colors">&lt;DEV
+            /&gt;</a>
+        <div class="nav-links-desktop flex items-center gap-8 text-sm font-medium tracking-wide">
+            <a href="#about" class="text-chalk/60 hover:text-acid transition-colors">About</a>
+            <a href="#skills" class="text-chalk/60 hover:text-acid transition-colors">Skills</a>
+            <a href="#projects" class="text-chalk/60 hover:text-acid transition-colors">Projects</a>
+            <a href="#contact" class="text-chalk/60 hover:text-acid transition-colors">Contact</a>
+            <a href="#contact"
+                class="px-5 py-2 bg-acid text-ink text-sm font-bold rounded-sm hover:bg-white transition-colors magnetic">Hire
+                Me</a>
+        </div>
+        <button class="nav-menu flex-col gap-1.5" id="menuBtn" aria-label="Menu">
+            <span class="w-6 h-px bg-chalk block" id="bar1"></span>
+            <span class="w-4 h-px bg-chalk block" id="bar2"></span>
+            <span class="w-6 h-px bg-chalk block" id="bar3"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 bg-ink/97 z-50 flex flex-col items-center justify-center gap-10 text-center"
+        id="mobileMenu" style="display:none!important;opacity:0;pointer-events:none;">
+        <a href="#about"
+            class="text-4xl font-bold text-chalk/80 hover:text-acid transition-colors mobile-link">About</a>
+        <a href="#skills"
+            class="text-4xl font-bold text-chalk/80 hover:text-acid transition-colors mobile-link">Skills</a>
+        <a href="#projects"
+            class="text-4xl font-bold text-chalk/80 hover:text-acid transition-colors mobile-link">Projects</a>
+        <a href="#contact"
+            class="text-4xl font-bold text-chalk/80 hover:text-acid transition-colors mobile-link">Contact</a>
+        <a href="#contact" class="mt-4 px-8 py-3 bg-acid text-ink font-bold rounded-sm text-lg">Hire Me</a>
+    </div>
+
+    <!-- ══ HERO ══ -->
+    <section id="home"
+        class="relative min-h-screen flex flex-col justify-center px-6 md:px-10 pt-24 pb-16 overflow-hidden">
+        <!-- Three.js background canvas -->
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+        <!-- Blobs (CSS only, no blur repaints — use contain:strict) -->
+        <div class="hero-blob w-72 h-72 md:w-96 md:h-96 bg-acid/8 top-10 -right-24 opacity-50"></div>
+        <div class="hero-blob w-56 h-56 bg-rust/8 bottom-16 -left-10 opacity-40"></div>
+
+        <div class="relative z-10">
+            <div class="flex items-center gap-3 mb-10" id="hero-badge">
+                <div class="w-2 h-2 rounded-full bg-acid" style="animation:float 2s ease-in-out infinite"></div>
+                <span class="font-mono text-xs text-acid/80 tracking-widest uppercase">Available for work</span>
+            </div>
+
+            <div class="mb-3">
+                <p class="font-mono text-xs text-chalk/40 tracking-widest uppercase mb-4 reveal">Full Stack Developer
+                </p>
+                <h1 class="text-[clamp(2.8rem,9.5vw,7.5rem)] font-black leading-[0.9] tracking-tight" id="hero-name">
+                    <span class="block overflow-hidden"><span class="hero-line block">YOUR</span></span>
+                    <span class="block overflow-hidden"><span class="hero-line block grad-text">NAME</span></span>
+                    <span class="block overflow-hidden"><span class="hero-line block">HERE.</span></span>
+                </h1>
+            </div>
+
+            <p class="mt-8 max-w-lg text-chalk/50 text-base md:text-lg leading-relaxed reveal" id="hero-desc">
+                I craft high-performance web &amp; mobile apps — from Laravel APIs to React Native screens. Clean code,
+                bold interfaces.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center gap-4 reveal" id="hero-cta">
+                <a href="#projects"
+                    class="magnetic group px-7 py-3.5 bg-acid text-ink font-bold text-sm tracking-wide rounded-sm hover:bg-white transition-colors flex items-center gap-2">
+                    View Work
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#contact"
+                    class="magnetic px-7 py-3.5 border border-chalk/20 text-chalk/70 font-medium text-sm tracking-wide rounded-sm hover:border-acid hover:text-acid transition-colors">
+                    Let's Talk
+                </a>
+            </div>
+
+            <div class="mt-16 flex flex-wrap gap-8 md:gap-12 reveal" id="hero-stats">
+                <div>
+                    <p class="text-3xl md:text-4xl font-black grad-text counter" data-target="5">0</p>
+                    <p class="text-xs text-chalk/40 mt-1 font-mono tracking-widest uppercase">Years Exp.</p>
+                </div>
+                <div>
+                    <p class="text-3xl md:text-4xl font-black grad-text counter" data-target="30">0</p>
+                    <p class="text-xs text-chalk/40 mt-1 font-mono tracking-widest uppercase">Projects</p>
+                </div>
+                <div>
+                    <p class="text-3xl md:text-4xl font-black grad-text counter" data-target="20">0</p>
+                    <p class="text-xs text-chalk/40 mt-1 font-mono tracking-widest uppercase">Clients</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 reveal z-10">
+            <span class="font-mono text-xs text-chalk/30 tracking-widest">SCROLL</span>
+            <div class="w-px h-12 bg-gradient-to-b from-acid/50 to-transparent float"></div>
+        </div>
+    </section>
+
+    <!-- ══ MARQUEE ══ -->
+    <div class="py-5 border-y border-chalk/8 overflow-hidden">
+        <div class="marquee-track text-chalk/20 font-bold text-sm tracking-widest select-none" aria-hidden="true">
+            <span class="px-8">LARAVEL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NODE.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REACT</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NEXT.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">VUE.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NUXT.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REACT NATIVE</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">MYSQL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">MONGODB</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">POSTGRESQL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">DOCKER</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REST APIs</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">LARAVEL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NODE.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REACT</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NEXT.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">VUE.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">NUXT.JS</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REACT NATIVE</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">MYSQL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">MONGODB</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">POSTGRESQL</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">DOCKER</span><span class="text-acid px-3">✦</span>
+            <span class="px-8">REST APIs</span><span class="text-acid px-3">✦</span>
+        </div>
+    </div>
+
+    <!-- ══ ABOUT ══ -->
+    <section id="about" class="py-20 md:py-32 px-6 md:px-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+                <div class="flex-1">
+                    <p class="section-num mb-4 reveal">01 — ABOUT</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-8 reveal">
+                        Building the web,<br><span class="font-serif italic text-acid">one layer at a time.</span>
+                    </h2>
+                    <div class="space-y-5 text-chalk/55 leading-relaxed reveal">
+                        <p>I'm a Full Stack Developer with 5+ years of experience building scalable, high-performance
+                            applications. My work spans the entire stack — from crafting robust Laravel &amp; Node.js
+                            backends to building beautiful UIs with React, Vue, Next, and Nuxt.</p>
+                        <p>I care deeply about developer experience, clean architecture, and shipping products that
+                            users love. Whether it's a complex REST API, a real-time dashboard, or a cross-platform
+                            mobile app in React Native — I thrive across the full spectrum.</p>
+                    </div>
+                    <div class="mt-10 grid grid-cols-2 gap-4 reveal">
+                        <div class="p-4 border border-chalk/8 rounded-sm">
+                            <p class="text-acid font-mono text-xs tracking-widest uppercase mb-2">Based in</p>
+                            <p class="font-semibold text-sm">Pakistan 🇵🇰</p>
+                        </div>
+                        <div class="p-4 border border-chalk/8 rounded-sm">
+                            <p class="text-acid font-mono text-xs tracking-widest uppercase mb-2">Availability</p>
+                            <p class="font-semibold text-sm">Open to Freelance</p>
+                        </div>
+                        <div class="p-4 border border-chalk/8 rounded-sm">
+                            <p class="text-acid font-mono text-xs tracking-widest uppercase mb-2">Focus</p>
+                            <p class="font-semibold text-sm">Web &amp; Mobile</p>
+                        </div>
+                        <div class="p-4 border border-chalk/8 rounded-sm">
+                            <p class="text-acid font-mono text-xs tracking-widest uppercase mb-2">Languages</p>
+                            <p class="font-semibold text-sm">EN / UR</p>
+                        </div>
+                    </div>
+                    <a href="#contact"
+                        class="mt-10 inline-flex items-center gap-2 text-acid font-mono text-sm tracking-widest hover:gap-4 transition-all magnetic reveal">
+                        GET IN TOUCH
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="flex-shrink-0 relative w-full lg:w-80">
+                    <div class="relative reveal">
+                        <div
+                            class="absolute inset-0 translate-x-3 translate-y-3 border border-acid/30 rounded-sm pointer-events-none">
+                        </div>
+                        <div
+                            class="relative bg-muted rounded-sm overflow-hidden aspect-[4/5] flex items-center justify-center border border-chalk/10">
+                            <div class="text-center px-8">
+                                <div
+                                    class="w-20 h-20 rounded-full bg-acid/20 border border-acid/30 flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-acid text-3xl font-black">YN</span>
+                                </div>
+                                <p class="text-chalk/30 text-sm font-mono">your-photo.jpg</p>
+                            </div>
+                            <div class="absolute top-3 left-3 w-4 h-4 border-t border-l border-acid/60"></div>
+                            <div class="absolute top-3 right-3 w-4 h-4 border-t border-r border-acid/60"></div>
+                            <div class="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-acid/60"></div>
+                            <div class="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-acid/60"></div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-4 w-24 h-24 reveal">
+                        <svg viewBox="0 0 100 100" class="spin-slow w-full h-full" aria-hidden="true">
+                            <defs>
+                                <path id="circle" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
+                            </defs>
+                            <text font-size="10.5" fill="#C6FF00" font-family="DM Mono" letter-spacing="2.5">
+                                <textPath href="#circle">FULL STACK · DEVELOPER · 2024 ·</textPath>
+                            </text>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center"><span
+                                class="text-acid text-lg">✦</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SKILLS ══ -->
+    <section id="skills" class="py-20 md:py-32 px-6 md:px-10 border-t border-chalk/5">
+        <div class="max-w-6xl mx-auto">
+            <p class="section-num mb-4 reveal">02 — SKILLS</p>
+            <h2 class="text-4xl md:text-5xl font-black leading-tight mb-16 reveal">The full stack.<br><span
+                    class="font-serif italic text-chalk/40">Every layer covered.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Backend -->
+                <div class="p-7 border border-chalk/8 rounded-sm skill-group reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-8 h-8 rounded-sm bg-acid/10 border border-acid/20 flex items-center justify-center">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6FF00"
+                                stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" />
+                                <path d="M8 21h8M12 17v4" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-sm tracking-widest uppercase text-chalk/80">Backend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">PHP /
+                            Laravel</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Node.js</span>
+                        <span
+                            class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Express.js</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">REST APIs</span>
+                        <span
+                            class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">WebSockets</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">JWT Auth</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Queues</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Redis</span>
+                    </div>
+                    <div class="mt-6 space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span
+                                    class="text-xs text-chalk/50 font-mono">Laravel</span><span
+                                    class="text-xs text-acid font-mono">95%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="95" style="width:0"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span
+                                    class="text-xs text-chalk/50 font-mono">Node.js</span><span
+                                    class="text-xs text-acid font-mono">88%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="88" style="width:0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frontend -->
+                <div class="p-7 border border-acid/20 bg-acid/[.03] rounded-sm skill-group reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-8 h-8 rounded-sm bg-acid/10 border border-acid/30 flex items-center justify-center">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6FF00"
+                                stroke-width="2">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-sm tracking-widest uppercase text-acid">Frontend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">React.js</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Next.js</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Vue.js</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Nuxt.js</span>
+                        <span
+                            class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">TypeScript</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Tailwind
+                            CSS</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">GSAP</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Pinia /
+                            Redux</span>
+                    </div>
+                    <div class="mt-6 space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span class="text-xs text-chalk/50 font-mono">React
+                                    / Next</span><span class="text-xs text-acid font-mono">90%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="90" style="width:0"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span class="text-xs text-chalk/50 font-mono">Vue /
+                                    Nuxt</span><span class="text-xs text-acid font-mono">85%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="85" style="width:0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile & DB -->
+                <div class="p-7 border border-chalk/8 rounded-sm skill-group reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-8 h-8 rounded-sm bg-acid/10 border border-acid/20 flex items-center justify-center">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6FF00"
+                                stroke-width="2">
+                                <rect x="5" y="2" width="14" height="20" rx="2" />
+                                <line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-sm tracking-widest uppercase text-chalk/80">Mobile &amp; DB</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">React
+                            Native</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Expo</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">MySQL</span>
+                        <span
+                            class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">PostgreSQL</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">MongoDB</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Docker</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">Git /
+                            CI-CD</span>
+                        <span class="skill-pill px-3 py-1.5 text-xs font-mono text-chalk/60 rounded-sm">AWS /
+                            Forge</span>
+                    </div>
+                    <div class="mt-6 space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span class="text-xs text-chalk/50 font-mono">React
+                                    Native</span><span class="text-xs text-acid font-mono">82%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="82" style="width:0"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1.5"><span
+                                    class="text-xs text-chalk/50 font-mono">Databases</span><span
+                                    class="text-xs text-acid font-mono">87%</span></div>
+                            <div class="h-px bg-chalk/10">
+                                <div class="h-px bg-acid skill-bar" data-w="87" style="width:0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ PROJECTS ══ -->
+    <section id="projects" class="py-20 md:py-32 px-6 md:px-10 border-t border-chalk/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+                <div>
+                    <p class="section-num mb-4 reveal">03 — PROJECTS</p>
+                    <h2 class="text-4xl md:text-5xl font-black leading-tight reveal">Selected<br><span
+                            class="font-serif italic text-chalk/40">work.</span></h2>
+                </div>
+                <p class="text-chalk/30 font-mono text-xs tracking-widest reveal">CLICK CARD TO OPEN 3D PREVIEW</p>
+            </div>
+
+            <!-- Featured -->
+            <div class="project-card rounded-sm p-7 md:p-10 mb-6 reveal" data-project="0"
+                data-title="E-Commerce Platform" data-num="01 — Featured"
+                data-desc="Multi-vendor marketplace with real-time inventory, payment gateway integration (Stripe), and a React Native companion app. Handles 10k+ daily active users."
+                data-tags="Laravel,Next.js,React Native,MySQL,Redis,Stripe" data-shape="torus" data-color="0xC6FF00">
+                <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
+                    <div>
+                        <span class="font-mono text-xs text-acid/70 tracking-widest uppercase">01 — Featured</span>
+                        <h3 class="text-2xl md:text-3xl font-black mt-2">E-Commerce Platform</h3>
+                        <p class="text-chalk/45 mt-2 max-w-lg">Multi-vendor marketplace with real-time inventory, Stripe
+                            payments, and a React Native companion app. 10k+ DAU.</p>
+                    </div>
+                    <span class="view-3d-badge flex-shrink-0">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        </svg>
+                        3D Preview
+                    </span>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 bg-acid/10 text-acid text-xs font-mono rounded-sm">Laravel</span>
+                    <span class="px-3 py-1 bg-chalk/5 text-chalk/50 text-xs font-mono rounded-sm">Next.js</span>
+                    <span class="px-3 py-1 bg-chalk/5 text-chalk/50 text-xs font-mono rounded-sm">React Native</span>
+                    <span class="px-3 py-1 bg-chalk/5 text-chalk/50 text-xs font-mono rounded-sm">MySQL</span>
+                    <span class="px-3 py-1 bg-chalk/5 text-chalk/50 text-xs font-mono rounded-sm">Redis</span>
+                    <span class="px-3 py-1 bg-chalk/5 text-chalk/50 text-xs font-mono rounded-sm">Stripe</span>
+                </div>
+                <div
+                    class="w-full h-36 md:h-48 bg-muted rounded-sm border border-chalk/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-acid/5 to-transparent"></div>
+                    <span class="text-chalk/20 font-mono text-sm z-10">project-preview.png</span>
+                    <div class="absolute top-3 right-3 w-2 h-2 rounded-full bg-acid"
+                        style="animation:float 2s ease-in-out infinite"></div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="project-card rounded-sm p-7 reveal" data-project="1" data-title="SaaS Dashboard"
+                    data-num="02"
+                    data-desc="Analytics platform with real-time charts, role-based access control, and a Node.js/Socket.io backend for live data streaming across multiple tenants."
+                    data-tags="Node.js,Vue.js,Socket.io,PostgreSQL" data-shape="octahedron" data-color="0x00CFFF">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="font-mono text-xs text-chalk/30 tracking-widest">02</span>
+                        <span class="view-3d-badge">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                            3D Preview
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-black mb-2">SaaS Dashboard</h3>
+                    <p class="text-chalk/40 text-sm leading-relaxed mb-5">Analytics platform with real-time charts,
+                        RBAC, and Node.js/Socket.io backend for live data streaming.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Node.js</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Vue.js</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Socket.io</span>
+                        <span
+                            class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card rounded-sm p-7 reveal" data-project="2" data-title="Mobile Delivery App"
+                    data-num="03"
+                    data-desc="Cross-platform React Native app with real-time GPS tracking, push notifications, and a Laravel API handling 500+ orders/hour with queue workers."
+                    data-tags="React Native,Laravel,Firebase,Expo" data-shape="cone" data-color="0xFF6B35">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="font-mono text-xs text-chalk/30 tracking-widest">03</span>
+                        <span class="view-3d-badge">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                            3D Preview
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-black mb-2">Mobile Delivery App</h3>
+                    <p class="text-chalk/40 text-sm leading-relaxed mb-5">Cross-platform React Native app with real-time
+                        GPS, push notifications, and Laravel API handling 500+ orders/hr.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-acid/10 text-acid text-xs font-mono rounded-sm">React Native</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Laravel</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Firebase</span>
+                    </div>
+                </div>
+
+                <div class="project-card rounded-sm p-7 reveal" data-project="3" data-title="CMS & Blog Engine"
+                    data-num="04"
+                    data-desc="Headless CMS built with Nuxt.js (SSG/ISR) and a custom Laravel admin panel. Achieves perfect 100/100 Lighthouse score on production with edge caching."
+                    data-tags="Nuxt.js,Laravel,MongoDB,Tailwind" data-shape="dodecahedron" data-color="0xA855F7">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="font-mono text-xs text-chalk/30 tracking-widest">04</span>
+                        <span class="view-3d-badge">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                            3D Preview
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-black mb-2">CMS &amp; Blog Engine</h3>
+                    <p class="text-chalk/40 text-sm leading-relaxed mb-5">Headless CMS with Nuxt.js SSG/ISR and a custom
+                        Laravel admin. 100/100 Lighthouse score on production.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Nuxt.js</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Laravel</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="project-card rounded-sm p-7 reveal" data-project="4" data-title="Healthcare Portal"
+                    data-num="05"
+                    data-desc="Patient management system with appointment scheduling, doctor dashboards, and HIPAA-compliant data handling via Node.js microservices with end-to-end encryption."
+                    data-tags="Node.js,React.js,PostgreSQL,Docker" data-shape="icosahedron" data-color="0x22D3EE">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="font-mono text-xs text-chalk/30 tracking-widest">05</span>
+                        <span class="view-3d-badge">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                            3D Preview
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-black mb-2">Healthcare Portal</h3>
+                    <p class="text-chalk/40 text-sm leading-relaxed mb-5">Patient management with appointments, doctor
+                        dashboards, and HIPAA-compliant Node.js microservices with E2E encryption.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Node.js</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">React.js</span>
+                        <span
+                            class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">PostgreSQL</span>
+                        <span class="px-2.5 py-1 bg-chalk/5 text-chalk/40 text-xs font-mono rounded-sm">Docker</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ EXPERIENCE ══ -->
+    <section class="py-20 md:py-32 px-6 md:px-10 border-t border-chalk/5">
+        <div class="max-w-4xl mx-auto">
+            <p class="section-num mb-4 reveal">04 — EXPERIENCE</p>
+            <h2 class="text-4xl md:text-5xl font-black leading-tight mb-16 reveal">Where I've<br><span
+                    class="font-serif italic text-chalk/40">built things.</span></h2>
+            <div class="space-y-0">
+                <div class="flex gap-6 md:gap-10 reveal exp-item">
+                    <div class="flex flex-col items-center pt-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-acid flex-shrink-0"></div>
+                        <div class="w-px flex-1 mt-2 bg-gradient-to-b from-acid/40 to-transparent min-h-[4rem]"></div>
+                    </div>
+                    <div class="pb-12">
+                        <div class="flex flex-wrap items-center gap-3 mb-1">
+                            <h3 class="text-lg font-black">Senior Full Stack Developer</h3>
+                            <span class="px-2.5 py-0.5 bg-acid/10 text-acid text-xs font-mono rounded-sm">Current</span>
+                        </div>
+                        <p class="text-chalk/50 text-sm font-mono mb-3">Company Name · 2022 – Present</p>
+                        <p class="text-chalk/45 text-sm leading-relaxed max-w-lg">Led architecture of a multi-tenant
+                            SaaS platform serving 50k users. Migrated monolith to microservices using Node.js, reduced
+                            API response time by 40%.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 md:gap-10 reveal exp-item">
+                    <div class="flex flex-col items-center pt-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-chalk/30 flex-shrink-0"></div>
+                        <div class="w-px flex-1 mt-2 bg-chalk/10 min-h-[4rem]"></div>
+                    </div>
+                    <div class="pb-12">
+                        <h3 class="text-lg font-black mb-1">Full Stack Developer</h3>
+                        <p class="text-chalk/50 text-sm font-mono mb-3">Previous Company · 2020 – 2022</p>
+                        <p class="text-chalk/45 text-sm leading-relaxed max-w-lg">Developed and maintained 8+ client
+                            projects with Laravel &amp; Vue.js. Built a React Native app from scratch that reached 10k
+                            downloads in its first month.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 md:gap-10 reveal exp-item">
+                    <div class="flex flex-col items-center pt-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-chalk/20 flex-shrink-0"></div>
+                        <div class="w-px flex-1 mt-2 bg-chalk/5"></div>
+                    </div>
+                    <div class="pb-12">
+                        <h3 class="text-lg font-black mb-1">Junior Developer</h3>
+                        <p class="text-chalk/50 text-sm font-mono mb-3">Startup / Freelance · 2019 – 2020</p>
+                        <p class="text-chalk/45 text-sm leading-relaxed max-w-lg">Freelanced with Laravel and jQuery
+                            before transitioning to modern JS frameworks. Shipped first commercial Vue.js product with
+                            Stripe checkout.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section id="contact" class="py-20 md:py-32 px-6 md:px-10 border-t border-chalk/5">
+        <div class="max-w-4xl mx-auto">
+            <p class="section-num mb-4 reveal">05 — CONTACT</p>
+            <h2 class="text-4xl md:text-6xl font-black leading-tight mb-4 reveal">Let's build<br><span
+                    class="font-serif italic grad-text">something great.</span></h2>
+            <p class="text-chalk/45 mb-14 max-w-md reveal">Have a project in mind? I'm available for freelance,
+                full-time roles, and consulting.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <form class="space-y-4 reveal" id="contactForm">
+                    <div><label
+                            class="block text-xs font-mono text-chalk/40 tracking-widest uppercase mb-2">Name</label><input
+                            type="text" placeholder="Your name" class="form-input"></div>
+                    <div><label
+                            class="block text-xs font-mono text-chalk/40 tracking-widest uppercase mb-2">Email</label><input
+                            type="email" placeholder="you@example.com" class="form-input"></div>
+                    <div><label
+                            class="block text-xs font-mono text-chalk/40 tracking-widest uppercase mb-2">Message</label><textarea
+                            rows="5" placeholder="Tell me about your project…"
+                            class="form-input resize-none"></textarea></div>
+                    <button type="submit"
+                        class="magnetic w-full py-4 bg-acid text-ink font-bold text-sm tracking-wide rounded-sm hover:bg-white transition-colors flex items-center justify-center gap-2 group">
+                        Send Message
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </form>
+                <div class="space-y-6 reveal">
+                    <p class="text-xs font-mono text-chalk/30 tracking-widest uppercase mb-5">Or reach me via</p>
+                    <div class="space-y-3">
+                        <a href="mailto:hello@youremail.com"
+                            class="flex items-center gap-4 py-4 border-b border-chalk/8 hover:border-acid group transition-colors">
+                            <div
+                                class="w-9 h-9 border border-chalk/15 rounded-sm flex items-center justify-center group-hover:border-acid transition-colors">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" class="text-chalk/40 group-hover:text-acid transition-colors">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m2 7 10 7 10-7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-chalk/30 font-mono tracking-widest uppercase">Email</p>
+                                <p class="text-sm font-medium text-chalk/70 group-hover:text-acid transition-colors">
+                                    hello@youremail.com</p>
+                            </div>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener"
+                            class="flex items-center gap-4 py-4 border-b border-chalk/8 hover:border-acid group transition-colors">
+                            <div
+                                class="w-9 h-9 border border-chalk/15 rounded-sm flex items-center justify-center group-hover:border-acid transition-colors">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" class="text-chalk/40 group-hover:text-acid transition-colors">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                    <rect x="2" y="9" width="4" height="12" />
+                                    <circle cx="4" cy="4" r="2" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-chalk/30 font-mono tracking-widest uppercase">LinkedIn</p>
+                                <p class="text-sm font-medium text-chalk/70 group-hover:text-acid transition-colors">
+                                    linkedin.com/in/yourname</p>
+                            </div>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener"
+                            class="flex items-center gap-4 py-4 border-b border-chalk/8 hover:border-acid group transition-colors">
+                            <div
+                                class="w-9 h-9 border border-chalk/15 rounded-sm flex items-center justify-center group-hover:border-acid transition-colors">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" class="text-chalk/40 group-hover:text-acid transition-colors">
+                                    <path
+                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-chalk/30 font-mono tracking-widest uppercase">GitHub</p>
+                                <p class="text-sm font-medium text-chalk/70 group-hover:text-acid transition-colors">
+                                    github.com/yourusername</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="pt-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-2 h-2 rounded-full bg-acid" style="animation:float 2s ease-in-out infinite">
+                            </div>
+                            <span class="text-xs text-acid/70 font-mono tracking-widest uppercase">Available Now</span>
+                        </div>
+                        <p class="text-chalk/40 text-sm">Response time: within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="py-10 px-6 md:px-10 border-t border-chalk/5">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="font-mono text-xs text-chalk/25 tracking-widest">© 2025 YOUR NAME. ALL RIGHTS RESERVED.</p>
+            <div class="flex items-center gap-2 font-mono text-xs text-chalk/25">
+                <span>Crafted with</span><span class="text-acid">♥</span><span>using Laravel · React · Three.js ·
+                    GSAP</span>
+            </div>
+            <a href="#home"
+                class="w-9 h-9 border border-chalk/15 rounded-sm flex items-center justify-center hover:border-acid hover:text-acid transition-colors text-chalk/30 magnetic">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════════════════════
+     SCRIPTS  — all deferred/idle for performance
+══════════════════════════════════════════════════════════ -->
+    <script>
+        /* ── Wait for all deferred scripts then boot ── */
+        window.addEventListener('load', function () {
+            if (typeof gsap === 'undefined' || typeof THREE === 'undefined') {
+                setTimeout(arguments.callee.bind(this), 60); return;
+            }
+            initAll();
+        });
+
+        function initAll() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            /* ════════════════════════════════════════════
+               PERFORMANCE HELPERS
+            ════════════════════════════════════════════ */
+            const isMobile = window.innerWidth < 768;
+            const prefersLow = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2); // cap DPR
+
+            /* ════════════════════════════════════════════
+               CUSTOM CURSOR  (desktop only)
+            ════════════════════════════════════════════ */
+            if (!isMobile) {
+                const dot = document.getElementById('cursorDot');
+                const ring = document.getElementById('cursorRing');
+                let mx = 0, my = 0, rx = 0, ry = 0;
+
+                document.addEventListener('mousemove', e => {
+                    mx = e.clientX; my = e.clientY;
+                    gsap.set(dot, { x: mx, y: my });
+                }, { passive: true });
+
+                gsap.ticker.add(() => {
+                    rx += (mx - rx) * 0.13;
+                    ry += (my - ry) * 0.13;
+                    gsap.set(ring, { x: rx, y: ry });
+                });
+
+                document.querySelectorAll('a, button, .magnetic, .project-card').forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        gsap.to(ring, { scale: 1.7, borderColor: '#C6FF00', duration: 0.28 });
+                        gsap.to(dot, { scale: 0, duration: 0.18 });
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        gsap.to(ring, { scale: 1, borderColor: 'rgba(198,255,0,.45)', duration: 0.28 });
+                        gsap.to(dot, { scale: 1, duration: 0.18 });
+                    });
+                });
+            }
+
+            /* ════════════════════════════════════════════
+               MOBILE MENU
+            ════════════════════════════════════════════ */
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            let menuOpen = false;
+
+            function openMenu() {
+                menuOpen = true;
+                mobileMenu.style.cssText = 'display:flex!important;opacity:0;pointer-events:auto;';
+                gsap.to(mobileMenu, { opacity: 1, duration: 0.28 });
+                gsap.set('.mobile-link', { y: 28, opacity: 0 });
+                gsap.to('.mobile-link', { y: 0, opacity: 1, stagger: 0.06, duration: 0.38, ease: 'power2.out', delay: 0.08 });
+                gsap.to([bar1, bar3], { rotation: (i) => i === 0 ? 45 : -45, y: (i) => i === 0 ? 6 : -6, duration: 0.28 });
+                gsap.to(bar2, { opacity: 0, duration: 0.18 });
+            }
+            function closeMenu() {
+                menuOpen = false;
+                gsap.to(mobileMenu, {
+                    opacity: 0, duration: 0.28, onComplete: () => {
+                        mobileMenu.style.cssText = 'display:none!important;opacity:0;pointer-events:none;';
+                    }
+                });
+                gsap.to([bar1, bar3], { rotation: 0, y: 0, duration: 0.28 });
+                gsap.to(bar2, { opacity: 1, duration: 0.18 });
+            }
+            menuBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+            document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+
+            /* ════════════════════════════════════════════
+               HERO ENTRANCE
+            ════════════════════════════════════════════ */
+            if (!prefersLow) {
+                const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+                heroTL
+                    .from('#hero-badge', { y: 18, opacity: 0, duration: 0.55, delay: 0.2 })
+                    .from('.hero-line', { y: '105%', duration: 0.85, stagger: 0.11, ease: 'power4.out' }, '-=0.25')
+                    .from('#hero-desc', { y: 26, opacity: 0, duration: 0.65 }, '-=0.35')
+                    .from('#hero-cta', { y: 18, opacity: 0, duration: 0.55 }, '-=0.38')
+                    .from('#hero-stats', { y: 16, opacity: 0, duration: 0.55 }, '-=0.38')
+                    .from('#scroll-hint', { opacity: 0, duration: 0.5 }, '-=0.2');
+            } else {
+                gsap.set(['.hero-line', '#hero-desc', '#hero-cta', '#hero-stats'], { opacity: 1, y: 0 });
+            }
+
+            /* ════════════════════════════════════════════
+               COUNTERS
+            ════════════════════════════════════════════ */
+            ScrollTrigger.create({
+                trigger: '#hero-stats', start: 'top 92%', once: true,
+                onEnter: () => {
+                    document.querySelectorAll('.counter').forEach(el => {
+                        const t = +el.dataset.target;
+                        gsap.to({ v: 0 }, {
+                            v: t, duration: 1.6, ease: 'power2.out',
+                            onUpdate: function () { el.textContent = Math.round(this.targets()[0].v) + '+'; }
+                        });
+                    });
+                }
+            });
+
+            /* ════════════════════════════════════════════
+               SCROLL REVEALS  (IntersectionObserver, not
+               ScrollTrigger, for off-screen perf)
+            ════════════════════════════════════════════ */
+            if (!prefersLow) {
+                const revealObs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            gsap.to(e.target, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' });
+                            revealObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+                document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+                /* Skill bars */
+                const barObs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            gsap.to(e.target, { width: e.target.dataset.w + '%', duration: 1.3, ease: 'power3.out' });
+                            barObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                document.querySelectorAll('.skill-bar').forEach(b => barObs.observe(b));
+
+                /* Experience stagger */
+                const expObs = new IntersectionObserver((entries) => {
+                    entries.forEach((e, i) => {
+                        if (e.isIntersecting) {
+                            gsap.to(e.target, { x: 0, opacity: 1, duration: 0.75, ease: 'power3.out', delay: i * 0.1 });
+                            expObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                document.querySelectorAll('.exp-item').forEach(el => { gsap.set(el, { x: -30, opacity: 0 }); expObs.observe(el); });
+
+            } else {
+                /* Reduced motion: just make everything visible */
+                document.querySelectorAll('.reveal, .skill-bar').forEach(el => {
+                    el.style.opacity = '1'; el.style.transform = 'none';
+                });
+                document.querySelectorAll('.skill-bar').forEach(el => el.style.width = el.dataset.w + '%');
+            }
+
+            /* ════════════════════════════════════════════
+               SKILL CARD TILT  (desktop only)
+            ════════════════════════════════════════════ */
+            if (!isMobile) {
+                document.querySelectorAll('.skill-group').forEach(card => {
+                    card.addEventListener('mousemove', e => {
+                        const r = card.getBoundingClientRect();
+                        gsap.to(card, { rotateY: ((e.clientX - r.left) / r.width - .5) * 6, rotateX: -((e.clientY - r.top) / r.height - .5) * 6, duration: 0.35, transformPerspective: 800 });
+                    }, { passive: true });
+                    card.addEventListener('mouseleave', () => gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.45, ease: 'power2.out' }));
+                });
+            }
+
+            /* ════════════════════════════════════════════
+               MAGNETIC BUTTONS  (desktop only)
+            ════════════════════════════════════════════ */
+            if (!isMobile) {
+                document.querySelectorAll('.magnetic').forEach(el => {
+                    el.addEventListener('mousemove', e => {
+                        const r = el.getBoundingClientRect();
+                        gsap.to(el, { x: (e.clientX - r.left - r.width / 2) * .22, y: (e.clientY - r.top - r.height / 2) * .22, duration: 0.38, ease: 'power2.out' });
+                    }, { passive: true });
+                    el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, y: 0, duration: 0.48, ease: 'elastic.out(1,.4)' }));
+                });
+            }
+
+            /* ════════════════════════════════════════════
+               HERO PARALLAX BLOBS  (throttled with RAF)
+            ════════════════════════════════════════════ */
+            if (!isMobile && !prefersLow) {
+                let rafPending = false;
+                window.addEventListener('scroll', () => {
+                    if (rafPending) return;
+                    rafPending = true;
+                    requestAnimationFrame(() => {
+                        const s = window.scrollY;
+                        document.querySelectorAll('.hero-blob').forEach((b, i) =>
+                            b.style.transform = `translateY(${s * (i % 2 === 0 ? .14 : -.09)}px)`
+                        );
+                        rafPending = false;
+                    });
+                }, { passive: true });
+            }
+
+            /* ════════════════════════════════════════════
+               CONTACT FORM
+            ════════════════════════════════════════════ */
+            document.getElementById('contactForm')?.addEventListener('submit', e => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                gsap.to(btn, { scale: .96, duration: .1, yoyo: true, repeat: 1 });
+                btn.innerHTML = '✓ Message Sent!';
+                btn.style.background = '#fff';
+                setTimeout(() => {
+                    btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:-3px;margin-left:6px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                    btn.style.background = '';
+                }, 3000);
+                e.target.reset();
+            });
+
+            /* ════════════════════════════════════════════
+               ████████████████████████████████████████
+               THREE.JS — HERO BACKGROUND CANVAS
+               Floating particle field + wireframe orb
+               ████████████████████████████████████████
+            ════════════════════════════════════════════ */
+            (function initHeroThree() {
+                const heroSection = document.getElementById('home');
+                const canvas = document.getElementById('hero-canvas');
+                if (!canvas || !THREE) return;
+
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'high-performance' });
+                renderer.setPixelRatio(DPR);
+                renderer.setClearColor(0x000000, 0);
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+                camera.position.z = 5;
+
+                /* Resize handler */
+                function resizeHero() {
+                    const w = heroSection.offsetWidth, h = heroSection.offsetHeight;
+                    renderer.setSize(w, h, false);
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                }
+                resizeHero();
+                const ro = new ResizeObserver(resizeHero);
+                ro.observe(heroSection);
+
+                /* ── Particle field ── */
+                const COUNT = isMobile ? 600 : 1200;
+                const pGeo = new THREE.BufferGeometry();
+                const pPos = new Float32Array(COUNT * 3);
+                const pSizes = new Float32Array(COUNT);
+                for (let i = 0; i < COUNT; i++) {
+                    pPos[i * 3] = (Math.random() - 0.5) * 20;
+                    pPos[i * 3 + 1] = (Math.random() - 0.5) * 20;
+                    pPos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+                    pSizes[i] = Math.random() * 2.5 + 0.5;
+                }
+                pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+                pGeo.setAttribute('size', new THREE.BufferAttribute(pSizes, 1));
+
+                const pMat = new THREE.PointsMaterial({
+                    color: 0xC6FF00, size: 0.04, transparent: true, opacity: 0.45,
+                    sizeAttenuation: true, depthWrite: false
+                });
+                const particles = new THREE.Points(pGeo, pMat);
+                scene.add(particles);
+
+                /* ── Wireframe orb ── */
+                const orbGeo = new THREE.IcosahedronGeometry(1.4, isMobile ? 1 : 2);
+                const orbMat = new THREE.MeshBasicMaterial({ color: 0xC6FF00, wireframe: true, transparent: true, opacity: 0.08 });
+                const orb = new THREE.Mesh(orbGeo, orbMat);
+                orb.position.set(2.5, 0.5, -1);
+                scene.add(orb);
+
+                /* ── Ring ── */
+                const ringGeo = new THREE.TorusGeometry(2.2, 0.008, 6, 80);
+                const ringMat = new THREE.MeshBasicMaterial({ color: 0xC6FF00, transparent: true, opacity: 0.12 });
+                const ring3 = new THREE.Mesh(ringGeo, ringMat);
+                ring3.rotation.x = Math.PI * 0.3;
+                ring3.position.set(2.5, 0.5, -2);
+                scene.add(ring3);
+
+                /* ── Mouse parallax ── */
+                let tMx = 0, tMy = 0, cMx = 0, cMy = 0;
+                document.addEventListener('mousemove', e => {
+                    tMx = (e.clientX / window.innerWidth - 0.5) * 0.6;
+                    tMy = (e.clientY / window.innerHeight - 0.5) * 0.4;
+                }, { passive: true });
+
+                /* ── RAF loop — only run when hero is visible ── */
+                let heroVisible = true, heroRaf = null;
+                const heroIO = new IntersectionObserver(([entry]) => {
+                    heroVisible = entry.isIntersecting;
+                    if (heroVisible && !heroRaf) tick();
+                }, { threshold: 0 });
+                heroIO.observe(heroSection);
+
+                let clock = { t: 0 };
+                let lastTime = 0;
+                function tick(now = 0) {
+                    if (!heroVisible) { heroRaf = null; return; }
+                    heroRaf = requestAnimationFrame(tick);
+
+                    /* throttle to ~60fps max */
+                    if (now - lastTime < 14) return;
+                    lastTime = now;
+                    clock.t += 0.008;
+
+                    /* smooth camera parallax */
+                    cMx += (tMx - cMx) * 0.04;
+                    cMy += (tMy - cMy) * 0.04;
+                    camera.position.x = cMx;
+                    camera.position.y = -cMy;
+
+                    /* rotate */
+                    particles.rotation.y = clock.t * 0.04;
+                    particles.rotation.x = clock.t * 0.02;
+                    orb.rotation.x = clock.t * 0.18;
+                    orb.rotation.y = clock.t * 0.22;
+                    ring3.rotation.z = clock.t * 0.12;
+
+                    renderer.render(scene, camera);
+                }
+                tick();
+
+                /* dispose on page unload */
+                window.addEventListener('beforeunload', () => {
+                    pGeo.dispose(); pMat.dispose();
+                    orbGeo.dispose(); orbMat.dispose();
+                    ringGeo.dispose(); ringMat.dispose();
+                    renderer.dispose();
+                });
+            })();
+
+            /* ════════════════════════════════════════════
+               ████████████████████████████████████████
+               THREE.JS — 3D PROJECT MODAL
+               ████████████████████████████████████████
+            ════════════════════════════════════════════ */
+            (function initModalThree() {
+                const overlay = document.getElementById('modal-overlay');
+                const modalClose = document.getElementById('modal-close');
+                const canvasWrap = document.getElementById('modal-canvas-wrap');
+                const ctrlRotate = document.getElementById('ctrl-rotate');
+                const ctrlWire = document.getElementById('ctrl-wire');
+                const ctrlReset = document.getElementById('ctrl-reset');
+
+                /* Dynamic info fields */
+                const mTitle = document.getElementById('modal-title');
+                const mNum = document.getElementById('modal-num');
+                const mDesc = document.getElementById('modal-desc');
+                const mTags = document.getElementById('modal-tags');
+                const mLink = document.getElementById('modal-link');
+
+                /* THREE setup — lazy: created once on first open */
+                let threeReady = false;
+                let renderer2, scene2, camera2, mesh, edges, pointLight, rafId2;
+                let autoRotate = true, wireMode = false;
+                let isDragging = false, prevMouse = { x: 0, y: 0 };
+                let targetRot = { x: 0.4, y: 0 };
+                let currentRot = { x: 0.4, y: 0 };
+                let zoom = 5, targetZoom = 5;
+
+                function buildThree() {
+                    if (threeReady) return;
+                    threeReady = true;
+
+                    renderer2 = new THREE.WebGLRenderer({ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' });
+                    renderer2.setPixelRatio(DPR);
+                    renderer2.setClearColor(0x0a0a0a, 1);
+                    renderer2.setSize(canvasWrap.clientWidth, canvasWrap.clientHeight);
+                    canvasWrap.appendChild(renderer2.domElement);
+
+                    scene2 = new THREE.Scene();
+                    scene2.fog = new THREE.FogExp2(0x0a0a0a, 0.12);
+
+                    camera2 = new THREE.PerspectiveCamera(45, canvasWrap.clientWidth / canvasWrap.clientHeight, 0.1, 100);
+                    camera2.position.z = zoom;
+
+                    /* Lighting */
+                    const ambient = new THREE.AmbientLight(0xffffff, 0.15);
+                    scene2.add(ambient);
+                    pointLight = new THREE.PointLight(0xC6FF00, 2.5, 12);
+                    pointLight.position.set(3, 3, 4);
+                    scene2.add(pointLight);
+                    const rimLight = new THREE.PointLight(0x0055ff, 1.2, 10);
+                    rimLight.position.set(-3, -2, -3);
+                    scene2.add(rimLight);
+
+                    /* Subtle grid plane */
+                    const gridHelper = new THREE.GridHelper(14, 18, 0x1a1a1a, 0x141414);
+                    gridHelper.position.y = -2.5;
+                    scene2.add(gridHelper);
+
+                    /* Floating ambient particles in modal */
+                    const mpGeo = new THREE.BufferGeometry();
+                    const mpPos = new Float32Array(200 * 3);
+                    for (let i = 0; i < 200; i++) {
+                        mpPos[i * 3] = (Math.random() - .5) * 12;
+                        mpPos[i * 3 + 1] = (Math.random() - .5) * 8;
+                        mpPos[i * 3 + 2] = (Math.random() - .5) * 8 - 2;
+                    }
+                    mpGeo.setAttribute('position', new THREE.BufferAttribute(mpPos, 3));
+                    const mpMat = new THREE.PointsMaterial({ color: 0xC6FF00, size: .04, transparent: true, opacity: .3, depthWrite: false });
+                    scene2.add(new THREE.Points(mpGeo, mpMat));
+
+                    /* Resize */
+                    const ro2 = new ResizeObserver(() => {
+                        const w = canvasWrap.clientWidth, h = canvasWrap.clientHeight;
+                        renderer2.setSize(w, h, false);
+                        camera2.aspect = w / h; camera2.updateProjectionMatrix();
+                    });
+                    ro2.observe(canvasWrap);
+
+                    /* Drag / orbit controls (manual) */
+                    canvasWrap.addEventListener('mousedown', e => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; autoRotate = false; }, { passive: true });
+                    window.addEventListener('mouseup', () => { isDragging = false; });
+                    window.addEventListener('mousemove', e => {
+                        if (!isDragging) return;
+                        targetRot.y += (e.clientX - prevMouse.x) * 0.008;
+                        targetRot.x += (e.clientY - prevMouse.y) * 0.008;
+                        targetRot.x = Math.max(-1.2, Math.min(1.2, targetRot.x));
+                        prevMouse = { x: e.clientX, y: e.clientY };
+                    }, { passive: true });
+
+                    /* Touch orbit */
+                    let lastTouch = null;
+                    canvasWrap.addEventListener('touchstart', e => { lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY }; autoRotate = false; }, { passive: true });
+                    canvasWrap.addEventListener('touchmove', e => {
+                        if (!lastTouch) return;
+                        targetRot.y += (e.touches[0].clientX - lastTouch.x) * 0.008;
+                        targetRot.x += (e.touches[0].clientY - lastTouch.y) * 0.008;
+                        lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                    }, { passive: true });
+                    canvasWrap.addEventListener('touchend', () => lastTouch = null, { passive: true });
+
+                    /* Scroll zoom */
+                    canvasWrap.addEventListener('wheel', e => {
+                        targetZoom = Math.max(2.5, Math.min(9, targetZoom + e.deltaY * 0.004));
+                    }, { passive: true });
+                }
+
+                /* Build geometry for each project shape */
+                function buildMesh(shape, color) {
+                    /* Remove old */
+                    if (mesh) { scene2.remove(mesh); mesh.geometry.dispose(); mesh.material.dispose(); }
+                    if (edges) { scene2.remove(edges); edges.geometry.dispose(); edges.material.dispose(); }
+
+                    let geo;
+                    switch (shape) {
+                        case 'torus': geo = new THREE.TorusGeometry(1.1, 0.42, isMobile ? 16 : 32, isMobile ? 40 : 80); break;
+                        case 'octahedron': geo = new THREE.OctahedronGeometry(1.4, isMobile ? 0 : 1); break;
+                        case 'cone': geo = new THREE.ConeGeometry(1.1, 2.2, isMobile ? 24 : 48, 1); break;
+                        case 'dodecahedron': geo = new THREE.DodecahedronGeometry(1.4, 0); break;
+                        case 'icosahedron': geo = new THREE.IcosahedronGeometry(1.4, isMobile ? 1 : 2); break;
+                        default: geo = new THREE.TorusKnotGeometry(0.9, 0.32, isMobile ? 60 : 120, isMobile ? 8 : 16);
+                    }
+
+                    const mat = new THREE.MeshStandardMaterial({
+                        color: parseInt(color),
+                        metalness: 0.55,
+                        roughness: 0.28,
+                        emissive: parseInt(color),
+                        emissiveIntensity: 0.12,
+                        transparent: true, opacity: 0.92,
+                    });
+                    mesh = new THREE.Mesh(geo, mat);
+                    scene2.add(mesh);
+
+                    /* Wireframe edges overlay */
+                    const edgesGeo = new THREE.EdgesGeometry(geo, 15);
+                    const edgesMat = new THREE.LineBasicMaterial({ color: parseInt(color), transparent: true, opacity: 0.18 });
+                    edges = new THREE.LineSegments(edgesGeo, edgesMat);
+                    scene2.add(edges);
+
+                    /* Reset view */
+                    targetRot = { x: 0.4, y: 0 };
+                    currentRot = { x: 0.4, y: 0 };
+                    targetZoom = 5; zoom = 5;
+                    if (mesh) { mesh.rotation.x = 0.4; mesh.rotation.y = 0; }
+                    if (edges) { edges.rotation.x = 0.4; edges.rotation.y = 0; }
+                    wireMode = false;
+                    autoRotate = true;
+                }
+
+                /* RAF loop for modal */
+                function modalTick() {
+                    if (!threeReady || !mesh) { rafId2 = requestAnimationFrame(modalTick); return; }
+                    rafId2 = requestAnimationFrame(modalTick);
+
+                    if (autoRotate) targetRot.y += 0.006;
+
+                    /* Smooth interpolation */
+                    currentRot.x += (targetRot.x - currentRot.x) * 0.08;
+                    currentRot.y += (targetRot.y - currentRot.y) * 0.08;
+                    zoom += (targetZoom - zoom) * 0.08;
+
+                    mesh.rotation.x = currentRot.x;
+                    mesh.rotation.y = currentRot.y;
+                    edges.rotation.x = currentRot.x;
+                    edges.rotation.y = currentRot.y;
+                    camera2.position.z = zoom;
+
+                    /* Pulsing light */
+                    pointLight.intensity = 2.5 + Math.sin(Date.now() * 0.002) * 0.6;
+
+                    renderer2.render(scene2, camera2);
+                }
+
+                /* ── Open / Close ── */
+                let rafRunning = false;
+                function openModal(data) {
+                    buildThree();                   /* lazy init */
+                    buildMesh(data.shape, data.color);
+
+                    /* Fill content */
+                    mNum.textContent = data.num;
+                    mTitle.textContent = data.title;
+                    mDesc.textContent = data.desc;
+                    mLink.href = data.link || '#';
+                    mTags.innerHTML = '';
+                    (data.tags || '').split(',').forEach(tag => {
+                        const s = document.createElement('span');
+                        s.className = 'px-3 py-1 text-xs font-mono rounded-sm';
+                        s.style.cssText = 'background:rgba(198,255,0,0.08);color:rgba(198,255,0,0.8);border:1px solid rgba(198,255,0,0.2)';
+                        s.textContent = tag.trim();
+                        mTags.appendChild(s);
+                    });
+
+                    overlay.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+
+                    if (!rafRunning) { rafRunning = true; modalTick(); }
+                }
+
+                function closeModal() {
+                    overlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                    rafRunning = false;
+                    cancelAnimationFrame(rafId2);
+                }
+
+                /* ── Project card click ── */
+                document.querySelectorAll('.project-card[data-project]').forEach(card => {
+                    card.addEventListener('click', () => openModal({
+                        title: card.dataset.title,
+                        num: card.dataset.num,
+                        desc: card.dataset.desc,
+                        tags: card.dataset.tags,
+                        shape: card.dataset.shape,
+                        color: card.dataset.color,
+                        link: card.dataset.link,
+                    }));
+                });
+
+                modalClose.addEventListener('click', closeModal);
+                overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+                document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+                /* ── Control buttons ── */
+                ctrlRotate.addEventListener('click', () => {
+                    autoRotate = !autoRotate;
+                    ctrlRotate.style.color = autoRotate ? '#C6FF00' : 'rgba(198,255,0,.4)';
+                });
+                ctrlWire.addEventListener('click', () => {
+                    wireMode = !wireMode;
+                    if (mesh && edges) {
+                        mesh.material.opacity = wireMode ? 0 : 0.92;
+                        edges.material.opacity = wireMode ? 0.7 : 0.18;
+                    }
+                    ctrlWire.style.color = wireMode ? '#C6FF00' : 'rgba(198,255,0,.4)';
+                });
+                ctrlReset.addEventListener('click', () => {
+                    targetRot = { x: 0.4, y: 0 };
+                    targetZoom = 5; autoRotate = true;
+                    ctrlRotate.style.color = 'rgba(198,255,0,.7)';
+                });
+            })();
+
+            /* Refresh ScrollTrigger */
+            ScrollTrigger.refresh();
+        }
+    </script>
+</body>
+
+</html>

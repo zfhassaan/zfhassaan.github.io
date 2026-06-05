@@ -1,0 +1,430 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+:root {
+    --ink: #0D0D0D;
+    --chalk: #F5F2ED;
+    --acid: #C6FF00;
+    --rust: #E8440A;
+    --dim: #1A1A1A
+}
+
+html {
+    scroll-behavior: smooth
+}
+
+body {
+    background: var(--ink);
+    color: var(--chalk);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none
+}
+
+/* ── Performance: GPU layers only where needed ── */
+#hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    will-change: transform
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    will-change: opacity, transform
+}
+
+.project-card {
+    will-change: border-color
+}
+
+/* ── Noise overlay (one fixed el, not ::before on body for perf) ── */
+#noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9990;
+    opacity: .3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")
+}
+
+/* ── Cursor ── */
+.cursor-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--acid);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%)
+}
+
+.cursor-ring {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid rgba(198, 255, 0, .45);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%)
+}
+
+@media(max-width:768px) {
+
+    .cursor-dot,
+    .cursor-ring {
+        display: none
+    }
+
+    body {
+        cursor: auto
+    }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+    width: 3px
+}
+
+::-webkit-scrollbar-track {
+    background: var(--ink)
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--acid);
+    border-radius: 2px
+}
+
+/* ── Nav ── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    mix-blend-mode: difference
+}
+
+.nav-menu {
+    display: none
+}
+
+@media(max-width:768px) {
+    .nav-links-desktop {
+        display: none !important
+    }
+
+    .nav-menu {
+        display: flex
+    }
+}
+
+@media(min-width:769px) {
+    .mobile-menu {
+        display: none !important
+    }
+}
+
+/* ── Marquee ── */
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 24s linear infinite
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .marquee-track {
+        animation: none
+    }
+}
+
+/* ── Grid background ── */
+.grid-bg {
+    background-image: linear-gradient(rgba(198, 255, 0, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(198, 255, 0, .025) 1px, transparent 1px);
+    background-size: 60px 60px
+}
+
+/* ── Skill pill ── */
+.skill-pill {
+    border: 1px solid rgba(198, 255, 0, .18);
+    transition: border-color .25s, background .25s, color .25s, transform .25s
+}
+
+.skill-pill:hover {
+    border-color: var(--acid);
+    background: rgba(198, 255, 0, .07);
+    color: var(--acid);
+    transform: translateY(-2px)
+}
+
+/* ── Project card ── */
+.project-card {
+    border: 1px solid rgba(255, 255, 255, .07);
+    transition: border-color .3s;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(198, 255, 0, .04), transparent 60%);
+    opacity: 0;
+    transition: opacity .35s;
+    pointer-events: none
+}
+
+.project-card:hover::before {
+    opacity: 1
+}
+
+.project-card:hover {
+    border-color: rgba(198, 255, 0, .28)
+}
+
+/* ── Section num ── */
+.section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(198, 255, 0, .6);
+    letter-spacing: .15em
+}
+
+/* ── Gradient text ── */
+.grad-text {
+    background: linear-gradient(135deg, #C6FF00 0%, #fff 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text
+}
+
+/* ── Magnetic ── */
+.magnetic {
+    transition: transform .3s cubic-bezier(.23, 1, .32, 1)
+}
+
+/* ── Hero ── */
+.hero-line {
+    display: block
+}
+
+.hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    contain: strict
+}
+
+/* ── Form ── */
+.form-input {
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .1);
+    color: var(--chalk);
+    transition: border-color .3s;
+    width: 100%;
+    padding: .875rem 1rem;
+    border-radius: 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: .9rem;
+    outline: none
+}
+
+.form-input:focus {
+    border-color: var(--acid);
+    background: rgba(198, 255, 0, .04)
+}
+
+.form-input::placeholder {
+    color: rgba(245, 242, 237, .3)
+}
+
+/* ── content-visibility for off-screen sections (layout perf) ── */
+section:not(#home) {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px
+}
+
+/* ══════════════════════════════════════════
+3D MODAL
+══════════════════════════════════════════ */
+#modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0, 0, 0, .85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+}
+
+#modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto
+}
+
+#modal-box {
+    position: relative;
+    width: min(92vw, 900px);
+    background: #111;
+    border: 1px solid rgba(198, 255, 0, .25);
+    border-radius: 8px;
+    overflow: hidden;
+    transform: scale(.92) translateY(24px);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+}
+
+#modal-overlay.open #modal-box {
+    transform: scale(1) translateY(0)
+}
+
+/* Three.js canvas inside modal */
+#modal-canvas-wrap {
+    width: 100%;
+    height: clamp(220px, 40vw, 400px);
+    position: relative;
+    background: #0a0a0a;
+}
+
+#modal-canvas-wrap canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important
+}
+
+/* Modal controls overlay */
+#modal-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.ctrl-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, .5);
+    border: 1px solid rgba(198, 255, 0, .2);
+    color: rgba(198, 255, 0, .7);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+}
+
+.ctrl-btn:hover {
+    border-color: var(--acid);
+    color: var(--acid)
+}
+
+#modal-content {
+    padding: 1.5rem 1.75rem 1.75rem
+}
+
+#modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, .5);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, .5);
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: border-color .2s, color .2s;
+}
+
+#modal-close:hover {
+    border-color: var(--acid);
+    color: var(--acid)
+}
+
+/* view-3d badge on cards */
+.view-3d-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--acid);
+    border: 1px solid rgba(198, 255, 0, .3);
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(198, 255, 0, .05);
+    transition: background .2s, border-color .2s;
+}
+
+.project-card:hover .view-3d-badge {
+    background: rgba(198, 255, 0, .12);
+    border-color: var(--acid)
+}
+
+/* Spin badge */
+@keyframes spin-slow {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.spin-slow {
+    animation: spin-slow 12s linear infinite
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(-10px)
+    }
+}
+
+.float {
+    animation: float 6s ease-in-out infinite
+}
