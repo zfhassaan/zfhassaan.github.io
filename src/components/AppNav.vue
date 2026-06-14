@@ -23,7 +23,7 @@
                 </svg>
             </a>
             <button class="theme-toggle magnetic" onclick="toggleTheme()" aria-label="Toggle light and dark mode"
-                title="Toggle theme">
+                title="Toggle theme" style="align-items: center; display: flex;">
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="4" />
