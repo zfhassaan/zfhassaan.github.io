@@ -1,10 +1,11 @@
 <template>
-<!-- NAV -->
+    <!-- NAV -->
     <nav id="nav">
-        <div class="nav-logo">
-            <div class="nav-logo-dot"></div>
-            &lt;engineer /&gt;
-        </div>
+        <a class="nav-logo" href="#" aria-label="zfhassaan — home">
+            <img class="nav-logo-img" src="/avatar.png" width="28" height="28" alt="zfhassaan avatar" />
+            <span class="nav-logo-text">zfhassaan</span>
+            <span class="nav-logo-dot"></span>
+        </a>
         <div class="nav-links">
             <a href="#projects" class="nav-link">Projects</a>
             <a href="#opensource" class="nav-link">Open Source</a>
@@ -19,7 +20,8 @@
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                    <path
+                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
                 </svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">

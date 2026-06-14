@@ -24,7 +24,8 @@
                             NestJS, with React and Vue.js front-ends. Alongside, ship and maintain a suite of
                             open-source
                             Laravel packages — payment-gateway SDKs for JazzCash, PayFast, EasyPaisa and Bank Alfalah —
-                            and contribute to laravel-amqp (2.2M+ downloads). Currently exploring Go + Redis Streams to
+                            and maintain <span class="mono">bschmitt/laravel-amqp</span> as a contributor (6 merged PRs
+                            upstream; fork docs pending review). Currently exploring Go + Redis Streams to
                             offload high-throughput queue processing from PHP.
                         </div>
                         <div class="timeline-tags">

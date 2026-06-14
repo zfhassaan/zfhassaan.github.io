@@ -421,27 +421,34 @@
             <div class="case-study reveal">
                 <div class="case-info">
                     <div>
-                        <div class="case-tag">Open Source · Maintainer</div>
+                        <div class="case-tag">Open Source · Contributor</div>
                         <h3 class="case-h3" style="margin-top:12px">
                             <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener">
                                 Laravel AMQP — RabbitMQ Toolkit
                             </a>
                         </h3>
+                        <p class="case-sub" style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);line-height:1.5">
+                            Community package by <span class="mono">bschmitt/laravel-amqp</span> — I contribute as a
+                            maintainer, not the original author.
+                        </p>
                     </div>
                     <div class="case-meta">
                         <div class="case-meta-row">
                             <div class="case-meta-label">Problem</div>
-                            <div class="case-meta-value">A widely-used Laravel RabbitMQ client (279★) had drifted behind
-                                modern Laravel/PHP releases, lacked higher-level messaging patterns (RPC, dead-letters,
-                                retries, monitoring), and shipped docs that no longer matched the config.</div>
+                            <div class="case-meta-value">The community package
+                                <span class="mono">bschmitt/laravel-amqp</span> (2.2M+ downloads) had drifted behind
+                                modern Laravel/PHP releases. Official docs no longer matched the config, and
+                                higher-level messaging patterns were hard to adopt without clear guidance.</div>
                         </div>
                         <div class="case-meta-row">
                             <div class="case-meta-label">Solution</div>
-                            <div class="case-meta-value">As a project collaborator, shipped RPC request/response,
-                                Management HTTP API integration, a gRPC-lite typed RPC layer, and a full messaging
-                                platform — sagas, typed dispatch, dead-letter manager, <span class="mono">#[Retry]</span>,
-                                monitoring dashboard &amp; MessageStore — plus a modernized CI matrix and a modular docs
-                                rebuild.</div>
+                            <div class="case-meta-value"><strong>Upstream (merged):</strong> 6 PRs — Laravel 8→13 &amp;
+                                PHP 7.3→8.5 compatibility, CI matrix modernization, and production fixes.<br><br>
+                                <strong>Fork (maintainer):</strong> Keep the package current with RPC, sagas,
+                                dead-letter handling, <span class="mono">#[Retry]</span>, and monitoring. Rebuilt
+                                modular documentation to match the real config — published at
+                                <span class="mono">zfhassaan.github.io/laravel-amqp</span> while the docs PR is pending
+                                upstream review.</div>
                         </div>
                         <div class="case-meta-row">
                             <div class="case-meta-label">Stack</div>
@@ -460,10 +467,10 @@
                             <div class="case-meta-label">Impact</div>
                             <div class="case-meta-value">
                                 <div class="tech-tags">
-                                    <span class="impact-tag">6 merged PRs</span>
-                                    <span class="impact-tag">440+ tests · 1000+ assertions</span>
+                                    <span class="impact-tag">6 merged PRs · upstream</span>
+                                    <span class="impact-tag">Docs PR · pending review</span>
+                                    <span class="impact-tag">Fork · latest features</span>
                                     <span class="impact-tag">Laravel 8→13 · PHP 7.3→8.5</span>
-                                    <span class="impact-tag">0 breaking changes</span>
                                 </div>
                             </div>
                         </div>
@@ -473,7 +480,17 @@
                                 <div class="case-links">
                                     <a href="https://zfhassaan.github.io/laravel-amqp" target="_blank" rel="noopener"
                                         class="case-link magnetic">
-                                        <span class="case-link-icon">📖</span> Documentation
+                                        <span class="case-link-icon">📖</span> Fork docs
+                                        <span class="case-link-arrow">↗</span>
+                                    </a>
+                                    <a href="https://github.com/zfhassaan/laravel-amqp" target="_blank" rel="noopener"
+                                        class="case-link magnetic">
+                                        <svg class="case-link-icon" width="14" height="14" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path
+                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                        </svg>
+                                        My fork
                                         <span class="case-link-arrow">↗</span>
                                     </a>
                                     <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener"
@@ -483,7 +500,7 @@
                                             <path
                                                 d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                         </svg>
-                                        GitHub
+                                        Upstream
                                         <span class="case-link-arrow">↗</span>
                                     </a>
                                 </div>
@@ -515,7 +532,7 @@
                             <div><span class="t-fn">OrderPlaced</span>::<span class="t-fn">dispatch</span>([<span
                                     class="t-str">'order_id'</span> =&gt; <span class="t-val">$id</span>]);</div>
                             <br>
-                            <div class="t-dim">// 444 tests · Laravel 8→13 · PHP 7.3→8.5 ✓</div>
+                            <div class="t-dim">// 6 PRs merged · docs PR pending · fork up to date ✓</div>
                         </div>
                     </div>
                 </div>

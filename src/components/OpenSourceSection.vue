@@ -4,27 +4,30 @@
         <div class="container">
             <div class="os-grid">
                 <div class="os-info reveal">
-                    <div class="section-label">Open Source</div>
+                    <div class="section-label">Open Source · Contributor</div>
                     <h2 class="section-h2">Laravel RabbitMQ</h2>
                     <p
                         style="font-size:0.95rem;color:var(--text-secondary);line-height:1.7;margin-top:16px;max-width:480px">
-                        Production-grade RabbitMQ integration for Laravel. Powers distributed message queuing,
-                        event-driven architectures, and async job processing in enterprise applications across the PHP
-                        ecosystem.
+                        I help maintain <span class="mono" style="color:var(--accent)">bschmitt/laravel-amqp</span> —
+                        a widely-adopted community package (not mine originally). I've merged compatibility and CI work
+                        upstream; my fork keeps the latest messaging features current, and hosts rebuilt docs at
+                        <a href="https://zfhassaan.github.io/laravel-amqp" target="_blank" rel="noopener"
+                            style="color:var(--accent)">zfhassaan.github.io/laravel-amqp</a> while the documentation PR
+                        is pending review.
                     </p>
                     <div class="os-stat-row">
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="counter" data-target="2500000" data-display="2.5"
                                     data-suffix="M+">0</span></div>
-                            <div class="os-stat-label">Total Downloads</div>
+                            <div class="os-stat-label">Pkg downloads</div>
                         </div>
                         <div class="os-stat">
-                            <div class="os-stat-num"><span style="color:var(--accent)">200+</span></div>
-                            <div class="os-stat-label">GitHub Stars</div>
+                            <div class="os-stat-num"><span style="color:var(--accent)">6</span></div>
+                            <div class="os-stat-label">Merged PRs</div>
                         </div>
                         <div class="os-stat">
-                            <div class="os-stat-num"><span style="color:var(--accent)">v3</span></div>
-                            <div class="os-stat-label">Current Version</div>
+                            <div class="os-stat-num"><span style="color:var(--accent)">PR</span></div>
+                            <div class="os-stat-label">Docs pending</div>
                         </div>
                     </div>
                     <!-- Contrib heatmap -->

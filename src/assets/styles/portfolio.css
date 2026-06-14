@@ -62,6 +62,12 @@
             border-bottom-color: rgba(15, 23, 42, 0.06);
         }
 
+        :root[data-theme="light"] #nav.scrolled {
+            background: rgba(244, 247, 251, 0.95);
+            border-bottom-color: rgba(15, 23, 42, 0.1);
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 8px 24px -16px rgba(15, 23, 42, 0.25);
+        }
+
         :root[data-theme="light"] .arch-connector {
             stroke: rgba(15, 23, 42, 0.2);
         }
@@ -337,6 +343,11 @@
             transition: background 0.3s;
         }
 
+        /* Slightly more opaque once the page is scrolled (class set in JS) */
+        #nav.scrolled {
+            background: rgba(7, 11, 20, 0.97);
+        }
+
         @media (max-width: 768px) {
             #nav {
                 padding: 0 20px;
@@ -345,13 +356,35 @@
 
         .nav-logo {
             font-family: var(--font-mono);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 9px;
+        }
+
+        .nav-logo-img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--border);
+            box-shadow: 0 0 0 2px var(--glow);
+            transition: box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .nav-logo:hover .nav-logo-img {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--glow-strong);
+        }
+
+        .nav-logo-text {
+            background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-logo-dot {

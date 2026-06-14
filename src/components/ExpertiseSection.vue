@@ -13,7 +13,7 @@
 
             <div class="expertise-grid">
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">⚙️</div>
+                   
                     <div class="exp-title">Backend Engineering</div>
                     <div class="exp-desc">API-first architectures, event-driven systems, distributed processing, and
                         high-throughput services.</div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">⬡</div>
+                    
                     <div class="exp-title">Frontend Engineering</div>
                     <div class="exp-desc">SSR-optimized, accessible, performant interfaces that feel as fast as native
                         apps.</div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">🔧</div>
+                    
                     <div class="exp-title">Infrastructure & DevOps</div>
                     <div class="exp-desc">Production-ready deployment, monitoring, and scaling strategies for real
                         workloads.</div>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">🧠</div>
+                    
                     <div class="exp-title">AI &amp; Automation</div>
                     <div class="exp-desc">Practical AI integration that automates workflows and augments business
                         operations.</div>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">🏗️</div>
+                    
                     <div class="exp-title">Enterprise Solutions</div>
                     <div class="exp-desc">Complex business logic, multi-tenant systems, and domain-driven design for
                         large organizations.</div>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="expertise-card reveal">
-                    <div class="exp-icon">📐</div>
+                    
                     <div class="exp-title">Architecture &amp; Design</div>
                     <div class="exp-desc">System design, technical leadership, and architecture decisions that scale
                         with business growth.</div>

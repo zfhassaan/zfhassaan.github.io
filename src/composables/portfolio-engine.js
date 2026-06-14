@@ -231,13 +231,13 @@
             const nav = document.getElementById('nav');
             if (!nav) return;
             let pending = false;
+            /* Toggle a class instead of inline-styling a hardcoded color so the
+               background stays theme-aware (CSS owns the light/dark values). */
             window.addEventListener('scroll', () => {
                 if (pending) return;
                 pending = true;
                 requestAnimationFrame(() => {
-                    nav.style.background = window.scrollY > 60
-                        ? 'rgba(7,11,20,0.97)'
-                        : 'rgba(7,11,20,0.7)';
+                    nav.classList.toggle('scrolled', window.scrollY > 60);
                     pending = false;
                 });
             }, { passive: true });
