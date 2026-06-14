@@ -487,39 +487,47 @@
 
         /* ════════════════════════════════════════════
            CONTRIBUTION HEATMAP
-           Build DOM via DocumentFragment (1 write),
-           then animate with single stagger call.
+           Build lazily when near the viewport; animate the
+           grid container once — not 364 individual GSAP tweens.
         ════════════════════════════════════════════ */
         function buildContribGrid() {
             const grid = document.getElementById('contrib-grid');
             if (!grid) return;
 
-            const frag = document.createDocumentFragment();
-            const TOTAL = 52 * 7;
-
-            for (let i = 0; i < TOTAL; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'contrib-cell';
-                const r = Math.random();
-                if (r > 0.72) cell.dataset.level = Math.min(4, Math.ceil((r - 0.72) / 0.28 * 4));
-                frag.appendChild(cell);
-            }
-            grid.appendChild(frag);
-
-            if (REDUCED) return;
+            const COLS = 52;
+            const ROWS = 7;
+            const TOTAL = COLS * ROWS;
+            let built = false;
 
             const obs = new IntersectionObserver(([e]) => {
                 if (!e.isIntersecting) return;
                 obs.disconnect();
-                const cells = grid.querySelectorAll('.contrib-cell');
-                gsap.from(cells, {
-                    opacity: 0, scale: 0,
-                    duration: 0.3,
-                    stagger: { each: 0.0014, from: 'start' },
-                    ease: 'power2.out',
-                    onComplete() { cells.forEach(c => c.classList.add('animated')); }
-                });
-            }, { threshold: 0.15 });
+
+                if (!built) {
+                    built = true;
+                    const frag = document.createDocumentFragment();
+                    for (let i = 0; i < TOTAL; i++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'contrib-cell';
+                        const r = Math.random();
+                        if (r > 0.72) {
+                            cell.dataset.level = String(Math.min(4, Math.ceil((r - 0.72) / 0.28 * 4)));
+                        }
+                        /* Column-based delay → a quick left-to-right sweep.
+                           Set once as a CSS var; the animation itself runs on
+                           the compositor (no JS tween per cell). */
+                        if (!REDUCED) {
+                            const col = i % COLS;
+                            cell.style.setProperty('--d', (col * 11) + 'ms');
+                        }
+                        frag.appendChild(cell);
+                    }
+                    grid.appendChild(frag);
+                }
+
+                /* One class flip kicks off the CSS-driven reveal for all tiles. */
+                requestAnimationFrame(() => grid.classList.add('contrib-ready'));
+            }, { threshold: 0.08, rootMargin: '80px' });
 
             obs.observe(grid);
         }

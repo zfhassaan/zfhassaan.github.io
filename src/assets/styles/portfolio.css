@@ -1378,12 +1378,50 @@
             grid-template-columns: repeat(52, 1fr);
             gap: 2px;
             margin-top: 24px;
+            /* Animate the whole grid as one layer instead of per-cell */
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .contrib-grid.contrib-ready {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contrib-cell {
             aspect-ratio: 1;
-            border-radius: 2px;
+            border-radius: 1px;
             background: var(--surface);
+            opacity: 0;
+        }
+
+        /* Staggered fade driven by a CSS custom property — compositor-only,
+           no per-cell JS tween, so 364 tiles animate cheaply. */
+        .contrib-grid.contrib-ready .contrib-cell {
+            animation: contribPop 0.4s ease forwards;
+            animation-delay: var(--d, 0ms);
+        }
+
+        @keyframes contribPop {
+            from {
+                opacity: 0;
+                transform: scale(0.4);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .contrib-grid,
+            .contrib-cell {
+                transition: none;
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
         }
 
         .contrib-cell[data-level="1"] {
