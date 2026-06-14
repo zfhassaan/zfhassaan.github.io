@@ -31,8 +31,10 @@
    hardcoded dark-on-light values that don't read tokens.
 ═══════════════════════════════════════════════ */
         :root[data-theme="light"] {
-            --bg-primary: #F4F6FB;
-            --bg-secondary: #FFFFFF;
+            /* Surface hierarchy: tinted page → near-white sections → pure-white cards
+               so cards lift off the page with only a hairline border + soft shadow. */
+            --bg-primary: #EAEEF5;
+            --bg-secondary: #F4F7FB;
             --surface: #FFFFFF;
             --card: #FFFFFF;
             --text-primary: #0F172A;
@@ -42,27 +44,66 @@
             --accent2: #16A34A;
             --accent3: #2563EB;
             --success: #059669;
-            --border: rgba(15, 23, 42, 0.12);
-            --glow: rgba(13, 148, 136, 0.12);
-            --glow-strong: rgba(13, 148, 136, 0.28);
+            --border: rgba(15, 23, 42, 0.08);
+            --glow: rgba(13, 148, 136, 0.10);
+            --glow-strong: rgba(13, 148, 136, 0.22);
             color-scheme: light;
         }
 
+        :root[data-theme="light"] body {
+            background:
+                radial-gradient(ellipse 70% 55% at 80% -5%, rgba(13, 148, 136, 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 45% at 0% 30%, rgba(37, 99, 235, 0.05) 0%, transparent 55%),
+                var(--bg-primary);
+        }
+
         :root[data-theme="light"] #nav {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(244, 247, 251, 0.8);
+            border-bottom-color: rgba(15, 23, 42, 0.06);
         }
 
         :root[data-theme="light"] .arch-connector {
-            stroke: rgba(15, 23, 42, 0.18);
+            stroke: rgba(15, 23, 42, 0.2);
         }
 
         :root[data-theme="light"] .rmq-arrow {
             background: rgba(15, 23, 42, 0.12);
         }
 
+        :root[data-theme="light"] .btn-secondary {
+            border-color: rgba(15, 23, 42, 0.16);
+        }
+
         :root[data-theme="light"] .btn-secondary:hover,
         :root[data-theme="light"] .pg-btn-secondary:hover {
             border-color: rgba(15, 23, 42, 0.28);
+        }
+
+        /* Code/terminal cards stay dark in light mode — high-contrast code blocks
+           are the modern convention and let the syntax palette read correctly. */
+        :root[data-theme="light"] .terminal-card {
+            background: #0E1526;
+            border-color: rgba(15, 23, 42, 0.1);
+            box-shadow: 0 20px 44px -22px rgba(15, 23, 42, 0.5), 0 1px 2px rgba(15, 23, 42, 0.06);
+            color: #E2E8F0;
+        }
+
+        :root[data-theme="light"] .terminal-bar {
+            background: #141E33;
+            border-bottom-color: rgba(255, 255, 255, 0.07);
+        }
+
+        :root[data-theme="light"] .terminal-body {
+            color: #E2E8F0;
+        }
+
+        /* Soft, layered elevation for cards instead of the dark theme's hard shadows. */
+        :root[data-theme="light"] .schema-card {
+            box-shadow: 0 14px 34px -22px rgba(15, 23, 42, 0.4), 0 1px 2px rgba(15, 23, 42, 0.05);
+        }
+
+        :root[data-theme="light"] .expertise-card:hover {
+            box-shadow: 0 16px 34px -20px rgba(15, 23, 42, 0.3);
         }
 
         /* ═══════════════════════════════════════════════
@@ -78,19 +119,18 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             flex: 0 0 auto;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
+            border-radius: 50%;
+            border: none;
             background: transparent;
             color: var(--text-secondary);
-            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            transition: color 0.2s ease, background 0.2s ease;
         }
 
         .theme-toggle:hover {
             color: var(--accent);
-            border-color: var(--accent);
             background: var(--glow);
         }
 
