@@ -1,5 +1,5 @@
 <template>
-<!-- ══ OPEN SOURCE ══ -->
+    <!-- ══ OPEN SOURCE ══ -->
     <section id="opensource" class="section">
         <div class="container">
             <div class="os-grid">
@@ -19,7 +19,7 @@
                             <div class="os-stat-label">Total Downloads</div>
                         </div>
                         <div class="os-stat">
-                            <div class="os-stat-num"><span style="color:var(--accent)">1.2k</span></div>
+                            <div class="os-stat-num"><span style="color:var(--accent)">200+</span></div>
                             <div class="os-stat-label">GitHub Stars</div>
                         </div>
                         <div class="os-stat">
@@ -94,7 +94,7 @@
                             <div
                                 style="background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;padding:12px;font-family:var(--font-mono);font-size:11px;line-height:1.6">
                                 <span style="color:var(--text-muted)">"require"</span>: {<br>
-                                &nbsp;&nbsp;<span style="color:#F59E0B">"vyuldashev/laravel-rabbitmq"</span>:<br>
+                                &nbsp;&nbsp;<span style="color:#F59E0B">"bschmitt/laravel-amqp"</span>:<br>
                                 &nbsp;&nbsp;<span style="color:var(--accent2)">"^3.0"</span><br>
                                 }
                             </div>

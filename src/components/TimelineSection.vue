@@ -1,5 +1,5 @@
 <template>
-<!-- ══ TIMELINE ══ -->
+    <!-- ══ TIMELINE ══ -->
     <section id="timeline" class="section">
         <div class="container">
             <div class="reveal" style="margin-bottom:56px">
@@ -16,73 +16,79 @@
                             2022 — Present
                             <span class="timeline-current-tag">CURRENT</span>
                         </div>
-                        <div class="timeline-title">Senior Full Stack Engineer</div>
-                        <div class="timeline-company">Product Company / Remote</div>
+                        <div class="timeline-title">Senior Software Engineer</div>
+                        <div class="timeline-company">CoDev360 · Lahore, Pakistan</div>
                         <div class="timeline-desc">
-                            Leading architecture of a SaaS platform serving 50,000+ users. Migrated monolith to
-                            microservices, reducing API latency by 68%. Built AI automation workflows saving 180+
-                            hours/month. Owns entire backend infrastructure and deployment pipeline.
+                            Architecting microservice-based platforms and scalable web services &amp; APIs in Laravel
+                            and
+                            NestJS, with React and Vue.js front-ends. Alongside, ship and maintain a suite of
+                            open-source
+                            Laravel packages — payment-gateway SDKs for JazzCash, PayFast, EasyPaisa and Bank Alfalah —
+                            and contribute to laravel-amqp (2.2M+ downloads). Currently exploring Go + Redis Streams to
+                            offload high-throughput queue processing from PHP.
                         </div>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Laravel</span>
-                            <span class="timeline-tag">Node.js</span>
+                            <span class="timeline-tag">NestJS</span>
+                            <span class="timeline-tag">Vue.js</span>
                             <span class="timeline-tag">React</span>
-                            <span class="timeline-tag">RabbitMQ</span>
-                            <span class="timeline-tag">AI Agents</span>
+                            <span class="timeline-tag">Microservices</span>
+                            <span class="timeline-tag">Go</span>
                         </div>
                     </div>
 
                     <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2020 — 2022</div>
+                        <div class="timeline-date">2021 — 2022</div>
                         <div class="timeline-title">Full Stack Engineer</div>
-                        <div class="timeline-company">Software Agency</div>
+                        <div class="timeline-company">Kalon Couture · Hong Kong (Remote)</div>
                         <div class="timeline-desc">
-                            Delivered 20+ client projects spanning ERP systems, eCommerce platforms, and payment
-                            integrations. Built the Laravel RabbitMQ open-source package which has since crossed 2.5M
-                            downloads. Led a team of 4 engineers.
+                            Designed software system architecture for a fashion-tech 3D garment platform. Built scalable
+                            web services, APIs and internal tooling, applying solid data structures and design patterns,
+                            then identified bottlenecks and optimized performance across the stack.
                         </div>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Laravel</span>
                             <span class="timeline-tag">Vue.js</span>
-                            <span class="timeline-tag">RabbitMQ</span>
-                            <span class="timeline-tag">Open Source</span>
+                            <span class="timeline-tag">APIs</span>
+                            <span class="timeline-tag">Microservices</span>
                         </div>
                     </div>
 
                     <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2018 — 2020</div>
-                        <div class="timeline-title">Backend Developer</div>
-                        <div class="timeline-company">Startup · Series A</div>
+                        <div class="timeline-date">2019 — 2021</div>
+                        <div class="timeline-title">Full-Stack Developer</div>
+                        <div class="timeline-company">The Inksters · Lahore, Pakistan</div>
                         <div class="timeline-desc">
-                            Built REST API infrastructure from scratch for a marketplace platform. Implemented Stripe
-                            payment processing, real-time notifications, and automated reporting pipelines. Platform
-                            reached 100k MAU.
+                            Built custom web applications in PHP and Python for a digital-marketing agency, converting
+                            Adobe XD and PSD designs into responsive, production-ready sites and cutting project
+                            delivery
+                            time by ~20%. Automated repetitive workflows with Python and Selenium.
                         </div>
                         <div class="timeline-tags">
                             <span class="timeline-tag">PHP</span>
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Selenium</span>
                             <span class="timeline-tag">Laravel</span>
-                            <span class="timeline-tag">MySQL</span>
-                            <span class="timeline-tag">Stripe</span>
                         </div>
                     </div>
 
                     <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-date">2017 — 2018</div>
-                        <div class="timeline-title">Junior Developer</div>
-                        <div class="timeline-company">Freelance</div>
+                        <div class="timeline-date">2016 — 2019</div>
+                        <div class="timeline-title">Founder &amp; Tech Support Lead</div>
+                        <div class="timeline-company">Rock Stuff · Lahore, Pakistan</div>
                         <div class="timeline-desc">
-                            Started building web applications with PHP and Laravel. Delivered first commercial SaaS
-                            product — a property management system still in production. Foundation in clean architecture
-                            and test-driven development.
+                            Founded Rock Stuff as a final-year university project and grew it into a running business
+                            over
+                            3+ years before handing off leadership. Led digital marketing, lead generation, and the
+                            technical operations that kept the company online.
                         </div>
                         <div class="timeline-tags">
-                            <span class="timeline-tag">PHP</span>
-                            <span class="timeline-tag">Laravel</span>
-                            <span class="timeline-tag">jQuery</span>
-                            <span class="timeline-tag">MySQL</span>
+                            <span class="timeline-tag">Entrepreneurship</span>
+                            <span class="timeline-tag">Digital Marketing</span>
+                            <span class="timeline-tag">Tech Support</span>
                         </div>
                     </div>
 

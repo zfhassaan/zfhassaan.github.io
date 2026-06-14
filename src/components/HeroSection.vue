@@ -35,8 +35,7 @@
             <!-- GSAP-animated SVG system architecture.
                  Coordinate grid: spine centered at x=210, symmetric workers at
                  x=108 / x=312, annotation column right-aligned at x=374. -->
-            <svg id="arch-svg" class="arch-diagram" viewBox="0 0 440 480" xmlns="http://www.w3.org/2000/svg"
-                role="img"
+            <svg id="arch-svg" class="arch-diagram" viewBox="0 0 440 480" xmlns="http://www.w3.org/2000/svg" role="img"
                 aria-label="Distributed system architecture: users flow through the API gateway into a queue, fan out to two workers, and persist to the database.">
                 <defs>
                     <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="5.2" refY="3" orient="auto"
@@ -120,8 +119,7 @@
                 </g>
 
                 <!-- Animated packet dots (moved by GSAP along the spine) -->
-                <circle id="pkt1" class="arch-packet" cx="210" cy="44" r="4.5" opacity="0"
-                    filter="url(#glow-filter)" />
+                <circle id="pkt1" class="arch-packet" cx="210" cy="44" r="4.5" opacity="0" filter="url(#glow-filter)" />
                 <circle id="pkt2" class="arch-packet arch-packet-alt" cx="210" cy="44" r="4.5" opacity="0"
                     filter="url(#glow-filter)" />
 
@@ -133,7 +131,7 @@
                     </g>
                     <g transform="translate(374,250)">
                         <rect class="arch-badge" x="0" y="0" width="56" height="20" rx="5" />
-                        <text class="arch-badge-text" x="28" y="11">2.5M+/day</text>
+                        <text class="arch-badge-text" x="28" y="11">20k+/day</text>
                     </g>
                     <g transform="translate(374,355)">
                         <rect class="arch-badge" x="0" y="0" width="56" height="20" rx="5" />
@@ -147,5 +145,14 @@
 <style scoped>
 .hero-actions .magnetic {
     display: flex;
+}
+
+.container {
+    padding-bottom: 30px;
+}
+
+.container .hero-right {
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 </style>

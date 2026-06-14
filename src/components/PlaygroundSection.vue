@@ -3,11 +3,11 @@
     <section id="playground" class="section">
         <div class="container">
             <div class="reveal" style="margin-bottom:40px">
-                <div class="section-label">Interactive</div>
-                <h2 class="section-h2">Architecture Playground</h2>
+                <div class="section-label">Live Demo</div>
+                <h2 class="section-h2">Request Lifecycle</h2>
                 <p style="font-size:0.9rem;color:var(--text-muted);margin-top:12px;max-width:500px;line-height:1.65">
-                    Simulate a real request flowing through a distributed system. Trigger events and watch the
-                    architecture respond in real time.
+                    Follow a real request as it flows through a distributed system — trigger events and watch each
+                    stage respond in real time.
                 </p>
             </div>
 

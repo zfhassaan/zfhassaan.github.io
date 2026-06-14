@@ -8,7 +8,7 @@
         <div class="nav-links">
             <a href="#projects" class="nav-link">Projects</a>
             <a href="#opensource" class="nav-link">Open Source</a>
-            <a href="#playground" class="nav-link">Playground</a>
+            <a href="#playground" class="nav-link">Live Demo</a>
             <a href="#expertise" class="nav-link">Expertise</a>
             <a href="#timeline" class="nav-link">Experience</a>
             <a href="#contact" class="nav-link magnetic">Contact</a>

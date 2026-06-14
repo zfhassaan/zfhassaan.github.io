@@ -1,5 +1,5 @@
 <template>
-<!-- ══ EXPERTISE ══ -->
+    <!-- ══ EXPERTISE ══ -->
     <section id="expertise" class="section">
         <div class="container">
             <div class="reveal" style="margin-bottom:16px">
@@ -62,6 +62,7 @@
                         <div class="exp-item">AI Agents · LangChain</div>
                         <div class="exp-item">Workflow Automation</div>
                         <div class="exp-item">Document Intelligence</div>
+                        <div class="exp-item">N8N - Monday - Zapier</div>
                     </div>
                 </div>
                 <div class="expertise-card reveal">

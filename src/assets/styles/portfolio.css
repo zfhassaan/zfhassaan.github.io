@@ -358,7 +358,15 @@
         @media (max-width: 1024px) {
             #hero {
                 grid-template-columns: 1fr;
-                padding: 100px 24px 48px;
+                /* extra bottom space once the diagram stacks under the text */
+                padding: 100px 24px 88px;
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                padding: 96px 20px 72px;
             }
         }
 
@@ -859,6 +867,44 @@
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 4px;
             background: rgba(16, 185, 129, 0.06);
+        }
+
+        .case-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .case-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--accent);
+            padding: 6px 12px;
+            border: 1px solid rgba(45, 212, 191, 0.25);
+            border-radius: 6px;
+            background: rgba(45, 212, 191, 0.06);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .case-link:hover {
+            background: rgba(45, 212, 191, 0.12);
+            border-color: var(--accent);
+        }
+
+        .case-link-icon {
+            display: inline-flex;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .case-link-arrow {
+            font-size: 11px;
+            opacity: 0.7;
         }
 
         .case-visual {
