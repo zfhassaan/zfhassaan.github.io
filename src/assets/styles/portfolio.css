@@ -21,6 +21,94 @@
             --font-mono: 'JetBrains Mono', monospace;
             --max-w: 1200px;
             --radius: 8px;
+            color-scheme: dark;
+        }
+
+        /* ═══════════════════════════════════════════════
+   LIGHT THEME
+   Toggled via [data-theme="light"] on <html>.
+   Overrides the design tokens plus the handful of
+   hardcoded dark-on-light values that don't read tokens.
+═══════════════════════════════════════════════ */
+        :root[data-theme="light"] {
+            --bg-primary: #F4F6FB;
+            --bg-secondary: #FFFFFF;
+            --surface: #FFFFFF;
+            --card: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --accent: #0D9488;
+            --accent2: #16A34A;
+            --accent3: #2563EB;
+            --success: #059669;
+            --border: rgba(15, 23, 42, 0.12);
+            --glow: rgba(13, 148, 136, 0.12);
+            --glow-strong: rgba(13, 148, 136, 0.28);
+            color-scheme: light;
+        }
+
+        :root[data-theme="light"] #nav {
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        :root[data-theme="light"] .arch-connector {
+            stroke: rgba(15, 23, 42, 0.18);
+        }
+
+        :root[data-theme="light"] .rmq-arrow {
+            background: rgba(15, 23, 42, 0.12);
+        }
+
+        :root[data-theme="light"] .btn-secondary:hover,
+        :root[data-theme="light"] .pg-btn-secondary:hover {
+            border-color: rgba(15, 23, 42, 0.28);
+        }
+
+        /* ═══════════════════════════════════════════════
+   THEME TOGGLE
+═══════════════════════════════════════════════ */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--glow);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .theme-icon-moon {
+            display: none;
+        }
+
+        :root[data-theme="light"] .theme-icon-sun {
+            display: none;
+        }
+
+        :root[data-theme="light"] .theme-icon-moon {
+            display: block;
         }
 
         /* ═══════════════════════════════════════════════

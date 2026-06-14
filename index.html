@@ -20,6 +20,24 @@
       rel="stylesheet"
     />
 
+    <!-- Apply the saved/preferred color scheme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        window.toggleTheme = function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('theme', next); } catch (e) {}
+        };
+      })();
+    </script>
+
     <!-- GSAP must load before the Vue bundle so initPortfolioEngine() can use it -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

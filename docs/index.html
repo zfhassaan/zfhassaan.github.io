@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Stack Engineer — Laravel, Node.js, React, SaaS &amp; ERP Systems</title>
+    <meta
+      name="description"
+      content="Senior Full Stack Engineer specializing in Laravel, Node.js, React, Vue.js, SaaS platforms, ERP systems, AI automation, payment gateways, and enterprise-scale applications."
+    />
+    <meta
+      name="keywords"
+      content="Laravel Developer, Full Stack Engineer, SaaS Development, ERP Development, eCommerce Development, API Integration, AI Automation, RabbitMQ, Node.js, React, Vue.js, Next.js, Payment Gateway Integration, Enterprise Software Development"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Apply the saved/preferred color scheme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        window.toggleTheme = function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          try { localStorage.setItem('theme', next); } catch (e) {}
+        };
+      })();
+    </script>
+
+    <!-- GSAP must load before the Vue bundle so initPortfolioEngine() can use it -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module" crossorigin src="/assets/index-CfujzG8r.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C5XAwxZH.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
