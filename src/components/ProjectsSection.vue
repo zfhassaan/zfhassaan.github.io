@@ -7,7 +7,7 @@
                     <div class="section-label">Featured Work</div>
                     <h2 class="section-h2">Case Studies</h2>
                 </div>
-                <p class="text-muted reveal" style="font-size:0.875rem;max-width:280px;line-height:1.6">
+                <p class="projects-intro text-muted reveal">
                     Systems built for scale — not just to ship. Each project solved real business problems at production
                     load.
                 </p>
@@ -427,7 +427,7 @@
                                 Laravel AMQP — RabbitMQ Toolkit
                             </a>
                         </h3>
-                        <p class="case-sub" style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);line-height:1.5">
+                        <p class="case-sub">
                             Community package by <span class="mono">bschmitt/laravel-amqp</span> — I contribute as a
                             maintainer, not the original author.
                         </p>

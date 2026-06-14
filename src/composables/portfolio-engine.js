@@ -208,7 +208,7 @@
                     gsap.to(spans[0], { rotation: 45, y: 6.5, duration: 0.25, ease: 'power2.out' });
                     gsap.to(spans[1], { opacity: 0, duration: 0.15 });
                     gsap.to(spans[2], { rotation: -45, y: -6.5, duration: 0.25, ease: 'power2.out' });
-                    gsap.fromTo('#mobile-menu a',
+                    gsap.fromTo('.mobile-menu-links a',
                         { y: 24, opacity: 0 },
                         { y: 0, opacity: 1, stagger: 0.07, duration: 0.35, ease: 'power3.out', delay: 0.08 }
                     );
@@ -217,7 +217,7 @@
                 }
             });
 
-            menuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            menuEl.querySelectorAll('.mobile-menu-links a').forEach(a => a.addEventListener('click', () => {
                 open = false;
                 menuEl.classList.remove('open');
                 gsap.to(spans, { rotation: 0, y: 0, opacity: 1, duration: 0.22 });

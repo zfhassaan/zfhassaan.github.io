@@ -374,7 +374,53 @@
 
         @media (max-width: 768px) {
             #nav {
-                padding: 0 20px;
+                padding: 0 16px;
+                height: 56px;
+            }
+
+            .nav-actions {
+                gap: 6px;
+            }
+
+            /* Contact lives in the hamburger menu — frees space on small screens */
+            .nav-cta {
+                display: none;
+            }
+
+            .nav-icon-link,
+            .theme-toggle {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 34px;
+                height: 34px;
+                padding: 0;
+                border: none;
+                background: transparent;
+            }
+        }
+
+        @media (max-width: 420px) {
+            #nav {
+                padding: 0 12px;
+            }
+
+            /* Avatar-only logo on the narrowest phones */
+            .nav-logo-text {
+                display: none;
+            }
+
+            .nav-logo-dot {
+                display: none;
+            }
+
+            .nav-logo {
+                gap: 0;
             }
         }
 
@@ -504,10 +550,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 32px;
+            gap: 0;
+            padding: 72px 24px 32px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
+            overflow-y: auto;
         }
 
         #mobile-menu.open {
@@ -515,15 +563,85 @@
             pointer-events: all;
         }
 
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            flex: 1;
+            justify-content: center;
+        }
+
         #mobile-menu a {
             font-family: var(--font-head);
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 6vw, 2rem);
             font-weight: 700;
             color: var(--text-secondary);
+            transition: color 0.2s ease;
         }
 
         #mobile-menu a:hover {
             color: var(--text-primary);
+        }
+
+        .mobile-menu-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            max-width: 280px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-menu-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .mobile-menu-icon:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--glow);
+        }
+
+        .mobile-menu-cta {
+            flex: 1;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            padding: 12px 20px;
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            color: var(--accent);
+            border-radius: 6px;
+            background: transparent;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .mobile-menu-cta:hover {
+            background: rgba(45, 212, 191, 0.1);
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                cursor: pointer;
+            }
+
+            .nav-icon-link,
+            .theme-toggle,
+            .nav-cta {
+                cursor: pointer;
+            }
         }
 
         /* ═══════════════════════════════════════════════
@@ -900,6 +1018,12 @@
             flex-wrap: wrap;
         }
 
+        .projects-intro {
+            font-size: 0.875rem;
+            max-width: 280px;
+            line-height: 1.6;
+        }
+
         .section-h2 {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
@@ -987,6 +1111,13 @@
             line-height: 1.2;
             letter-spacing: -0.02em;
             color: var(--text-primary);
+        }
+
+        .case-sub {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .case-problem {
@@ -1238,6 +1369,142 @@
             font-size: 13px;
         }
 
+        /* ── Projects: mobile refinements ── */
+        @media (max-width: 768px) {
+            .projects-header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 40px;
+                gap: 14px;
+            }
+
+            .projects-header p,
+            .projects-intro {
+                max-width: 100%;
+            }
+
+            .case-study {
+                margin-bottom: 20px;
+                border-radius: 10px;
+            }
+
+            .case-study.reverse .case-info {
+                border-left: none;
+            }
+
+            .case-h3 {
+                font-size: 1.25rem;
+            }
+
+            .case-sub {
+                font-size: 0.78rem;
+                line-height: 1.55;
+            }
+
+            .case-meta {
+                gap: 14px;
+            }
+
+            .case-meta-value {
+                font-size: 0.8125rem;
+            }
+
+            .case-meta-value strong {
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            .case-links {
+                gap: 8px;
+            }
+
+            .case-link {
+                padding: 8px 12px;
+                font-size: 10px;
+            }
+
+            .terminal-card {
+                max-width: 100%;
+            }
+
+            .terminal-body {
+                font-size: 10px;
+                padding: 14px 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .terminal-body::-webkit-scrollbar {
+                display: none;
+            }
+
+            .schema-card {
+                max-width: 100%;
+            }
+
+            .schema-box {
+                font-size: 10px;
+                padding: 8px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .case-info {
+                padding: 24px 18px;
+                gap: 18px;
+            }
+
+            .case-visual {
+                padding: 24px 18px;
+                min-height: 200px;
+            }
+
+            .case-meta-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .case-meta-label {
+                min-width: unset;
+                padding-top: 0;
+            }
+
+            .case-tag {
+                font-size: 9px;
+                letter-spacing: 0.1em;
+            }
+
+            .case-h3 {
+                font-size: 1.125rem;
+            }
+
+            .tech-tag,
+            .impact-tag {
+                font-size: 9px;
+            }
+
+            .case-link {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Three-across schema rows (Direct / Hosted / Wallet) */
+            .schema-row[style*="gap"] {
+                gap: 4px !important;
+            }
+
+            .schema-row .schema-box[style*="font-size"] {
+                font-size: 9px !important;
+                padding: 7px 6px !important;
+                gap: 4px;
+            }
+
+            .schema-row .schema-box .s-icon {
+                font-size: 11px;
+            }
+        }
+
         /* ═══════════════════════════════════════════════
    OPEN SOURCE
 ═══════════════════════════════════════════════ */
@@ -1262,6 +1529,43 @@
 
         .os-info {
             max-width: 540px;
+        }
+
+        .os-intro {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-top: 16px;
+            max-width: 480px;
+        }
+
+        .os-intro-mono {
+            color: var(--accent);
+        }
+
+        .os-intro-link {
+            color: var(--accent);
+            word-break: break-word;
+        }
+
+        .os-intro-link:hover {
+            text-decoration: underline;
+        }
+
+        .os-contrib {
+            margin-top: 24px;
+        }
+
+        .os-contrib-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            letter-spacing: 0.08em;
+        }
+
+        .os-stat-accent {
+            color: var(--accent);
         }
 
         .os-stat-row {
@@ -1305,6 +1609,38 @@
             padding: 32px;
             position: relative;
             overflow: hidden;
+        }
+
+        .rmq-diagram-title {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .rmq-composer {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .rmq-composer-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .rmq-composer-code {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            line-height: 1.6;
         }
 
         .rmq-diagram::before {
@@ -1373,7 +1709,7 @@
         .rmq-arrow {
             flex: 0 0 24px;
             height: 1px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--border);
             position: relative;
             margin: -24px 0 0;
             align-self: center;
@@ -1401,7 +1737,7 @@
             display: grid;
             grid-template-columns: repeat(52, 1fr);
             gap: 2px;
-            margin-top: 24px;
+            margin-top: 0;
             /* Animate the whole grid as one layer instead of per-cell */
             opacity: 0;
             transform: translateY(8px);
@@ -1462,6 +1798,149 @@
 
         .contrib-cell[data-level="4"] {
             background: var(--accent);
+        }
+
+        /* ── Open Source: mobile refinements ── */
+        @media (max-width: 768px) {
+            .os-grid {
+                gap: 32px;
+            }
+
+            .os-info {
+                max-width: 100%;
+            }
+
+            .os-intro {
+                max-width: 100%;
+                font-size: 0.9rem;
+            }
+
+            .os-stat-row {
+                gap: 20px;
+                padding: 22px 0;
+                margin-top: 24px;
+                justify-content: space-between;
+            }
+
+            .os-stat {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .os-stat-num {
+                font-size: 1.6rem;
+            }
+
+            .os-contrib {
+                margin-top: 20px;
+            }
+
+            .rmq-diagram {
+                padding: 24px 20px;
+            }
+
+            .rmq-diagram-title {
+                margin-bottom: 20px;
+            }
+
+            /* Stack the flow vertically so it fits any width without scrolling */
+            .rmq-nodes {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow-x: visible;
+                gap: 0;
+            }
+
+            .rmq-node {
+                flex-direction: row;
+                gap: 12px;
+                min-width: 0;
+                width: 100%;
+                max-width: 220px;
+                justify-content: flex-start;
+            }
+
+            .rmq-box {
+                flex: 0 0 auto;
+            }
+
+            .rmq-label {
+                margin-left: auto;
+            }
+
+            /* Rotate connector to point downward between stacked nodes */
+            .rmq-arrow {
+                flex: 0 0 20px;
+                width: 1px;
+                height: 20px;
+                margin: 0;
+                align-self: center;
+            }
+
+            .rmq-arrow::after {
+                content: '›';
+                right: auto;
+                left: -4px;
+                top: auto;
+                bottom: -3px;
+                transform: rotate(90deg);
+            }
+
+            .rmq-composer-code {
+                font-size: 10px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .rmq-composer-code::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .os-stat-row {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .os-stat {
+                flex: 1 1 calc(33.333% - 8px);
+            }
+
+            .os-stat-num {
+                font-size: 1.35rem;
+            }
+
+            .os-stat-label {
+                font-size: 10px;
+            }
+
+            .os-intro {
+                font-size: 0.875rem;
+                line-height: 1.65;
+            }
+
+            .rmq-diagram {
+                padding: 20px 14px;
+                border-radius: 10px;
+            }
+
+            .rmq-box {
+                width: 64px;
+                height: 44px;
+                font-size: 9px;
+            }
+
+            .rmq-box .rmq-icon {
+                font-size: 14px;
+            }
+
+            .rmq-composer {
+                margin-top: 22px;
+                padding-top: 16px;
+            }
         }
 
         /* ═══════════════════════════════════════════════
