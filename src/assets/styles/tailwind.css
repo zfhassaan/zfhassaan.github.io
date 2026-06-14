@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * shadcn-vue design tokens.
+ * The portfolio is a dark-only experience, so the token values below mirror
+ * the brand palette defined in portfolio.css (teal accent on deep-navy).
+ */
+@layer base {
+  :root {
+    --background: 218 48% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 46% 14%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 172 66% 50%;
+    --primary-foreground: 218 48% 5%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 172 66% 50%;
+    --accent-foreground: 218 48% 5%;
+
+    --destructive: 0 63% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 172 66% 50%;
+
+    --radius: 0.5rem;
+  }
+}

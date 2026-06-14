@@ -1,0 +1,10 @@
+node_modules
+*.local
+.DS_Store
+.vite
+dist
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# NOTE: docs/ is the GitHub Pages publish directory and IS committed.

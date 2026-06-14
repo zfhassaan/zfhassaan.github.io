@@ -1,0 +1,5 @@
+<template>
+<!-- CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+</template>
