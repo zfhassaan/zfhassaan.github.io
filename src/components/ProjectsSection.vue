@@ -421,15 +421,15 @@
             <div class="case-study reveal">
                 <div class="case-info">
                     <div>
-                        <div class="case-tag">Open Source · Contributor</div>
+                        <div class="case-tag">Open Source · Collaborator</div>
                         <h3 class="case-h3" style="margin-top:12px">
                             <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener">
                                 Laravel AMQP — RabbitMQ Toolkit
                             </a>
                         </h3>
                         <p class="case-sub">
-                            Community package by <span class="mono">bschmitt/laravel-amqp</span> — I contribute as a
-                            maintainer, not the original author.
+                            Community package by <span class="mono">bschmitt/laravel-amqp</span> — I'm a collaborator
+                            on the upstream repo with 6 merged PRs.
                         </p>
                     </div>
                     <div class="case-meta">
@@ -442,13 +442,13 @@
                         </div>
                         <div class="case-meta-row">
                             <div class="case-meta-label">Solution</div>
-                            <div class="case-meta-value"><strong>Upstream (merged):</strong> 6 PRs — Laravel 8→13 &amp;
-                                PHP 7.3→8.5 compatibility, CI matrix modernization, and production fixes.<br><br>
-                                <strong>Fork (maintainer):</strong> Keep the package current with RPC, sagas,
+                            <div class="case-meta-value"><strong>Upstream (collaborator):</strong> Added as a
+                                collaborator with 6 merged PRs — Laravel 8→13 &amp; PHP 7.3→8.5 compatibility, CI
+                                matrix modernization, and production fixes.<br><br>
+                                <strong>Docs &amp; features:</strong> Keep the package current with RPC, sagas,
                                 dead-letter handling, <span class="mono">#[Retry]</span>, and monitoring. Rebuilt
                                 modular documentation to match the real config — published at
-                                <span class="mono">zfhassaan.github.io/laravel-amqp</span> while the docs PR is pending
-                                upstream review.</div>
+                                <span class="mono">zfhassaan.github.io/laravel-amqp</span>.</div>
                         </div>
                         <div class="case-meta-row">
                             <div class="case-meta-label">Stack</div>
@@ -468,8 +468,8 @@
                             <div class="case-meta-value">
                                 <div class="tech-tags">
                                     <span class="impact-tag">6 merged PRs · upstream</span>
-                                    <span class="impact-tag">Docs PR · pending review</span>
-                                    <span class="impact-tag">Fork · latest features</span>
+                                    <span class="impact-tag">Collaborator · upstream access</span>
+                                    <span class="impact-tag">Rebuilt docs · latest features</span>
                                     <span class="impact-tag">Laravel 8→13 · PHP 7.3→8.5</span>
                                 </div>
                             </div>
@@ -480,7 +480,7 @@
                                 <div class="case-links">
                                     <a href="https://zfhassaan.github.io/laravel-amqp" target="_blank" rel="noopener"
                                         class="case-link magnetic">
-                                        <span class="case-link-icon">📖</span> Fork docs
+                                        <span class="case-link-icon">📖</span> Docs
                                         <span class="case-link-arrow">↗</span>
                                     </a>
                                     <a href="https://github.com/zfhassaan/laravel-amqp" target="_blank" rel="noopener"
@@ -532,7 +532,7 @@
                             <div><span class="t-fn">OrderPlaced</span>::<span class="t-fn">dispatch</span>([<span
                                     class="t-str">'order_id'</span> =&gt; <span class="t-val">$id</span>]);</div>
                             <br>
-                            <div class="t-dim">// 6 PRs merged · docs PR pending · fork up to date ✓</div>
+                            <div class="t-dim">// 6 PRs merged · collaborator · upstream up to date ✓</div>
                         </div>
                     </div>
                 </div>

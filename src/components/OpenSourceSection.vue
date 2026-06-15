@@ -4,15 +4,14 @@
         <div class="container">
             <div class="os-grid">
                 <div class="os-info reveal">
-                    <div class="section-label">Open Source · Contributor</div>
+                    <div class="section-label">Open Source · Collaborator</div>
                     <h2 class="section-h2">Laravel RabbitMQ</h2>
                     <p class="os-intro">
-                        I help maintain <span class="mono os-intro-mono">bschmitt/laravel-amqp</span> —
-                        a widely-adopted community package (not mine originally). I've merged compatibility and CI work
-                        upstream; my fork keeps the latest messaging features current, and hosts rebuilt docs at
+                        I'm a collaborator on <span class="mono os-intro-mono">bschmitt/laravel-amqp</span> —
+                        a widely-adopted community RabbitMQ package for Laravel. With 6 merged PRs upstream, I help
+                        keep it compatible with modern Laravel/PHP and maintain rebuilt documentation at
                         <a href="https://zfhassaan.github.io/laravel-amqp" target="_blank" rel="noopener"
-                            class="os-intro-link">zfhassaan.github.io/laravel-amqp</a> while the documentation PR
-                        is pending review.
+                            class="os-intro-link">zfhassaan.github.io/laravel-amqp</a>.
                     </p>
                     <div class="os-stat-row">
                         <div class="os-stat">
@@ -25,8 +24,8 @@
                             <div class="os-stat-label">Merged PRs</div>
                         </div>
                         <div class="os-stat">
-                            <div class="os-stat-num"><span class="os-stat-accent">PR</span></div>
-                            <div class="os-stat-label">Docs pending</div>
+                            <div class="os-stat-num"><span class="os-stat-accent">✓</span></div>
+                            <div class="os-stat-label">Collaborator</div>
                         </div>
                     </div>
                     <div class="os-contrib">

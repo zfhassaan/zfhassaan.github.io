@@ -7,7 +7,7 @@
                     <div class="metric-number"><span class="counter" data-target="2500000" data-suffix="M+"
                             data-display="2.5">0</span></div>
                     <div class="metric-label">Downloads · Maintained</div>
-                    <div class="metric-sub mono">laravel-amqp contributor</div>
+                    <div class="metric-sub mono">laravel-amqp collaborator</div>
                 </div>
                 <div class="metric-item reveal-scale">
                     <div class="metric-number"><span class="counter" data-target="200" data-suffix="M+">0</span></div>
