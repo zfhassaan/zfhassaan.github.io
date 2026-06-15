@@ -12,14 +12,9 @@
                 </div>
 
                 <div class="tools-grid">
-                    <router-link
-                        v-for="tool in tools"
-                        :key="tool.name"
-                        class="tool-card"
-                        :class="{ 'tool-card--soon': !tool.to }"
-                        :to="tool.to || ''"
-                        @click="!tool.to && $event.preventDefault()"
-                    >
+                    <router-link v-for="tool in tools" :key="tool.name" class="tool-card"
+                        :class="{ 'tool-card--soon': !tool.to }" :to="tool.to || ''"
+                        @click="!tool.to && $event.preventDefault()">
                         <div class="tool-card-top">
                             <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
                             <span v-if="!tool.to" class="tool-badge">Soon</span>
@@ -64,6 +59,10 @@ const tools = [
 </script>
 
 <style scoped>
+.section {
+    margin-top: 40px !important;
+}
+
 .tools-page {
     min-height: 100vh;
     padding-top: 72px;

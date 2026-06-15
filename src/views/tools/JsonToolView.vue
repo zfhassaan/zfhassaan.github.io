@@ -30,17 +30,9 @@
                             <div ref="inputGutter" class="gutter">
                                 <div v-for="n in inputLineCount" :key="n">{{ n }}</div>
                             </div>
-                            <textarea
-                                ref="inputEl"
-                                v-model="input"
-                                class="json-area"
-                                spellcheck="false"
-                                placeholder='{ "hello": "world" }'
-                                @input="onInput"
-                                @keyup="updateCursor"
-                                @click="updateCursor"
-                                @scroll="syncScroll($refs.inputGutter, $refs.inputEl)"
-                            ></textarea>
+                            <textarea ref="inputEl" v-model="input" class="json-area" spellcheck="false"
+                                placeholder='{ "hello": "world" }' @input="onInput" @keyup="updateCursor"
+                                @click="updateCursor" @scroll="syncScroll($refs.inputGutter, $refs.inputEl)"></textarea>
                         </div>
                         <div class="json-statusbar">
                             <span class="json-status" :class="statusClass">
@@ -96,15 +88,9 @@
                             <div ref="outputGutter" class="gutter">
                                 <div v-for="n in outputLineCount" :key="n">{{ n }}</div>
                             </div>
-                            <textarea
-                                ref="outputEl"
-                                :value="output"
-                                class="json-area"
-                                spellcheck="false"
-                                readonly
+                            <textarea ref="outputEl" :value="output" class="json-area" spellcheck="false" readonly
                                 placeholder="Result appears here"
-                                @scroll="syncScroll($refs.outputGutter, $refs.outputEl)"
-                            ></textarea>
+                                @scroll="syncScroll($refs.outputGutter, $refs.outputEl)"></textarea>
                         </div>
                     </div>
                 </div>
@@ -386,6 +372,10 @@ const inputBytes = computed(() => {
 </script>
 
 <style scoped>
+.section {
+    margin-top: 0px !important;
+}
+
 .json-tool {
     min-height: 100vh;
     padding-top: 72px;
