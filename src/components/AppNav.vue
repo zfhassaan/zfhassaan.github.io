@@ -1,18 +1,19 @@
 <template>
     <!-- NAV -->
     <nav id="nav">
-        <a class="nav-logo" href="#" aria-label="zfhassaan — home">
+        <router-link class="nav-logo" :to="{ name: 'home' }" aria-label="zfhassaan — home">
             <img class="nav-logo-img" src="/avatar.png" width="28" height="28" alt="zfhassaan avatar" />
             <span class="nav-logo-text">zfhassaan</span>
             <span class="nav-logo-dot"></span>
-        </a>
+        </router-link>
         <div class="nav-links">
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#opensource" class="nav-link">Open Source</a>
-            <a href="#playground" class="nav-link">Live Demo</a>
-            <a href="#expertise" class="nav-link">Expertise</a>
-            <a href="#timeline" class="nav-link">Experience</a>
-            <a href="#contact" class="nav-link magnetic">Contact</a>
+            <router-link :to="{ name: 'home', hash: '#projects' }" class="nav-link">Projects</router-link>
+            <router-link :to="{ name: 'home', hash: '#opensource' }" class="nav-link">Open Source</router-link>
+            <router-link :to="{ name: 'home', hash: '#playground' }" class="nav-link">Live Demo</router-link>
+            <router-link :to="{ name: 'home', hash: '#expertise' }" class="nav-link">Expertise</router-link>
+            <router-link :to="{ name: 'home', hash: '#timeline' }" class="nav-link">Experience</router-link>
+            <router-link :to="{ name: 'tools' }" class="nav-link">Tools</router-link>
+            <router-link :to="{ name: 'home', hash: '#contact' }" class="nav-link magnetic">Contact</router-link>
         </div>
         <div class="nav-actions">
             <a class="nav-icon-link magnetic" href="https://github.com/zfhassaan" target="_blank" rel="noopener"
@@ -35,8 +36,7 @@
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                 </svg>
             </button>
-            <button class="nav-cta magnetic"
-                onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's Talk</button>
+            <router-link class="nav-cta magnetic" :to="{ name: 'home', hash: '#contact' }">Let's Talk</router-link>
             <button class="nav-toggle" id="navToggle" aria-label="Menu">
                 <span></span><span></span><span></span>
             </button>

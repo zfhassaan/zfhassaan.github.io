@@ -18,16 +18,16 @@
                 requests.
             </p>
             <div class="hero-actions" id="hero-actions">
-                <a href="#projects" class="btn-primary magnetic">
+                <router-link :to="{ name: 'home', hash: '#projects' }" class="btn-primary magnetic">
                     View Projects
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2.5">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                </a>
-                <a href="#contact" class="btn-secondary magnetic">
+                </router-link>
+                <router-link :to="{ name: 'home', hash: '#contact' }" class="btn-secondary magnetic">
                     Let's Talk
-                </a>
+                </router-link>
             </div>
         </div>
 

@@ -17,6 +17,23 @@
         /* ════════════════════════════════════════════
            BOOT — waits for DOM + GSAP
         ════════════════════════════════════════════ */
+        /* ── Global chrome (nav, cursor, mobile menu) ──
+           These target persistent elements that exist on every route, so they
+           must initialize regardless of which view is mounted (e.g. when a user
+           deep-links straight to /tools). Guarded independently from the
+           home-only animations below. */
+        export function initGlobalChrome() {
+            if (typeof gsap === 'undefined') { console.error('[Portfolio] GSAP not loaded'); return; }
+            if (window.__chromeStarted) return;
+            window.__chromeStarted = true;
+            gsap.registerPlugin(ScrollTrigger);
+
+            if (!IS_MOBILE) initCursor();
+            initMobileMenu();
+            initNavScroll();
+            if (!IS_MOBILE && !REDUCED) initMagnetic();
+        }
+
         export function initPortfolioEngine() {
             if (typeof gsap === 'undefined') { console.error('[Portfolio] GSAP not loaded'); return; }
             /* Guard against double initialization (e.g. HMR re-mounts or the
@@ -27,17 +44,16 @@
             window.__portfolioEngineStarted = true;
             gsap.registerPlugin(ScrollTrigger);
 
+            /* Shared chrome first (guarded, safe if already started) */
+            initGlobalChrome();
+
             /* Set initial hidden states BEFORE first paint */
             setInitialStates();
 
-            /* Run everything */
+            /* Run home-only animations */
             heroEntrance();
-            if (!IS_MOBILE) initCursor();
-            initMobileMenu();
-            initNavScroll();
             initScrollReveals();
             initCounters();
-            if (!IS_MOBILE && !REDUCED) initMagnetic();
             initArchDiagram();
             initRmqFlow();
             buildContribGrid();
