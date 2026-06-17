@@ -7,6 +7,7 @@
             <router-link :to="{ name: 'home', hash: '#playground' }">Live Demo</router-link>
             <router-link :to="{ name: 'home', hash: '#expertise' }">Expertise</router-link>
             <router-link :to="{ name: 'home', hash: '#timeline' }">Experience</router-link>
+            <router-link :to="{ name: 'blog' }">Blog</router-link>
             <router-link :to="{ name: 'tools' }">Tools</router-link>
             <router-link :to="{ name: 'home', hash: '#contact' }">Contact</router-link>
         </nav>

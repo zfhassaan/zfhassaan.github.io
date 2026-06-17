@@ -12,6 +12,7 @@
             <router-link :to="{ name: 'home', hash: '#playground' }" class="nav-link">Live Demo</router-link>
             <router-link :to="{ name: 'home', hash: '#expertise' }" class="nav-link">Expertise</router-link>
             <router-link :to="{ name: 'home', hash: '#timeline' }" class="nav-link">Experience</router-link>
+            <router-link :to="{ name: 'blog' }" class="nav-link">Blog</router-link>
             <router-link :to="{ name: 'tools' }" class="nav-link">Tools</router-link>
             <router-link :to="{ name: 'home', hash: '#contact' }" class="nav-link magnetic">Contact</router-link>
         </div>

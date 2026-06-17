@@ -8,6 +8,17 @@ const routes = [
     component: HomeView,
   },
   {
+    path: '/blog',
+    name: 'blog',
+    component: () => import('@/views/BlogView.vue'),
+  },
+  {
+    path: '/blog/:id',
+    name: 'blog-post',
+    component: () => import('@/views/BlogPostView.vue'),
+    props: true,
+  },
+  {
     path: '/tools',
     name: 'tools',
     component: () => import('@/views/ToolsView.vue'),
