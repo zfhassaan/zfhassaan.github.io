@@ -2,17 +2,22 @@
            PORTFOLIO ANIMATION ENGINE — FIXED & CLEAN
         ═══════════════════════════════════════════ */
 
-        /* ── Global flags ── */
-        const REDUCED = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-        const IS_MOBILE = window.innerWidth < 768;
+        /* ── Global flags (safe during SSR — no window at import on server) ── */
+        const REDUCED = typeof window !== 'undefined'
+            ? window.matchMedia('(prefers-reduced-motion:reduce)').matches
+            : true;
+        const IS_MOBILE = typeof window !== 'undefined' ? window.innerWidth < 768 : true;
 
-        /* ── Pause animations on hidden tab ── */
+        /* ── Pause animations on hidden tab (client only) ── */
         let _paused = false;
-        document.addEventListener('visibilitychange', () => {
-            _paused = document.hidden;
-            if (_paused) gsap.globalTimeline.pause();
-            else gsap.globalTimeline.resume();
-        });
+        if (typeof document !== 'undefined') {
+            document.addEventListener('visibilitychange', () => {
+                _paused = document.hidden;
+                if (typeof gsap === 'undefined') return;
+                if (_paused) gsap.globalTimeline.pause();
+                else gsap.globalTimeline.resume();
+            });
+        }
 
         /* ════════════════════════════════════════════
            BOOT — waits for DOM + GSAP
@@ -574,27 +579,23 @@
         function initCaseStudies() {
             if (REDUCED) return;
 
-            document.querySelectorAll('.case-study').forEach(study => {
-                const info = study.querySelector('.case-info');
-                const visual = study.querySelector('.case-visual');
-                const isRev = study.classList.contains('reverse');
+            /* Single fade carousel — animate the stage once on enter */
+            const stage = document.querySelector('.projects-stage');
+            if (!stage) return;
 
-                if (!info || !visual) return;
-
-                gsap.set(info, { opacity: 0, x: isRev ? 28 : -28 });
-                gsap.set(visual, { opacity: 0, x: isRev ? -28 : 28 });
-
-                const obs = new IntersectionObserver(([e]) => {
-                    if (!e.isIntersecting) return;
-                    obs.disconnect();
-                    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-                    tl.to(info, { opacity: 1, x: 0, duration: 0.7 })
-                        .to(visual, { opacity: 1, x: 0, duration: 0.7 }, '-=0.45')
-                        .add(() => { [info, visual].forEach(el => el.classList.add('animated')); });
-                }, { threshold: 0.1 });
-
-                obs.observe(study);
-            });
+            gsap.set(stage, { opacity: 0, y: 24 });
+            const obs = new IntersectionObserver(([e]) => {
+                if (!e.isIntersecting) return;
+                obs.disconnect();
+                gsap.to(stage, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    ease: 'power3.out',
+                    onComplete() { stage.classList.add('animated'); },
+                });
+            }, { threshold: 0.1 });
+            obs.observe(stage);
         }
 
         /* ════════════════════════════════════════════
@@ -758,14 +759,16 @@
             };
         }
 
-        /* ── Debounced resize ── */
-(function () {
-    let rafId = null;
-    window.addEventListener('resize', () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => {
-            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-            rafId = null;
-        });
-    }, { passive: true });
-})();
+        /* ── Debounced resize (client only) ── */
+if (typeof window !== 'undefined') {
+    (function () {
+        let rafId = null;
+        window.addEventListener('resize', () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                rafId = null;
+            });
+        }, { passive: true });
+    })();
+}

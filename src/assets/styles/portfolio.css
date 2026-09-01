@@ -1024,6 +1024,113 @@
             line-height: 1.6;
         }
 
+        /* Single-item fade carousel */
+        .projects-carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .projects-stage {
+            position: relative;
+            min-height: 420px;
+        }
+
+        .projects-stage .case-study {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .case-fade-enter-active,
+        .case-fade-leave-active {
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+
+        .case-fade-enter-from,
+        .case-fade-leave-to {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .case-fade-enter-to,
+        .case-fade-leave-from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .projects-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .projects-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1;
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .projects-nav-btn:hover {
+            color: var(--text-primary);
+            border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+            background: color-mix(in srgb, var(--accent) 6%, transparent);
+        }
+
+        .projects-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .projects-dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.35;
+            cursor: none;
+            transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+        }
+
+        .projects-dot.active {
+            opacity: 1;
+            background: var(--accent);
+            transform: scale(1.25);
+        }
+
+        .projects-pager {
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            min-width: 4.5rem;
+            text-align: center;
+        }
+
+        .projects-pager-sep {
+            opacity: 0.5;
+            margin: 0 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .case-fade-enter-active,
+            .case-fade-leave-active {
+                transition: none;
+            }
+        }
+
         .section-h2 {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
