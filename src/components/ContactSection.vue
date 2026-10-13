@@ -1,45 +1,370 @@
 <template>
-    <!-- ══ CONTACT ══ -->
+    <!-- ══ CONTACT & PROJECT ENQUIRY ══ -->
     <section id="contact" class="section">
         <div class="container">
             <div class="contact-inner reveal">
-                <div class="section-label">Contact</div>
-                <h2 class="contact-h2">Let's Build Something<br>at Scale</h2>
+                <div class="section-label">Start a Conversation</div>
+                <h2 class="contact-h2">Have a Technical Challenge?<br>Let's Discuss Your Project.</h2>
                 <p class="contact-sub">
-                    Available for full-time roles, contract engagements, and technical consulting. If you're building a
-                    SaaS platform, ERP system, or need engineering leadership — let's talk.
+                    Whether you are building a new platform, integrating mission-critical payment gateways, or scaling an existing backend system — I'm available for direct client engagements, contracts, and technical consulting.
                 </p>
+
+                <!-- Project Enquiry Builder -->
+                <div class="enquiry-card">
+                    <div class="enquiry-header">
+                        <div class="enquiry-title">
+                            <Zap :size="16" class="text-accent" />
+                            <span>Quick Project Brief Builder</span>
+                        </div>
+                        <div class="enquiry-note">Select your project type to generate a pre-structured email template:</div>
+                    </div>
+
+                    <div class="project-types" role="radiogroup" aria-label="Project Type">
+                        <button
+                            v-for="type in projectTypes"
+                            :key="type.id"
+                            type="button"
+                            class="project-type-btn"
+                            :class="{ active: selectedType === type.id }"
+                            @click="selectedType = type.id"
+                        >
+                            <component :is="type.icon" :size="15" class="type-icon" />
+                            <span class="type-label">{{ type.label }}</span>
+                        </button>
+                    </div>
+
+                    <div class="enquiry-action-row">
+                        <a
+                            :href="mailToLink"
+                            class="btn-primary magnetic enquiry-send-btn"
+                        >
+                            <span>Open Email with Project Brief</span>
+                            <ArrowRight :size="14" />
+                        </a>
+                        <button
+                            type="button"
+                            class="btn-secondary magnetic copy-btn"
+                            @click="copyEmail"
+                        >
+                            <Check v-if="copied" :size="14" />
+                            <Copy v-else :size="14" />
+                            <span>{{ copied ? 'Copied zfhassaan@gmail.com' : 'Copy Email Address' }}</span>
+                        </button>
+                    </div>
+
+                    <!-- What happens next -->
+                    <div class="enquiry-steps">
+                        <div class="enquiry-step">
+                            <span class="enquiry-step-num">1</span>
+                            <span>Share your brief, timeline &amp; tech stack</span>
+                        </div>
+                        <div class="enquiry-step">
+                            <span class="enquiry-step-num">2</span>
+                            <span>Get initial technical feedback within 24h</span>
+                        </div>
+                        <div class="enquiry-step">
+                            <span class="enquiry-step-num">3</span>
+                            <span>Intro call to align on milestones &amp; scope</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct channels & recruiter route -->
                 <div class="contact-links">
                     <a href="mailto:zfhassaan@gmail.com" class="contact-link magnetic">
-                        <span class="contact-link-icon">✉️</span>
-                        zfhassaan@gmail.com
-                    </a>
-                    <a href="https://github.com/zfhassaan" target="_blank" rel="noopener"
-                        class="contact-link magnetic !flex flex-row d-flex">
-                        <svg class="contact-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        GitHub
+                        <Mail :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">zfhassaan@gmail.com</span>
                     </a>
                     <a href="https://linkedin.com/in/zfhassaan" target="_blank" rel="noopener"
-                        class="contact-link magnetic !flex flex-row">
-                        <svg class="contact-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg>
-                        LinkedIn
+                        class="contact-link magnetic">
+                        <Linkedin :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">LinkedIn</span>
                     </a>
-                    <a href="#" class="contact-link magnetic !flex flex-row">
-                        <span class="contact-link-icon">📄</span>
-                        Resume / CV
+                    <a href="https://github.com/zfhassaan" target="_blank" rel="noopener"
+                        class="contact-link magnetic">
+                        <Github :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">GitHub</span>
+                    </a>
+                    <!-- Recruiter secondary route -->
+                    <a href="https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf" download="Hassaan_Ali_Senior_Software_Engineer_Resume.pdf" class="contact-link recruiter-link magnetic" title="Download technical résumé for recruiters and engineering managers">
+                        <FileText :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">Résumé for Recruiters</span>
                     </a>
                 </div>
+
                 <div class="contact-availability">
                     <div class="avail-dot"></div>
-                    Available for new projects — response within 24 hours
+                    Available for direct client engagements &amp; remote contracts · Response within 24 hours
                 </div>
             </div>
         </div>
     </section>
 </template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import {
+    Zap,
+    CreditCard,
+    Monitor,
+    Search,
+    Handshake,
+    ArrowRight,
+    Copy,
+    Check,
+    Mail,
+    Linkedin,
+    Github,
+    FileText
+} from 'lucide-vue-next'
+
+const projectTypes = [
+    { id: 'backend', label: 'Backend & APIs', icon: Zap },
+    { id: 'payments', label: 'Payment Gateway', icon: CreditCard },
+    { id: 'fullstack', label: 'Full-Stack / SaaS', icon: Monitor },
+    { id: 'audit', label: 'System Audit & Scaling', icon: Search },
+    { id: 'other', label: 'General Project', icon: Handshake },
+]
+
+const selectedType = ref('backend')
+const copied = ref(false)
+
+const mailToLink = computed(() => {
+    const selected = projectTypes.find(t => t.id === selectedType.value)
+    const typeLabel = selected ? selected.label : 'Engineering Project'
+    const subject = encodeURIComponent(`Project Discussion: ${typeLabel} — Direct Inquiry`)
+    const body = encodeURIComponent(
+`Hi Hassaan,
+
+I came across your portfolio and would like to discuss a project with you.
+
+1. Project Overview & Goals:
+[Briefly describe what you are looking to build or solve]
+
+2. Target Timeline:
+[e.g., Immediate / Within 1 month / Flexible]
+
+3. Current Tech Stack or Existing Codebase:
+[e.g., Laravel / Node.js / Vue / React / Postgres / New greenfield]
+
+4. Best way to follow up:
+[Email / WhatsApp / Slack / Video Call]
+
+Looking forward to your thoughts.
+
+Best regards,
+[Your Name]
+[Company / Organization]`
+    )
+    return `mailto:zfhassaan@gmail.com?subject=${subject}&body=${body}`
+})
+
+function copyEmail() {
+    navigator.clipboard?.writeText('zfhassaan@gmail.com')
+    copied.value = true
+    setTimeout(() => {
+        copied.value = false
+    }, 2500)
+}
+</script>
+
+<style scoped>
+.enquiry-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    margin: 32px auto;
+    max-width: 760px;
+    text-align: left;
+}
+
+@media (max-width: 640px) {
+    .enquiry-card {
+        padding: 20px 16px;
+    }
+}
+
+.enquiry-header {
+    margin-bottom: 18px;
+}
+
+.enquiry-title {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.enquiry-note {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.project-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.project-type-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    width: auto;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.project-type-btn:hover {
+    border-color: rgba(45, 212, 191, 0.4);
+    color: var(--text-primary);
+}
+
+.project-type-btn.active {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: var(--accent);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.type-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.enquiry-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.enquiry-send-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: auto;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.copy-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: auto;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.enquiry-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+    .enquiry-steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+.enquiry-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.enquiry-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(45, 212, 191, 0.15);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.recruiter-link {
+    border-color: rgba(96, 165, 250, 0.3) !important;
+    color: var(--text-secondary);
+}
+
+.recruiter-link:hover {
+    border-color: var(--accent3) !important;
+    color: var(--text-primary);
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.contact-link {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    gap: 8px !important;
+    padding: 10px 20px !important;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contact-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0 !important;
+}
+
+.contact-link-text {
+    white-space: nowrap !important;
+}
+</style>

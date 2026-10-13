@@ -1,12 +1,9 @@
 <template>
-    <main class="post-page container">
+    <main class="post-page">
         <section class="section">
-            <div class="container container--full">
+            <div class="container">
                 <router-link :to="{ name: 'blog' }" class="back-link">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
+                    <ArrowLeft :size="14" />
                     All posts
                 </router-link>
 
@@ -45,7 +42,8 @@
 
                     <footer class="post-footer">
                         <a v-if="post.url" :href="post.url" target="_blank" rel="noopener" class="blog-btn">
-                            View original on Blogger ↗
+                            <span>View original on Blogger</span>
+                            <ExternalLink :size="14" />
                         </a>
                     </footer>
                 </article>
@@ -57,6 +55,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { ArrowLeft, ExternalLink } from 'lucide-vue-next'
 import { useBlogFeed } from '@/composables/useBlogFeed'
 import { formatDate } from '@/lib/format'
 
@@ -90,7 +89,10 @@ watch(() => route.params.id, (id) => { if (id) load(id) }, { immediate: true })
 
 .back-link {
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    white-space: nowrap;
+    width: auto;
     gap: 6px;
     font-family: var(--font-mono);
     font-size: 12px;
@@ -98,6 +100,10 @@ watch(() => route.params.id, (id) => { if (id) load(id) }, { immediate: true })
     color: var(--text-secondary);
     margin-bottom: 28px;
     transition: color 0.2s ease;
+}
+
+.back-link svg {
+    flex-shrink: 0;
 }
 
 .back-link:hover {
@@ -154,7 +160,13 @@ watch(() => route.params.id, (id) => { if (id) load(id) }, { immediate: true })
 
 .blog-btn {
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: auto;
+    max-width: 100%;
+    gap: 8px;
     font-family: var(--font-head);
     font-size: 14px;
     font-weight: 600;
@@ -164,7 +176,12 @@ watch(() => route.params.id, (id) => { if (id) load(id) }, { immediate: true })
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
+    text-decoration: none;
     transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.blog-btn svg {
+    flex-shrink: 0;
 }
 
 .blog-btn:hover {

@@ -24,7 +24,7 @@
                             <div class="os-stat-label">Merged PRs</div>
                         </div>
                         <div class="os-stat">
-                            <div class="os-stat-num"><span class="os-stat-accent">✓</span></div>
+                            <div class="os-stat-num"><span class="os-stat-accent"><Check :size="24" /></span></div>
                             <div class="os-stat-label">Collaborator</div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <div class="rmq-nodes" id="rmq-flow">
                             <div class="rmq-node">
                                 <div class="rmq-box" id="rmq-producer">
-                                    <div class="rmq-icon">📤</div>
+                                    <div class="rmq-icon"><Send :size="16" /></div>
                                     <div>Producer</div>
                                 </div>
                                 <div class="rmq-label">Publisher</div>
@@ -48,7 +48,7 @@
                             <div class="rmq-arrow" aria-hidden="true"></div>
                             <div class="rmq-node">
                                 <div class="rmq-box" id="rmq-exchange">
-                                    <div class="rmq-icon">🔀</div>
+                                    <div class="rmq-icon"><Shuffle :size="16" /></div>
                                     <div>Exchange</div>
                                 </div>
                                 <div class="rmq-label">Router</div>
@@ -56,7 +56,7 @@
                             <div class="rmq-arrow" aria-hidden="true"></div>
                             <div class="rmq-node">
                                 <div class="rmq-box" id="rmq-queue">
-                                    <div class="rmq-icon">⬡</div>
+                                    <div class="rmq-icon"><Layers :size="16" /></div>
                                     <div>Queue</div>
                                 </div>
                                 <div class="rmq-label">Buffer</div>
@@ -64,7 +64,7 @@
                             <div class="rmq-arrow" aria-hidden="true"></div>
                             <div class="rmq-node">
                                 <div class="rmq-box" id="rmq-consumer">
-                                    <div class="rmq-icon">📥</div>
+                                    <div class="rmq-icon"><Download :size="16" /></div>
                                     <div>Consumer</div>
                                 </div>
                                 <div class="rmq-label">Laravel</div>
@@ -86,3 +86,7 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { Check, Send, Shuffle, Layers, Download } from 'lucide-vue-next'
+</script>

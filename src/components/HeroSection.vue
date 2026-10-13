@@ -4,30 +4,37 @@
         <div class="hero-left">
             <div class="hero-eyebrow" id="hero-badge">
                 <div class="hero-eyebrow-dot"></div>
-                Senior Full Stack Engineer
+                Senior Backend &amp; Full-Stack Engineer · Direct Client Engagements
             </div>
             <h1 class="hero-h1" id="hero-h1">
-                Building Scalable<br>
-                <span class="accent-word">SaaS Platforms,</span><br>
-                ERP Systems &amp;<br>
-                <span class="dim-word">AI Solutions</span>
+                <span class="hero-title-row">Complex technical problems.</span>
+                <span class="hero-title-row"><span class="accent-word">Reliable software</span> solutions.</span>
             </h1>
             <p class="hero-sub" id="hero-sub">
-                Senior Full Stack Engineer specializing in Laravel, Node.js, React, Vue.js, API integrations, AI
-                automation, payment gateways, ERP systems, and enterprise-scale applications that process millions of
-                requests.
+                I help startups and businesses build backend systems, integrate APIs and payment providers, and develop full-stack applications designed to work reliably in production.
             </p>
             <div class="hero-actions" id="hero-actions">
-                <router-link :to="{ name: 'home', hash: '#projects' }" class="btn-primary magnetic">
-                    View Projects
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+                <router-link :to="{ name: 'home', hash: '#contact' }" class="btn-primary magnetic">
+                    Discuss Your Project
+                    <ArrowRight :size="14" />
                 </router-link>
-                <router-link :to="{ name: 'home', hash: '#contact' }" class="btn-secondary magnetic">
-                    Let's Talk
+                <router-link :to="{ name: 'home', hash: '#projects' }" class="btn-secondary magnetic">
+                    Explore My Work
                 </router-link>
+            </div>
+            <div class="hero-stats" id="hero-stats">
+                <div class="hero-stat-pill">
+                    <Check :size="14" class="pill-check" /> Scalable Backend Systems
+                </div>
+                <div class="hero-stat-pill">
+                    <Check :size="14" class="pill-check" /> Mission-Critical Payments &amp; APIs
+                </div>
+                <div class="hero-stat-pill">
+                    <Check :size="14" class="pill-check" /> 9+ Years · Proven Delivery
+                </div>
+                <div class="hero-stat-pill">
+                    <Check :size="14" class="pill-check" /> Async Communication &amp; Global Overlap
+                </div>
             </div>
         </div>
 
@@ -73,7 +80,7 @@
                 <!-- USERS -->
                 <g class="arch-node" id="node-users" transform="translate(140,18)">
                     <rect x="0" y="0" width="140" height="52" rx="10" />
-                    <text class="arch-icon" x="28" y="27">👤</text>
+                    <User class="arch-icon" x="18" y="16" :size="20" />
                     <text class="arch-label" x="84" y="22">USERS</text>
                     <text class="arch-meta" x="84" y="37">Client requests</text>
                 </g>
@@ -81,7 +88,7 @@
                 <!-- API GATEWAY -->
                 <g class="arch-node" id="node-api" transform="translate(102,120)">
                     <rect x="0" y="0" width="216" height="60" rx="10" />
-                    <text class="arch-icon" x="32" y="31">⚡</text>
+                    <Zap class="arch-icon" x="22" y="20" :size="20" />
                     <text class="arch-label" x="120" y="25">API GATEWAY</text>
                     <text class="arch-meta" x="120" y="41">Auth · Rate limit · Route</text>
                 </g>
@@ -89,7 +96,7 @@
                 <!-- QUEUE -->
                 <g class="arch-node" id="node-queue" transform="translate(118,230)">
                     <rect x="0" y="0" width="184" height="60" rx="10" />
-                    <text class="arch-icon" x="30" y="31">⬡</text>
+                    <Layers class="arch-icon" x="20" y="20" :size="20" />
                     <text class="arch-label" x="102" y="25">QUEUE</text>
                     <text class="arch-meta" x="102" y="41">RabbitMQ · Redis</text>
                 </g>
@@ -97,7 +104,7 @@
                 <!-- WORKER A (left) -->
                 <g class="arch-node" id="node-worker-a" transform="translate(56,340)">
                     <rect x="0" y="0" width="104" height="50" rx="10" />
-                    <text class="arch-icon" x="24" y="26">⚙</text>
+                    <Cpu class="arch-icon" x="14" y="16" :size="18" />
                     <text class="arch-label arch-label-sm" x="64" y="21">WORKER</text>
                     <text class="arch-meta" x="64" y="34">Go</text>
                 </g>
@@ -105,7 +112,7 @@
                 <!-- WORKER B (right) -->
                 <g class="arch-node" id="node-worker-b" transform="translate(260,340)">
                     <rect x="0" y="0" width="104" height="50" rx="10" />
-                    <text class="arch-icon" x="24" y="26">⚙</text>
+                    <Cpu class="arch-icon" x="14" y="16" :size="18" />
                     <text class="arch-label arch-label-sm" x="64" y="21">WORKER</text>
                     <text class="arch-meta" x="64" y="34">Laravel</text>
                 </g>
@@ -113,7 +120,7 @@
                 <!-- DATABASE -->
                 <g class="arch-node" id="node-db" transform="translate(110,418)">
                     <rect x="0" y="0" width="200" height="60" rx="10" />
-                    <text class="arch-icon" x="30" y="31">🗄</text>
+                    <Database class="arch-icon" x="20" y="20" :size="20" />
                     <text class="arch-label" x="110" y="25">DATABASE</text>
                     <text class="arch-meta" x="110" y="41">MySQL · PostgreSQL · Redis</text>
                 </g>
@@ -142,9 +149,19 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { ArrowRight, Check, User, Zap, Layers, Cpu, Database } from 'lucide-vue-next'
+</script>
+
 <style scoped>
 .hero-actions .magnetic {
-    display: flex;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: auto;
 }
 
 .container {
@@ -154,5 +171,30 @@
 .container .hero-right {
     padding-top: 30px;
     padding-bottom: 20px;
+}
+
+.hero-stats {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hero-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+}
+
+.pill-check {
+    color: var(--accent);
+    font-weight: 700;
 }
 </style>

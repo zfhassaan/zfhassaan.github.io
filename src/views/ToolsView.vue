@@ -16,17 +16,16 @@
                         :class="{ 'tool-card--soon': !tool.to }" :to="tool.to || ''"
                         @click="!tool.to && $event.preventDefault()">
                         <div class="tool-card-top">
-                            <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
+                            <span class="tool-icon" aria-hidden="true">
+                                <component :is="tool.icon" :size="20" />
+                            </span>
                             <span v-if="!tool.to" class="tool-badge">Soon</span>
                         </div>
                         <h2 class="tool-name">{{ tool.name }}</h2>
                         <p class="tool-desc">{{ tool.desc }}</p>
                         <span v-if="tool.to" class="tool-cta">
                             Open
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
+                            <ArrowRight :size="14" />
                         </span>
                     </router-link>
                 </div>
@@ -36,22 +35,24 @@
 </template>
 
 <script setup>
+import { Braces, QrCode, Files, ArrowRight } from 'lucide-vue-next'
+
 const tools = [
     {
         name: 'JSON Formatter',
-        icon: '{ }',
+        icon: Braces,
         desc: 'Beautify, validate, and minify JSON with adjustable indentation.',
         to: { name: 'tools-json' },
     },
     {
         name: 'QR Code Generator',
-        icon: '▦',
+        icon: QrCode,
         desc: 'Turn any text or URL into a downloadable QR code.',
         to: null,
     },
     {
         name: 'PDF Merge',
-        icon: '⧉',
+        icon: Files,
         desc: 'Combine multiple PDF files into one, right in the browser.',
         to: null,
     },
@@ -154,7 +155,10 @@ const tools = [
 
 .tool-cta {
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    white-space: nowrap;
+    width: auto;
     gap: 6px;
     margin-top: auto;
     font-family: var(--font-mono);
@@ -162,5 +166,9 @@ const tools = [
     font-weight: 500;
     letter-spacing: 0.06em;
     color: var(--accent);
+}
+
+.tool-cta svg {
+    flex-shrink: 0;
 }
 </style>

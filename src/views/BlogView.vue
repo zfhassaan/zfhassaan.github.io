@@ -1,7 +1,7 @@
 <template>
-    <main class="blog-page container">
+    <main class="blog-page">
         <section class="section">
-            <div class="container container--full">
+            <div class="container">
                 <div class="blog-head">
                     <div class="section-label">Writing · Notes &amp; Tutorials</div>
                     <h1 class="section-h2">Blog</h1>
@@ -50,10 +50,7 @@
                                 <p class="blog-card-excerpt">{{ post.excerpt }}…</p>
                                 <span class="blog-card-cta">
                                     Read
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5">
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg>
+                                    <ArrowRight :size="14" />
                                 </span>
                             </div>
                         </router-link>
@@ -73,6 +70,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { ArrowRight } from 'lucide-vue-next'
 import { useBlogFeed } from '@/composables/useBlogFeed'
 import { formatDate } from '@/lib/format'
 
@@ -197,7 +195,10 @@ onMounted(loadInitial)
 
 .blog-card-cta {
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    white-space: nowrap;
+    width: auto;
     gap: 6px;
     margin-top: auto;
     font-family: var(--font-mono);
@@ -205,6 +206,10 @@ onMounted(loadInitial)
     font-weight: 500;
     letter-spacing: 0.06em;
     color: var(--accent);
+}
+
+.blog-card-cta svg {
+    flex-shrink: 0;
 }
 
 .blog-state {
@@ -223,6 +228,14 @@ onMounted(loadInitial)
 }
 
 .blog-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: auto;
+    max-width: 100%;
+    gap: 8px;
     font-family: var(--font-head);
     font-size: 14px;
     font-weight: 600;
@@ -232,7 +245,12 @@ onMounted(loadInitial)
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
+    text-decoration: none;
     transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.blog-btn svg {
+    flex-shrink: 0;
 }
 
 .blog-btn:hover:not(:disabled) {

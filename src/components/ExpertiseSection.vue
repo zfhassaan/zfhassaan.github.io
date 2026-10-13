@@ -1,94 +1,105 @@
 <template>
-    <!-- ══ EXPERTISE ══ -->
-    <section id="expertise" class="section">
+    <!-- ══ SERVICES & CAPABILITIES ══ -->
+    <section id="services" class="section">
+        <span id="expertise" style="position:relative;top:-84px;display:block;visibility:hidden;"></span>
         <div class="container">
             <div class="reveal" style="margin-bottom:16px">
-                <div class="section-label">Capabilities</div>
-                <h2 class="section-h2">Engineering Expertise</h2>
+                <div class="section-label">Services &amp; Capabilities</div>
+                <h2 class="section-h2">How I Help Startups &amp; Businesses</h2>
             </div>
-            <p style="font-size:0.9rem;color:var(--text-muted);max-width:520px;line-height:1.65;margin-bottom:0"
+            <p style="font-size:0.92rem;color:var(--text-muted);max-width:640px;line-height:1.65;margin-bottom:0"
                 class="reveal">
-                Not a list of technologies — a set of capabilities that produce reliable, scalable business systems.
+                Direct engineering services designed for founders, CTOs, and product leaders who need dependable systems. Every engagement prioritizes robust architecture, clear communication, and verifiable production outcomes.
             </p>
 
             <div class="expertise-grid">
+                <!-- 1. Backend Architecture & APIs -->
                 <div class="expertise-card reveal">
-                   
-                    <div class="exp-title">Backend Engineering</div>
-                    <div class="exp-desc">API-first architectures, event-driven systems, distributed processing, and
-                        high-throughput services.</div>
+                    <div class="exp-title">Backend Architecture &amp; Scalable APIs</div>
+                    <div class="exp-desc">
+                        High-throughput API development, event-driven pipelines, database optimization, and refactoring legacy bottlenecks for production reliability.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">Laravel · PHP 8.x</div>
-                        <div class="exp-item">Node.js · Express · Fastify</div>
-                        <div class="exp-item">REST APIs · GraphQL</div>
-                        <div class="exp-item">Microservices Architecture</div>
-                        <div class="exp-item">Message Queues · RabbitMQ</div>
+                        <div class="exp-item">Laravel (PHP 8.x) &amp; Node.js Services</div>
+                        <div class="exp-item">High-Performance REST &amp; GraphQL APIs</div>
+                        <div class="exp-item">Message Queues &amp; Event Sourcing (RabbitMQ, Redis)</div>
+                        <div class="exp-item">Relational Schema Design &amp; Query Optimization (MySQL, PostgreSQL)</div>
+                        <div class="exp-item">Monolith Refactoring &amp; Decoupled Microservices</div>
                     </div>
                 </div>
+
+                <!-- 2. Payment Gateways & Fintech -->
                 <div class="expertise-card reveal">
-                    
-                    <div class="exp-title">Frontend Engineering</div>
-                    <div class="exp-desc">SSR-optimized, accessible, performant interfaces that feel as fast as native
-                        apps.</div>
+                    <div class="exp-title">Payment Gateways &amp; Fintech Integrations</div>
+                    <div class="exp-desc">
+                        Direct and hosted checkouts, idempotent payment handling, tamper-proof ledgers, and automated webhook reconciliation. Author of ecosystem payment SDKs.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">React · Next.js (App Router)</div>
-                        <div class="exp-item">Vue.js · Nuxt.js (SSG/ISR)</div>
-                        <div class="exp-item">TypeScript · Tailwind</div>
-                        <div class="exp-item">React Native · Expo</div>
-                        <div class="exp-item">State: Zustand · Pinia</div>
+                        <div class="exp-item">Direct &amp; Hosted Checkout Flows (3DS &amp; OTP)</div>
+                        <div class="exp-item">Instant Payment Notifications (IPN) &amp; Webhook Verifiers</div>
+                        <div class="exp-item">Immutable Double-Entry Ledger Systems</div>
+                        <div class="exp-item">Strict Idempotency Keys &amp; Anti-Duplicate Safeguards</div>
+                        <div class="exp-item">JazzCash, PayFast, EasyPaisa &amp; Global Payment APIs</div>
                     </div>
                 </div>
+
+                <!-- 3. Full-Stack Application Development -->
                 <div class="expertise-card reveal">
-                    
-                    <div class="exp-title">Infrastructure & DevOps</div>
-                    <div class="exp-desc">Production-ready deployment, monitoring, and scaling strategies for real
-                        workloads.</div>
+                    <div class="exp-title">Full-Stack Web &amp; SaaS Development</div>
+                    <div class="exp-desc">
+                        End-to-end web applications, multi-tenant SaaS products, client portals, and administrative tools built for speed, responsiveness, and scale.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">Docker · Linux · SSH</div>
-                        <div class="exp-item">Redis · MySQL · PostgreSQL</div>
-                        <div class="exp-item">Nginx · Laravel Forge</div>
-                        <div class="exp-item">CI/CD · GitHub Actions</div>
-                        <div class="exp-item">AWS EC2 · S3 · CloudFront</div>
+                        <div class="exp-item">Vue.js (Nuxt / Vite) &amp; React (Next.js)</div>
+                        <div class="exp-item">Multi-Tenant SaaS Architecture &amp; RBAC Security</div>
+                        <div class="exp-item">Fast, Accessible User Interfaces &amp; Design Systems</div>
+                        <div class="exp-item">Automated Unit &amp; Integration Testing Suites</div>
+                        <div class="exp-item">Clean Code &amp; Complete Documentation for Future Handoff</div>
                     </div>
                 </div>
+
+                <!-- 4. Distributed Systems & Queues -->
                 <div class="expertise-card reveal">
-                    
-                    <div class="exp-title">AI &amp; Automation</div>
-                    <div class="exp-desc">Practical AI integration that automates workflows and augments business
-                        operations.</div>
+                    <div class="exp-title">Distributed Systems &amp; Async Pipelines</div>
+                    <div class="exp-desc">
+                        Decoupling heavy tasks from web requests with durable message brokers, background workers, and cross-platform systems tooling.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">OpenAI · Claude · Gemini</div>
-                        <div class="exp-item">RAG · Vector Databases</div>
-                        <div class="exp-item">AI Agents · LangChain</div>
-                        <div class="exp-item">Workflow Automation</div>
-                        <div class="exp-item">Document Intelligence</div>
-                        <div class="exp-item">N8N - Monday - Zapier</div>
+                        <div class="exp-item">RabbitMQ Topology Design &amp; Worker Optimization</div>
+                        <div class="exp-item">Dead-Letter Queues (DLQ) &amp; Exponential Retry Logic</div>
+                        <div class="exp-item">Collaborator on 2.2M+ Downloaded AMQP Package</div>
+                        <div class="exp-item">Cross-Platform CLI Systems Tooling in Go</div>
+                        <div class="exp-item">Background Batch Jobs &amp; Data Synchronization Pipelines</div>
                     </div>
                 </div>
+
+                <!-- 5. Performance & System Audits -->
                 <div class="expertise-card reveal">
-                    
-                    <div class="exp-title">Enterprise Solutions</div>
-                    <div class="exp-desc">Complex business logic, multi-tenant systems, and domain-driven design for
-                        large organizations.</div>
+                    <div class="exp-title">System Audits, Security &amp; Optimization</div>
+                    <div class="exp-desc">
+                        Comprehensive codebase and architecture audits to eliminate race conditions, resolve database slow-queries, and harden system security.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">ERP Systems · HRMS</div>
-                        <div class="exp-item">SaaS Multi-Tenancy</div>
-                        <div class="exp-item">eCommerce Platforms</div>
-                        <div class="exp-item">Payment Gateway Integration</div>
-                        <div class="exp-item">Audit Trails · Compliance</div>
+                        <div class="exp-item">Concurrency Race-Condition &amp; Deadlock Audits</div>
+                        <div class="exp-item">Database Slow-Query Profiling &amp; Index Optimization</div>
+                        <div class="exp-item">Cryptographic Payload Signing &amp; Hash Validation</div>
+                        <div class="exp-item">API Rate Limiting, Threat Mitigation &amp; Error Boundaries</div>
+                        <div class="exp-item">Pre-Launch Production Readiness Verification</div>
                     </div>
                 </div>
+
+                <!-- 6. Architecture Advisory & Collaboration -->
                 <div class="expertise-card reveal">
-                    
-                    <div class="exp-title">Architecture &amp; Design</div>
-                    <div class="exp-desc">System design, technical leadership, and architecture decisions that scale
-                        with business growth.</div>
+                    <div class="exp-title">Architecture Advisory &amp; Technical Ownership</div>
+                    <div class="exp-desc">
+                        Acting as a dependable senior technical partner — helping evaluate technical trade-offs, scope milestones, and communicate clearly across time zones.
+                    </div>
                     <div class="exp-list">
-                        <div class="exp-item">Domain-Driven Design</div>
-                        <div class="exp-item">Event Sourcing · CQRS</div>
-                        <div class="exp-item">API Design · OpenAPI</div>
-                        <div class="exp-item">Performance Optimization</div>
-                        <div class="exp-item">Technical Documentation</div>
+                        <div class="exp-item">Technical Discovery &amp; Architectural Decision Records (ADRs)</div>
+                        <div class="exp-item">API Contract Design (OpenAPI / Swagger Specs)</div>
+                        <div class="exp-item">Proactive Async Communication with Loom &amp; PR Walkthroughs</div>
+                        <div class="exp-item">4–6 Hour Working Overlap with US &amp; European Time Zones</div>
+                        <div class="exp-item">Milestone-Based Sprints with Transparent Delivery</div>
                     </div>
                 </div>
             </div>
