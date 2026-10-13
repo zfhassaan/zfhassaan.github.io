@@ -38,8 +38,18 @@
                             :href="mailToLink"
                             class="btn-primary magnetic enquiry-send-btn"
                         >
-                            <span>Open Email with Project Brief</span>
+                            <span>Open in Mail App</span>
                             <ArrowRight :size="14" />
+                        </a>
+                        <a
+                            :href="gmailLink"
+                            target="_blank"
+                            rel="noopener"
+                            class="btn-secondary magnetic webmail-btn"
+                            title="Compose directly in Gmail Web"
+                        >
+                            <ExternalLink :size="14" />
+                            <span>Open in Gmail</span>
                         </a>
                         <button
                             type="button"
@@ -48,7 +58,7 @@
                         >
                             <Check v-if="copied" :size="14" />
                             <Copy v-else :size="14" />
-                            <span>{{ copied ? 'Copied zfhassaan@gmail.com' : 'Copy Email Address' }}</span>
+                            <span>{{ copied ? 'Copied' : 'Copy Email' }}</span>
                         </button>
                     </div>
 
@@ -126,7 +136,8 @@ import {
     Github,
     FileText,
     Briefcase,
-    Star
+    Star,
+    ExternalLink
 } from 'lucide-vue-next'
 
 const projectTypes = [
@@ -140,12 +151,11 @@ const projectTypes = [
 const selectedType = ref('backend')
 const copied = ref(false)
 
-const mailToLink = computed(() => {
+const emailTemplate = computed(() => {
     const selected = projectTypes.find(t => t.id === selectedType.value)
     const typeLabel = selected ? selected.label : 'Engineering Project'
-    const subject = encodeURIComponent(`Project Discussion: ${typeLabel} — Direct Inquiry`)
-    const body = encodeURIComponent(
-`Hi Hassaan,
+    const subject = `Project Discussion: ${typeLabel} — Direct Inquiry`
+    const body = `Hi Hassaan,
 
 I came across your portfolio and would like to discuss a project with you.
 
@@ -166,8 +176,18 @@ Looking forward to your thoughts.
 Best regards,
 [Your Name]
 [Company / Organization]`
-    )
-    return `mailto:zfhassaan@gmail.com?subject=${subject}&body=${body}`
+
+    return { subject, body }
+})
+
+const mailToLink = computed(() => {
+    const { subject, body } = emailTemplate.value
+    return `mailto:zfhassaan@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+})
+
+const gmailLink = computed(() => {
+    const { subject, body } = emailTemplate.value
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=zfhassaan@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 })
 
 function copyEmail() {
@@ -279,7 +299,8 @@ function copyEmail() {
     text-decoration: none;
 }
 
-.copy-btn {
+.copy-btn,
+.webmail-btn {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -288,6 +309,7 @@ function copyEmail() {
     width: auto;
     gap: 6px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .enquiry-steps {
