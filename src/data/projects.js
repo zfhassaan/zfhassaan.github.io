@@ -9,6 +9,178 @@
  */
 export const projects = [
   {
+    id: 'uae-swat',
+    logo: '/images/clients/uae-swat-challenge.svg',
+    logoClass: 'logo-swat',
+    tag: 'Government Platform · Dubai Police · UAE',
+    title: 'UAE SWAT Challenge — Global Event & Scoring Platform',
+    href: 'https://www.uaeswatchallenge.com/en',
+    problem:
+      'The UAE SWAT Challenge, an elite international competition hosted by Dubai Police, required a secure, high-availability platform to handle global team registrations, tournament draws, live event scoring updates, and high-volume spectator ticketing workflows under heavy international traffic spikes.',
+    constraints:
+      'Strict security requirements under Dubai Police infrastructure, burst traffic from global law enforcement audiences during competition days, bilingual content delivery, and sub-second leaderboard freshness.',
+    approach:
+      'Architected a responsive, decoupled web platform with Azure Cloud asset offloading, optimized tournament draw engine, synchronized leaderboard feeds, and integration with ticketing provider APIs.',
+    delivery:
+      'Frontend and backend engineering, system performance optimization, API integrations, and production stability during event operations.',
+    outcome:
+      'Supported seamless international visitor registrations, zero downtime during tournament traffic surges, and real-time score dissemination across teams from 40+ countries.',
+    stack: ['Next.js', 'Vue', 'Azure Cloud', 'RESTful APIs', 'Tailwind CSS'],
+    impact: [
+      '40+ Global Teams',
+      'Dubai Police Event',
+      'Zero Downtime Under Spikes',
+      'Azure Storage & CDN',
+    ],
+    links: [
+      { label: 'Official Platform', href: 'https://www.uaeswatchallenge.com/en', icon: 'globe' },
+    ],
+    visual: {
+      type: 'schema',
+      rows: [
+        { boxes: [{ icon: 'Globe', text: 'Global Visitor Pass & Teams', highlight: true }] },
+        { boxes: [{ icon: 'Shield', text: 'Dubai Police Security & Azure CDN' }] },
+        {
+          boxes: [
+            { icon: 'Trophy', text: 'Leaderboard', small: true },
+            { icon: 'Zap', text: 'Draw Engine', small: true },
+            { icon: 'Check', text: 'Ticketing API', small: true },
+          ],
+        },
+        { boxes: [{ icon: 'Check', text: 'Live Tournament Results · Sync', highlight: true }] },
+      ],
+    },
+  },
+  {
+    id: 'haier-mall',
+    logo: '/images/clients/haier-white.svg',
+    logoClass: 'logo-haier',
+    tag: 'Enterprise E-Commerce · Retail · Pakistan',
+    title: 'Haier Mall — Direct-to-Consumer Enterprise Marketplace',
+    href: 'https://www.haiermall.pk',
+    problem:
+      'Haier Pakistan needed to transition from fragmented dealer distribution to a high-performance direct-to-consumer digital marketplace capable of handling comprehensive appliance catalogs, high-concurrency flash promotions, and integrated payment processing.',
+    constraints:
+      'High traffic concurrency during seasonal sales, complex multi-region delivery calculations for heavy appliances, and requirement for seamless transaction completion with zero double-charge edge cases.',
+    approach:
+      'Engineered a robust e-commerce architecture featuring multi-layer catalog caching, optimized checkout pipelines, decoupled state management, and direct integration with local and international payment gateways.',
+    delivery:
+      'Backend application architecture, payment gateway integration, database query optimization, and cart flow performance tuning.',
+    outcome:
+      'Delivered sub-second catalog page load times, high checkout completion rates during promotional campaigns, and reliable automated payment reconciliation.',
+    stack: ['Laravel', 'Vue.js', 'Payment Gateways', 'MySQL', 'Redis', 'Element Plus'],
+    impact: [
+      'Flagship Retail Portal',
+      'High Concurrency Flash Sales',
+      'Multi-Gateway Checkout',
+      'Real-Time Inventory',
+    ],
+    links: [
+      { label: 'Live Marketplace', href: 'https://www.haiermall.pk', icon: 'globe' },
+    ],
+    visual: {
+      type: 'schema',
+      rows: [
+        { boxes: [{ icon: 'ShoppingCart', text: 'Shopper Cart & Flash Sale', highlight: true }] },
+        { boxes: [{ icon: 'Database', text: 'Decoupled Catalog · Redis Cache' }] },
+        {
+          boxes: [
+            { icon: 'CreditCard', text: 'Cards', small: true },
+            { icon: 'Smartphone', text: 'Wallets', small: true },
+            { icon: 'ReceiptText', text: 'Invoices', small: true },
+          ],
+        },
+        { boxes: [{ icon: 'Check', text: 'Automated Order & Logistics Sync', highlight: true }] },
+      ],
+    },
+  },
+  {
+    id: 'online-auction',
+    logo: '/images/clients/online-auction-white.svg',
+    logoClass: 'logo-auction',
+    tag: 'Real-Time Systems · WebSockets · UAE',
+    title: 'Online Auction — Low-Latency Bidding Infrastructure',
+    href: 'https://onlineauction.ae',
+    problem:
+      'Digital asset and automotive auctions require instantaneous bid synchronization. Network latency discrepancies, concurrent last-second bids (bid sniping), and race conditions can result in invalid auction outcomes and customer disputes.',
+    constraints:
+      'Sub-second bid broadcast across thousands of concurrent bidders, strict validation of bid step increments, and unalterable financial audit trails.',
+    approach:
+      'Engineered a real-time event pipeline using WebSockets and Redis Pub/Sub, paired with pessimistic database row locking to guarantee atomic bid evaluation. Built automated outbid notifications and instant deposit hold verification.',
+    delivery:
+      'Architected real-time bid engine, database concurrency safeguards, WebSocket state synchronization, and post-auction automated settlements.',
+    outcome:
+      'Guaranteed zero concurrent bid collisions; delivered sub-100ms bid update broadcasts across active bidder sessions; ensured 100% auditable bid logs.',
+    stack: ['Next.js', 'Node.js', 'WebSockets', 'Redis', 'MySQL', 'Pessimistic Locking'],
+    impact: [
+      'Sub-100ms Broadcast',
+      'Atomic Concurrency Locks',
+      'Real-Time Bid Sync',
+      'Live UAE Asset Platform',
+    ],
+    links: [
+      { label: 'Live Auction Platform', href: 'https://onlineauction.ae', icon: 'globe' },
+    ],
+    visual: {
+      type: 'schema',
+      rows: [
+        { boxes: [{ icon: 'Gavel', text: 'Incoming Concurrent Bid', highlight: true }] },
+        { boxes: [{ icon: 'Lock', text: 'Pessimistic Row Lock · Validation' }] },
+        {
+          boxes: [
+            { icon: 'Zap', text: 'WebSocket Push', small: true },
+            { icon: 'Send', text: 'Outbid Alert', small: true },
+            { icon: 'Check', text: 'Ledger Audit', small: true },
+          ],
+        },
+        { boxes: [{ icon: 'Check', text: 'Real-Time Highest Bidder Broadcast', highlight: true }] },
+      ],
+    },
+  },
+  {
+    id: 'zoom-packaging',
+    logo: '/images/clients/zoom-packaging.png',
+    logoClass: 'logo-zoom',
+    tag: 'B2B SaaS · Manufacturing · USA',
+    title: 'Zoom Packaging — Dynamic Quotation & Manufacturing Portal',
+    href: 'https://zoompackaging.com/',
+    problem:
+      'B2B packaging manufacturing involves dozens of custom variables (length, width, depth, flute grade, coating, quantities). Traditional sales teams spent hours generating manual quotes, slowing down deal closes and losing high-intent leads.',
+    constraints:
+      'Complex volumetric and surface-area pricing mathematics, large dieline artwork upload validation, and need for instant price previews across thousands of quantity tiers.',
+    approach:
+      'Developed an algorithmic pricing calculator that calculates material cost, die-cutting run-time, and volume shipping freight instantly based on custom 3D dimensions entered by the client. Integrated structured dieline file uploaders and direct CRM pipeline sync.',
+    delivery:
+      'Full-stack development of dynamic quotation application, customer configuration workflows, and lead capture automation.',
+    outcome:
+      'Reduced quotation turnaround from 24+ hours to instantaneous interactive estimates; automated customer artwork intake; increased qualified enterprise quotation submissions.',
+    stack: ['PHP', 'JavaScript', 'WooCommerce API', 'REST APIs', 'Cloud Storage'],
+    impact: [
+      'Instant Volumetric Pricing',
+      'Automated Dieline Intake',
+      'B2B Wholesale Portal',
+      'Austin, Texas, USA',
+    ],
+    links: [
+      { label: 'Visit Platform', href: 'https://zoompackaging.com/', icon: 'globe' },
+    ],
+    visual: {
+      type: 'schema',
+      rows: [
+        { boxes: [{ icon: 'Package', text: 'Custom Dimensions (L x W x D)', highlight: true }] },
+        { boxes: [{ icon: 'Zap', text: 'Volumetric Pricing Engine' }] },
+        {
+          boxes: [
+            { icon: 'Globe', text: 'Tiered Qty', small: true },
+            { icon: 'Check', text: 'Artwork Dieline', small: true },
+            { icon: 'Send', text: 'CRM Pipeline', small: true },
+          ],
+        },
+        { boxes: [{ icon: 'Check', text: 'Instant Wholesale Quote Generated', highlight: true }] },
+      ],
+    },
+  },
+  {
     id: 'jazzcash',
     tag: 'Production SDK · Fintech · Pakistan',
     title: 'JazzCash Laravel SDK',

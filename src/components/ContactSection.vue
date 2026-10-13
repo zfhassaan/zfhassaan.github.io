@@ -174,8 +174,9 @@ function copyEmail() {
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 28px;
-    margin: 32px auto;
-    max-width: 760px;
+    margin: 32px 0 36px 0;
+    width: 100%;
+    box-sizing: border-box;
     text-align: left;
 }
 
@@ -219,7 +220,7 @@ function copyEmail() {
     white-space: nowrap;
     width: auto;
     gap: 6px;
-    padding: 8px 14px;
+    padding: 8px 13px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.02);

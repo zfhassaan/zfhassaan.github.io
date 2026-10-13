@@ -7,6 +7,7 @@
             <span class="nav-logo-dot"></span>
         </router-link>
         <div class="nav-links">
+            <router-link :to="{ name: 'home', hash: '#clients' }" class="nav-link">Clients</router-link>
             <router-link :to="{ name: 'home', hash: '#services' }" class="nav-link">Services</router-link>
             <router-link :to="{ name: 'home', hash: '#projects' }" class="nav-link">Case Studies</router-link>
             <router-link :to="{ name: 'home', hash: '#process' }" class="nav-link">Process</router-link>

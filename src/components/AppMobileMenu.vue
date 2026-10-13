@@ -2,6 +2,7 @@
 <!-- MOBILE MENU -->
     <div id="mobile-menu">
         <nav class="mobile-menu-links" aria-label="Mobile navigation">
+            <router-link :to="{ name: 'home', hash: '#clients' }" @click="closeMenu">Clients</router-link>
             <router-link :to="{ name: 'home', hash: '#services' }" @click="closeMenu">Services</router-link>
             <router-link :to="{ name: 'home', hash: '#projects' }" @click="closeMenu">Case Studies</router-link>
             <router-link :to="{ name: 'home', hash: '#process' }" @click="closeMenu">Process</router-link>

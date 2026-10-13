@@ -2,6 +2,7 @@
   <main>
     <HeroSection />
     <MetricsSection />
+    <ClientsSection />
     <ExpertiseSection />
     <ProjectsSection />
     <OpenSourceSection />
@@ -19,6 +20,7 @@ import { initPortfolioEngine } from '@/composables/portfolio-engine'
 
 import HeroSection from '@/components/HeroSection.vue'
 import MetricsSection from '@/components/MetricsSection.vue'
+import ClientsSection from '@/components/ClientsSection.vue'
 import ExpertiseSection from '@/components/ExpertiseSection.vue'
 import ProjectsSection from '@/components/ProjectsSection.vue'
 import OpenSourceSection from '@/components/OpenSourceSection.vue'

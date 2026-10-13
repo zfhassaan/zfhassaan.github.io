@@ -28,8 +28,17 @@
             >
               <div class="case-info">
                 <div>
-                  <div class="case-tag">{{ active.tag }}</div>
-                  <h3 class="case-h3" style="margin-top:12px">
+                  <div class="case-header-row">
+                    <img
+                      v-if="active.logo"
+                      :src="active.logo"
+                      :alt="`${active.title} logo`"
+                      class="case-client-logo"
+                      :class="active.logoClass"
+                    />
+                    <div class="case-tag">{{ active.tag }}</div>
+                  </div>
+                  <h3 class="case-h3" style="margin-top:10px">
                     <a :href="active.href" target="_blank" rel="noopener">
                       {{ active.title }}
                     </a>
@@ -88,6 +97,7 @@
                           <Box v-if="link.icon === 'packagist'" class="case-link-icon" :size="14" />
                           <BookOpen v-else-if="link.icon === 'docs'" class="case-link-icon" :size="14" />
                           <Github v-else-if="link.icon === 'github'" class="case-link-icon" :size="14" />
+                          <Globe v-else-if="link.icon === 'globe'" class="case-link-icon" :size="14" />
                           <span class="case-link-label">{{ link.label }}</span>
                           <ExternalLink class="case-link-arrow" :size="12" />
                         </a>
@@ -215,6 +225,12 @@ import {
   Minus,
   QrCode,
   ReceiptText,
+  Shield,
+  ShoppingCart,
+  Gavel,
+  Package,
+  Trophy,
+  Database,
 } from 'lucide-vue-next'
 
 const schemaIconMap = {
@@ -230,6 +246,12 @@ const schemaIconMap = {
   Minus,
   QrCode,
   ReceiptText,
+  Shield,
+  ShoppingCart,
+  Gavel,
+  Package,
+  Trophy,
+  Database,
 }
 
 const activeIndex = ref(0)
@@ -278,6 +300,37 @@ onBeforeUnmount(() => clearInterval(timer))
 </script>
 
 <style scoped>
+.case-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.case-client-logo {
+  height: 28px;
+  max-width: 120px;
+  object-fit: contain;
+}
+
+.case-client-logo.logo-swat {
+  height: 32px;
+}
+
+.case-client-logo.logo-haier {
+  height: 22px;
+}
+
+.case-client-logo.logo-auction {
+  height: 24px;
+}
+
+.case-client-logo.logo-zoom {
+  height: 26px;
+  filter: brightness(0) invert(1);
+}
+
 .case-links {
   display: flex;
   flex-direction: row;

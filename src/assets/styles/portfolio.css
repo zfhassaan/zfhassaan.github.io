@@ -2829,7 +2829,7 @@
         }
 
         .contact-inner {
-            max-width: 840px;
+            max-width: 920px;
         }
 
         .contact-h2 {
@@ -2845,8 +2845,8 @@
             font-size: 1rem;
             color: var(--text-secondary);
             line-height: 1.65;
-            margin-bottom: 48px;
-            max-width: 500px;
+            margin-bottom: 32px;
+            max-width: 720px;
         }
 
         .contact-links {
