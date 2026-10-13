@@ -39,7 +39,7 @@ export const projects = [
       type: 'schema',
       rows: [
         { boxes: [{ icon: 'Globe', text: 'Global Visitor Pass & Teams', highlight: true }] },
-        { boxes: [{ icon: 'Shield', text: 'Dubai Police Security & Azure CDN' }] },
+        { boxes: [{ icon: 'Shield', text: 'Dubai Police Security & Cloudflare CDN' }] },
         {
           boxes: [
             { icon: 'Trophy', text: 'Leaderboard', small: true },

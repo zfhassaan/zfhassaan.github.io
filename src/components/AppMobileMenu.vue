@@ -10,6 +10,7 @@
             <router-link :to="{ name: 'home', hash: '#timeline' }" @click="closeMenu">Experience</router-link>
             <router-link :to="{ name: 'blog' }" @click="closeMenu">Blog</router-link>
             <router-link :to="{ name: 'tools' }" @click="closeMenu">Tools</router-link>
+            <router-link :to="{ name: 'home', hash: '#faq' }" @click="closeMenu">FAQ</router-link>
             <router-link :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">Contact</router-link>
         </nav>
         <div class="mobile-menu-footer">

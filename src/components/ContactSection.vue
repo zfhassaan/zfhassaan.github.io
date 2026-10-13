@@ -85,7 +85,16 @@
                         <Github :size="16" class="contact-link-icon" />
                         <span class="contact-link-text">GitHub</span>
                     </a>
-                    <!-- Recruiter secondary route -->
+                    <a href="https://www.upwork.com/freelancers/zfhassaan" target="_blank" rel="noopener"
+                        class="contact-link upwork-link magnetic" title="Hire with Upwork Escrow Protection">
+                        <Briefcase :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">Upwork (Top Rated)</span>
+                    </a>
+                    <a href="https://www.fiverr.com/sellers/alphapk/" target="_blank" rel="noopener"
+                        class="contact-link fiverr-link magnetic" title="Hire on Fiverr with 5-Star Reviews">
+                        <Star :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">Fiverr (5★)</span>
+                    </a>
                     <a href="https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf" download="Hassaan_Ali_Senior_Software_Engineer_Resume.pdf" class="contact-link recruiter-link magnetic" title="Download technical résumé for recruiters and engineering managers">
                         <FileText :size="16" class="contact-link-icon" />
                         <span class="contact-link-text">Résumé for Recruiters</span>
@@ -115,7 +124,9 @@ import {
     Mail,
     Linkedin,
     Github,
-    FileText
+    FileText,
+    Briefcase,
+    Star
 } from 'lucide-vue-next'
 
 const projectTypes = [
@@ -326,6 +337,26 @@ function copyEmail() {
 .recruiter-link:hover {
     border-color: var(--accent3) !important;
     color: var(--text-primary);
+}
+
+.upwork-link {
+    border-color: rgba(20, 168, 0, 0.35) !important;
+}
+
+.upwork-link:hover {
+    border-color: #14a800 !important;
+    background: rgba(20, 168, 0, 0.08) !important;
+    color: var(--text-primary) !important;
+}
+
+.fiverr-link {
+    border-color: rgba(29, 191, 115, 0.35) !important;
+}
+
+.fiverr-link:hover {
+    border-color: #1dbf73 !important;
+    background: rgba(29, 191, 115, 0.08) !important;
+    color: var(--text-primary) !important;
 }
 
 .contact-links {
