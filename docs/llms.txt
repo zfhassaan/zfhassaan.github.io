@@ -95,7 +95,5 @@ Hassaan has delivered production systems for government entities, enterprise ret
 - **Email:** zfhassaan@gmail.com
 - **GitHub:** https://github.com/zfhassaan
 - **LinkedIn:** https://linkedin.com/in/zfhassaan
-- **Upwork (Top Rated Freelancer):** https://www.upwork.com/freelancers/zfhassaan
-- **Fiverr (5-Star Technical Consultant):** https://www.fiverr.com/sellers/alphapk/
 - **Packagist:** https://packagist.org/packages/zfhassaan/
 - **Résumé:** https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf

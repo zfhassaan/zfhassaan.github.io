@@ -5,7 +5,6 @@
     <ClientsSection />
     <ExpertiseSection />
     <ProjectsSection />
-    <ClientTestimonialsSection />
     <OpenSourceSection />
     <PlaygroundSection />
     <ProcessSection />
@@ -25,7 +24,6 @@ import MetricsSection from '@/components/MetricsSection.vue'
 import ClientsSection from '@/components/ClientsSection.vue'
 import ExpertiseSection from '@/components/ExpertiseSection.vue'
 import ProjectsSection from '@/components/ProjectsSection.vue'
-import ClientTestimonialsSection from '@/components/ClientTestimonialsSection.vue'
 import OpenSourceSection from '@/components/OpenSourceSection.vue'
 import PlaygroundSection from '@/components/PlaygroundSection.vue'
 import ProcessSection from '@/components/ProcessSection.vue'
