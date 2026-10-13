@@ -141,6 +141,44 @@
             box-shadow: 0 16px 34px -20px rgba(15, 23, 42, 0.3);
         }
 
+        /* Client logos in light mode */
+        :root[data-theme="light"] .ribbon-logo {
+            filter: none;
+            opacity: 0.75;
+        }
+
+        :root[data-theme="light"] .ribbon-item:hover .ribbon-logo {
+            opacity: 1;
+        }
+
+        :root[data-theme="light"] .logo-haier {
+            filter: invert(1);
+        }
+
+        :root[data-theme="light"] .logo-zoom {
+            filter: none;
+        }
+
+        :root[data-theme="light"] .logo-auction {
+            filter: invert(1);
+        }
+
+        :root[data-theme="light"] .logo-upwork {
+            filter: invert(1);
+        }
+
+        :root[data-theme="light"] .client-card-top {
+            border-bottom-color: rgba(15, 23, 42, 0.08);
+        }
+
+        :root[data-theme="light"] .client-card-footer {
+            border-top-color: rgba(15, 23, 42, 0.08);
+        }
+
+        :root[data-theme="light"] .faq-card.open {
+            background: #FFFFFF;
+        }
+
         /* ═══════════════════════════════════════════════
    THEME TOGGLE
 ═══════════════════════════════════════════════ */
