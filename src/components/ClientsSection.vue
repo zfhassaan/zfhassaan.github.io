@@ -108,8 +108,8 @@ const clients = [
     description:
       'Official competition and event portal for international law enforcement teams. Features high-traffic tournament draw management, team rosters, live scoring, and visitor pass workflows.',
     highlights: [
-      'High-availability cloud architecture (Azure & CDN)',
-      'Tournament draw & synchronized leaderboard engines',
+      'High-availability cloud architecture (AWS & Cloudflare CDN)',
+      'Tournament leaderboard',
       'Multi-lingual international visitor portal'
     ],
     ctaLabel: 'Visit Official Event Site'
@@ -170,44 +170,6 @@ const clients = [
       'Automated custom B2B quote-request workflow'
     ],
     ctaLabel: 'Visit Zoom Packaging'
-  },
-  {
-    id: 'upwork',
-    name: 'Upwork',
-    url: 'https://www.upwork.com/freelancers/zfhassaan',
-    displayUrl: 'upwork.com/freelancers/zfhassaan',
-    logo: '/images/clients/upwork-white.svg',
-    logoClass: 'logo-upwork',
-    badge: 'Verified Senior Freelancer',
-    accentColor: '#14a800',
-    tag: 'Direct Remote Contracts · International Clients',
-    description:
-      'Vetted senior backend and full-stack software engineer delivering complex APIs, fintech integrations, message queues, and production refactoring for US, UK, and European founders.',
-    highlights: [
-      '100% direct client delivery track record',
-      'Specialized in Laravel, Go, Vue, Node.js & Payment Systems',
-      'Available for hourly consulting, milestones & long-term contracts'
-    ],
-    ctaLabel: 'View Upwork Profile'
-  },
-  {
-    id: 'fiverr',
-    name: 'Fiverr',
-    url: 'https://www.fiverr.com/sellers/alphapk/',
-    displayUrl: 'fiverr.com/sellers/alphapk',
-    logo: '/images/clients/fiverr.svg',
-    logoClass: 'logo-fiverr',
-    badge: '5-Star Technical Consultant',
-    accentColor: '#1dbf73',
-    tag: 'Software Engineering & System Architecture',
-    description:
-      'Long-standing client acquisition and engineering consulting profile delivering custom backend services, payment gateway integrations, and production bug triage with consistent five-star client feedback.',
-    highlights: [
-      '5-Star client ratings for communication and technical depth',
-      'Rapid turnaround for payment gateways, APIs, and bug resolution',
-      'Trusted by international direct clients across 10+ countries'
-    ],
-    ctaLabel: 'View Fiverr Profile'
   }
 ]
 </script>
@@ -518,3 +480,4 @@ const clients = [
   max-width: 140px;
 }
 </style>
+
