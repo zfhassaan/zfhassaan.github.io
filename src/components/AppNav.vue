@@ -7,12 +7,10 @@
             <span class="nav-logo-dot"></span>
         </router-link>
         <div class="nav-links">
-            <router-link :to="{ name: 'home', hash: '#clients' }" class="nav-link">Clients</router-link>
+            <router-link :to="{ name: 'about' }" class="nav-link">About</router-link>
+            <router-link :to="{ name: 'case-studies' }" class="nav-link">Case Studies</router-link>
             <router-link :to="{ name: 'home', hash: '#services' }" class="nav-link">Services</router-link>
-            <router-link :to="{ name: 'home', hash: '#projects' }" class="nav-link">Case Studies</router-link>
-            <router-link :to="{ name: 'home', hash: '#process' }" class="nav-link">Process</router-link>
-            <router-link :to="{ name: 'home', hash: '#opensource' }" class="nav-link">Open Source</router-link>
-            <router-link :to="{ name: 'home', hash: '#timeline' }" class="nav-link">Experience</router-link>
+            <router-link :to="{ name: 'home', hash: '#opensource' }" class="nav-link">Contributions</router-link>
             <router-link :to="{ name: 'blog' }" class="nav-link">Blog</router-link>
             <router-link :to="{ name: 'tools' }" class="nav-link">Tools</router-link>
             <router-link :to="{ name: 'home', hash: '#contact' }" class="nav-link magnetic">Contact</router-link>

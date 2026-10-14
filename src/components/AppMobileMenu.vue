@@ -2,15 +2,13 @@
 <!-- MOBILE MENU -->
     <div id="mobile-menu">
         <nav class="mobile-menu-links" aria-label="Mobile navigation">
-            <router-link :to="{ name: 'home', hash: '#clients' }" @click="closeMenu">Clients</router-link>
+            <router-link :to="{ name: 'about' }" @click="closeMenu">About</router-link>
+            <router-link :to="{ name: 'case-studies' }" @click="closeMenu">Case Studies</router-link>
             <router-link :to="{ name: 'home', hash: '#services' }" @click="closeMenu">Services</router-link>
-            <router-link :to="{ name: 'home', hash: '#projects' }" @click="closeMenu">Case Studies</router-link>
+            <router-link :to="{ name: 'home', hash: '#opensource' }" @click="closeMenu">Contributions</router-link>
             <router-link :to="{ name: 'home', hash: '#process' }" @click="closeMenu">Process</router-link>
-            <router-link :to="{ name: 'home', hash: '#opensource' }" @click="closeMenu">Open Source</router-link>
-            <router-link :to="{ name: 'home', hash: '#timeline' }" @click="closeMenu">Experience</router-link>
             <router-link :to="{ name: 'blog' }" @click="closeMenu">Blog</router-link>
             <router-link :to="{ name: 'tools' }" @click="closeMenu">Tools</router-link>
-            <router-link :to="{ name: 'home', hash: '#faq' }" @click="closeMenu">FAQ</router-link>
             <router-link :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">Contact</router-link>
         </nav>
         <div class="mobile-menu-footer">

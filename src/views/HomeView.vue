@@ -8,9 +8,8 @@
     <OpenSourceSection />
     <PlaygroundSection />
     <ProcessSection />
-    <TimelineSection />
+    <!-- Timeline Section -->
     <BlogSection />
-    <ClientFaqSection />
     <ContactSection />
   </main>
 </template>
@@ -27,9 +26,8 @@ import ProjectsSection from '@/components/ProjectsSection.vue'
 import OpenSourceSection from '@/components/OpenSourceSection.vue'
 import PlaygroundSection from '@/components/PlaygroundSection.vue'
 import ProcessSection from '@/components/ProcessSection.vue'
-import TimelineSection from '@/components/TimelineSection.vue'
+// import TimelineSection from '@/components/TimelineSection.vue'
 import BlogSection from '@/components/BlogSection.vue'
-import ClientFaqSection from '@/components/ClientFaqSection.vue'
 import ContactSection from '@/components/ContactSection.vue'
 
 // Named so <keep-alive include="HomeView"> can target this view and keep the

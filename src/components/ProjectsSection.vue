@@ -1,14 +1,14 @@
 <template>
-  <!-- ══ PROJECTS ══ -->
+  <!-- ══ PROJECTS & CASE STUDIES ══ -->
   <section id="projects" class="section" aria-labelledby="projects-heading">
     <div class="container">
       <div class="projects-header">
         <div class="reveal">
-          <div class="section-label">Verified Case Studies</div>
-          <h2 id="projects-heading" class="section-h2">Engineering Problems &amp; Solutions</h2>
+          <div class="section-label">Featured Case Studies</div>
+          <h2 id="projects-heading" class="section-h2">Production Problems &amp; Solutions</h2>
         </div>
         <p class="projects-intro text-muted reveal">
-          Every project represents complex technical requirements solved for production — with deliberate architecture, concrete constraints, and verifiable outcomes.
+          Selected high-impact production architectures solved for government scale, enterprise retail, and high-throughput messaging.
         </p>
       </div>
 
@@ -39,9 +39,9 @@
                     <div class="case-tag">{{ active.tag }}</div>
                   </div>
                   <h3 class="case-h3" style="margin-top:10px">
-                    <a :href="active.href" target="_blank" rel="noopener">
+                    <router-link :to="{ name: 'case-study-detail', params: { id: active.id } }">
                       {{ active.title }}
-                    </a>
+                    </router-link>
                   </h3>
                   <p v-if="active.subtitle" class="case-sub" v-html="active.subtitle" />
                 </div>
@@ -86,6 +86,16 @@
                     <div class="case-meta-label">Links</div>
                     <div class="case-meta-value">
                       <div class="case-links">
+                        <!-- Primary CTA to single detail page -->
+                        <router-link
+                          :to="{ name: 'case-study-detail', params: { id: active.id } }"
+                          class="case-link case-link-highlight magnetic"
+                        >
+                          <BookOpen class="case-link-icon" :size="14" />
+                          <span class="case-link-label">Full Case Study</span>
+                          <ArrowRight class="case-link-arrow" :size="12" />
+                        </router-link>
+
                         <a
                           v-for="link in active.links"
                           :key="link.href + link.label"
@@ -171,7 +181,7 @@
 
           <div class="projects-dots" role="tablist" aria-label="Project slides">
             <button
-              v-for="(project, index) in projects"
+              v-for="(project, index) in featuredProjects"
               :key="project.id"
               type="button"
               class="projects-dot"
@@ -186,7 +196,7 @@
           <div class="projects-pager mono">
             {{ String(activeIndex + 1).padStart(2, '0') }}
             <span class="projects-pager-sep">/</span>
-            {{ String(projects.length).padStart(2, '0') }}
+            {{ String(featuredProjects.length).padStart(2, '0') }}
           </div>
 
           <button
@@ -197,6 +207,14 @@
           >
             <ArrowRight :size="16" />
           </button>
+        </div>
+
+        <!-- Link to all case studies -->
+        <div class="projects-view-all">
+          <router-link :to="{ name: 'case-studies' }" class="btn-view-all-cs magnetic">
+            <span>Explore All 9 Case Studies &amp; Projects</span>
+            <ArrowRight :size="16" />
+          </router-link>
         </div>
       </div>
     </div>
@@ -254,16 +272,21 @@ const schemaIconMap = {
   Database,
 }
 
+// 3 Strongest projects as requested: UAE SWAT, Haier Mall, Laravel AMQP
+const FEATURED_IDS = ['uae-swat', 'haier-mall', 'laravel-amqp']
+const featuredProjects = computed(() => {
+  return FEATURED_IDS.map(id => projects.find(p => p.id === id)).filter(Boolean)
+})
+
 const activeIndex = ref(0)
 const paused = ref(false)
 const AUTO_MS = 7000
 let timer = null
 
-const active = computed(() => projects[activeIndex.value])
+const active = computed(() => featuredProjects.value[activeIndex.value] || featuredProjects.value[0])
 
 function goTo(index) {
-  activeIndex.value = (index + projects.length) % projects.length
-  restart()
+  activeIndex.value = (index + featuredProjects.value.length) % featuredProjects.value.length
 }
 
 function next() {
@@ -274,29 +297,35 @@ function prev() {
   goTo(activeIndex.value - 1)
 }
 
+function startTimer() {
+  stopTimer()
+  timer = setInterval(() => {
+    if (!paused.value) next()
+  }, AUTO_MS)
+}
+
+function stopTimer() {
+  if (timer) {
+    clearInterval(timer)
+    timer = null
+  }
+}
+
 function pause() {
   paused.value = true
-  clearInterval(timer)
-  timer = null
 }
 
 function resume() {
   paused.value = false
-  restart()
 }
 
-function restart() {
-  clearInterval(timer)
-  timer = null
-  if (paused.value || typeof window === 'undefined') return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  timer = setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % projects.length
-  }, AUTO_MS)
-}
+onMounted(() => {
+  startTimer()
+})
 
-onMounted(() => restart())
-onBeforeUnmount(() => clearInterval(timer))
+onBeforeUnmount(() => {
+  stopTimer()
+})
 </script>
 
 <style scoped>
@@ -322,15 +351,6 @@ onBeforeUnmount(() => clearInterval(timer))
   height: 22px;
 }
 
-.case-client-logo.logo-auction {
-  height: 24px;
-}
-
-.case-client-logo.logo-zoom {
-  height: 26px;
-  filter: brightness(0) invert(1);
-}
-
 .case-client-logo.logo-amqp {
   height: 30px;
 }
@@ -353,6 +373,19 @@ onBeforeUnmount(() => clearInterval(timer))
   gap: 8px !important;
   padding: 8px 14px !important;
   text-decoration: none;
+  font-size: 0.8125rem;
+}
+
+.case-link-highlight {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.case-link-highlight:hover {
+  background: var(--accent) !important;
+  color: #0b0f17 !important;
 }
 
 .case-link-icon,
@@ -365,5 +398,34 @@ onBeforeUnmount(() => clearInterval(timer))
 
 .case-link-label {
   white-space: nowrap !important;
+}
+
+.projects-view-all {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-view-all-cs {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-view-all-cs:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
 }
 </style>

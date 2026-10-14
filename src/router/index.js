@@ -8,6 +8,24 @@ const routes = [
     component: HomeView,
   },
   {
+    path: '/about',
+    name: 'about',
+    component: () => import('@/views/AboutView.vue'),
+  },
+  {
+    path: '/case-studies',
+    alias: '/projects',
+    name: 'case-studies',
+    component: () => import('@/views/CaseStudiesView.vue'),
+  },
+  {
+    path: '/case-studies/:id',
+    alias: '/projects/:id',
+    name: 'case-study-detail',
+    component: () => import('@/views/CaseStudyDetailView.vue'),
+    props: true,
+  },
+  {
     path: '/blog',
     name: 'blog',
     component: () => import('@/views/BlogView.vue'),
@@ -28,7 +46,7 @@ const routes = [
     name: 'tools-json',
     component: () => import('@/views/tools/JsonToolView.vue'),
   },
-  // Anything unknown falls back to the resume.
+  // Anything unknown falls back to home.
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
