@@ -62,7 +62,7 @@ Hassaan is a recognized contributor in the PHP and Laravel ecosystem:
 Hassaan has delivered production systems for government entities, enterprise retail, and high-volume digital platforms:
 
 1. **UAE SWAT Challenge (Dubai Police Event Platform):**
-   - High-traffic official competition platform handling international law enforcement team rosters, tournament draws, live leaderboards, and spectator ticketing workflows.
+   - Official competition and registration platform handling international law enforcement team rosters, tournament draws, live leaderboards, and spectator ticketing workflows. Built with WordPress, custom PHP, and Elementor, hosted on AWS.
    - URL: https://www.uaeswatchallenge.com/en
 
 2. **Haier Mall (Enterprise Retail & Appliance E-Commerce):**

@@ -20,17 +20,17 @@ export const projects = [
     constraints:
       'Strict security requirements under Dubai Police infrastructure, burst traffic from global law enforcement audiences during competition days, bilingual content delivery, and sub-second leaderboard freshness.',
     approach:
-      'Architected a responsive, decoupled web platform with Azure Cloud asset offloading, optimized tournament draw engine, synchronized leaderboard feeds, and integration with ticketing provider APIs.',
+      'Architected and customized a robust WordPress & PHP platform powered by Elementor Page Builder and hosted on high-availability AWS cloud infrastructure. Engineered custom PHP modules for tournament draw management, team rosters, synchronized leaderboard feeds, and integration with event ticketing workflows.',
     delivery:
-      'Frontend and backend engineering, system performance optimization, API integrations, and production stability during event operations.',
+      'WordPress & PHP custom engineering, Elementor architecture, AWS hosting configuration, caching performance tuning, and zero-downtime operational stability during event operations.',
     outcome:
       'Supported seamless international visitor registrations, zero downtime during tournament traffic surges, and real-time score dissemination across teams from 40+ countries.',
-    stack: ['Next.js', 'Vue', 'Azure Cloud', 'RESTful APIs', 'Tailwind CSS'],
+    stack: ['WordPress', 'PHP', 'Elementor', 'AWS Hosting', 'MySQL', 'REST APIs'],
     impact: [
       '40+ Global Teams',
-      'Dubai Police Event',
+      'Dubai Police Platform',
       'Zero Downtime Under Spikes',
-      'Azure Storage & CDN',
+      'AWS Cloud Hosting',
     ],
     links: [
       { label: 'Official Platform', href: 'https://www.uaeswatchallenge.com/en', icon: 'globe' },
@@ -39,15 +39,15 @@ export const projects = [
       type: 'schema',
       rows: [
         { boxes: [{ icon: 'Globe', text: 'Global Visitor Pass & Teams', highlight: true }] },
-        { boxes: [{ icon: 'Shield', text: 'Dubai Police Security & Cloudflare CDN' }] },
+        { boxes: [{ icon: 'Shield', text: 'Dubai Police Security & AWS Hosting' }] },
         {
           boxes: [
             { icon: 'Trophy', text: 'Leaderboard', small: true },
-            { icon: 'Zap', text: 'Draw Engine', small: true },
+            { icon: 'Zap', text: 'Custom PHP', small: true },
             { icon: 'Check', text: 'Ticketing API', small: true },
           ],
         },
-        { boxes: [{ icon: 'Check', text: 'Live Tournament Results · Sync', highlight: true }] },
+        { boxes: [{ icon: 'Check', text: 'WordPress + Elementor Live Platform', highlight: true }] },
       ],
     },
   },

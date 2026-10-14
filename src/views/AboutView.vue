@@ -120,7 +120,7 @@
                   <span class="milestone-year mono">Government Scale</span>
                   <strong class="milestone-title">UAE SWAT Challenge (Dubai Police)</strong>
                   <p class="milestone-desc">
-                    Engineered high-concurrency event scoring and spectator registration portal under strict Dubai Police infrastructure guidelines, serving teams from 40+ countries without a single outage.
+                    Delivered the official tournament and registration portal for Dubai Police using WordPress, PHP, and Elementor on AWS hosting, serving teams from 40+ countries without a single outage.
                   </p>
                 </div>
               </li>
