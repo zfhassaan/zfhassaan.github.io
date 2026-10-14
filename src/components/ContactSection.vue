@@ -98,12 +98,12 @@
                     <a href="https://www.upwork.com/freelancers/zfhassaan" target="_blank" rel="noopener"
                         class="contact-link upwork-link magnetic" title="Hire with Upwork Escrow Protection">
                         <Briefcase :size="16" class="contact-link-icon" />
-                        <span class="contact-link-text">Upwork (Top Rated)</span>
+                        <span class="contact-link-text">Upwork </span>
                     </a>
                     <a href="https://www.fiverr.com/sellers/alphapk/" target="_blank" rel="noopener"
                         class="contact-link fiverr-link magnetic" title="Hire on Fiverr with 5-Star Reviews">
                         <Star :size="16" class="contact-link-icon" />
-                        <span class="contact-link-text">Fiverr (5★)</span>
+                        <span class="contact-link-text">Fiverr </span>
                     </a>
                     <a href="https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf" download="Hassaan_Ali_Senior_Software_Engineer_Resume.pdf" class="contact-link recruiter-link magnetic" title="Download technical résumé for recruiters and engineering managers">
                         <FileText :size="16" class="contact-link-icon" />
