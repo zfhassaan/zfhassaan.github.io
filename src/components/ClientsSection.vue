@@ -74,15 +74,28 @@
           </div>
 
           <div class="client-card-footer">
-            <a
-              :href="c.url"
-              target="_blank"
-              rel="noopener"
-              class="client-visit-btn magnetic"
-            >
-              <span>{{ c.ctaLabel }}</span>
-              <ExternalLink :size="13" class="btn-ext-icon" />
-            </a>
+            <div class="client-card-actions">
+              <a
+                :href="c.url"
+                target="_blank"
+                rel="noopener"
+                class="client-visit-btn magnetic"
+              >
+                <span>{{ c.ctaLabel }}</span>
+                <ExternalLink :size="13" class="btn-ext-icon" />
+              </a>
+              <a
+                v-if="c.githubUrl"
+                :href="c.githubUrl"
+                target="_blank"
+                rel="noopener"
+                class="client-github-btn magnetic"
+                title="View GitHub Repository"
+              >
+                <Github :size="13" class="btn-ext-icon" />
+                <span>GitHub</span>
+              </a>
+            </div>
             <span class="client-domain mono">{{ c.displayUrl }}</span>
           </div>
         </article>
@@ -92,7 +105,7 @@
 </template>
 
 <script setup>
-import { CheckCircle2, ExternalLink } from 'lucide-vue-next'
+import { CheckCircle2, ExternalLink, Github } from 'lucide-vue-next'
 
 const clients = [
   {
@@ -170,6 +183,26 @@ const clients = [
       'Automated custom B2B quote-request workflow'
     ],
     ctaLabel: 'Visit Zoom Packaging'
+  },
+  {
+    id: 'laravel-amqp',
+    name: 'Laravel AMQP',
+    url: 'https://zfhassaan.github.io/laravel-amqp',
+    githubUrl: 'https://github.com/bschmitt/laravel-amqp',
+    displayUrl: 'zfhassaan.github.io/laravel-amqp',
+    logo: '/images/clients/laravel-amqp.png',
+    logoClass: 'logo-amqp',
+    badge: 'Open Source · 2.2M+ Installs',
+    accentColor: '#f97316',
+    tag: 'RabbitMQ Messaging Toolkit · Laravel & Lumen',
+    description:
+      'High-throughput AMQP messaging package powering asynchronous queuing, event-driven microservices, and reliable dead-letter exchange (DLQ) retry pipelines.',
+    highlights: [
+      '2.2M+ lifetime installs across production architectures',
+      'Collaborator on upstream repository (bschmitt/laravel-amqp)',
+      'Continuous CI passing across Laravel 8→13 and PHP 7.3→8.5'
+    ],
+    ctaLabel: 'Visit Official Website'
   }
 ]
 </script>
@@ -344,6 +377,10 @@ const clients = [
   max-height: 24px;
 }
 
+.logo-amqp {
+  max-height: 34px;
+}
+
 .client-badge {
   display: inline-flex;
   align-items: center;
@@ -439,6 +476,39 @@ const clients = [
   gap: 12px;
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.client-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.client-github-btn {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: auto;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.client-github-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .client-visit-btn {

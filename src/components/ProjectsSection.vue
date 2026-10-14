@@ -331,6 +331,10 @@ onBeforeUnmount(() => clearInterval(timer))
   filter: brightness(0) invert(1);
 }
 
+.case-client-logo.logo-amqp {
+  height: 30px;
+}
+
 .case-links {
   display: flex;
   flex-direction: row;

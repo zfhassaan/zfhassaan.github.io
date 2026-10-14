@@ -181,6 +181,55 @@ export const projects = [
     },
   },
   {
+    id: 'laravel-amqp',
+    logo: '/images/clients/laravel-amqp.png',
+    logoClass: 'logo-amqp',
+    tag: 'Open Source · Upstream Collaborator · 2.2M+ Downloads',
+    title: 'Laravel AMQP — RabbitMQ Messaging Architecture',
+    href: 'https://zfhassaan.github.io/laravel-amqp',
+    subtitle:
+      'High-throughput AMQP messaging package by <span class="mono">bschmitt/laravel-amqp</span> — Collaborator on upstream repository with 6 merged PRs and independent documentation.',
+    problem:
+      'The community package <span class="mono">bschmitt/laravel-amqp</span> (2.2M+ downloads) had drifted behind modern Laravel/PHP releases, blocking teams from upgrading to Laravel 10/11/12/13 without breaking their message queue and async worker infrastructure.',
+    constraints:
+      'Must preserve strict backward compatibility for high-volume enterprise systems while refactoring internal AMQP protocol handlers and modernizing test matrices across PHP and Laravel versions.',
+    approach:
+      'Refactored connection management, upgraded to modern PHP 8 typed properties, standardized typed RPC messaging patterns, implemented dead-letter exchange (DLQ) retry guidance, and rebuilt modular documentation portal.',
+    delivery:
+      'Promoted to collaborator on the upstream repository with 6 merged PRs; modernized the multi-version GitHub Actions CI test suite; authored and published the official documentation portal at <span class="mono">zfhassaan.github.io/laravel-amqp</span>.',
+    outcome:
+      'Restored enterprise upgrade paths for 2.2M+ installations; continuous CI matrix passing across Laravel 8→13 and PHP 7.3→8.5 with zero reported regressions.',
+    stack: ['Laravel', 'PHP 8', 'RabbitMQ', 'php-amqplib', 'GitHub Actions', 'PHPUnit'],
+    impact: [
+      '2.2M+ Package Installs',
+      '6 Merged Upstream PRs',
+      'Upstream Collaborator Access',
+      'Laravel 8→13 · PHP 7.3→8.5',
+    ],
+    links: [
+      { label: 'Official Website', href: 'https://zfhassaan.github.io/laravel-amqp', icon: 'globe' },
+      { label: 'GitHub Repository', href: 'https://github.com/bschmitt/laravel-amqp', icon: 'github' },
+      { label: 'Docs Guide', href: 'https://zfhassaan.github.io/laravel-amqp#guide', icon: 'docs' },
+    ],
+    visual: {
+      type: 'terminal',
+      title: 'UserService.php',
+      lines: [
+        '<span class="t-comment">// Typed RPC over RabbitMQ</span>',
+        null,
+        '<span class="t-key">$user</span> = <span class="t-fn">Rpc</span>::<span class="t-fn">call</span>(',
+        '&nbsp;&nbsp;<span class="t-val">UserService</span>::<span class="t-key">class</span>,',
+        '&nbsp;&nbsp;<span class="t-fn">GetUserRequest</span>::<span class="t-fn">make</span>([<span class="t-str">\'id\'</span> =&gt; <span class="t-val">42</span>])',
+        ');',
+        null,
+        '<span class="t-comment">// Dispatch a typed message</span>',
+        '<span class="t-fn">OrderPlaced</span>::<span class="t-fn">dispatch</span>([<span class="t-str">\'order_id\'</span> =&gt; <span class="t-val">$id</span>]);',
+        null,
+        '<span class="t-dim">// 2.2M+ installs · 6 PRs merged · upstream up to date ✓</span>',
+      ],
+    },
+  },
+  {
     id: 'jazzcash',
     tag: 'Production SDK · Fintech · Pakistan',
     title: 'JazzCash Laravel SDK',
@@ -306,53 +355,7 @@ export const projects = [
       ],
     },
   },
-  {
-    id: 'laravel-amqp',
-    tag: 'Open Source · Collaborator · 2.2M+ Downloads',
-    title: 'Laravel AMQP — RabbitMQ Toolkit',
-    href: 'https://github.com/bschmitt/laravel-amqp',
-    subtitle:
-      'Community package by <span class="mono">bschmitt/laravel-amqp</span> — Collaborator on upstream repository with 6 merged PRs.',
-    problem:
-      'The community package <span class="mono">bschmitt/laravel-amqp</span> (2.2M+ downloads) had drifted behind modern Laravel/PHP releases, blocking teams from upgrading to Laravel 10/11/12 without breaking their message queue infrastructure.',
-    constraints:
-      'Must preserve strict backward compatibility for high-volume enterprise systems while refactoring internal AMQP protocol handlers and modernizing test matrices.',
-    approach:
-      'Refactored connection management, upgraded to modern PHP 8 typed properties, standardized typed RPC messaging patterns, implemented dead-letter exchange (DLQ) retry guidance, and rebuilt modular documentation.',
-    delivery:
-      'Promoted to collaborator on the upstream repository with 6 merged PRs; modernized the multi-version GitHub Actions CI test suite; independently built and published comprehensive documentation at <span class="mono">zfhassaan.github.io/laravel-amqp</span>.',
-    outcome:
-      'Restored enterprise upgrade paths for 2.2M+ installations; continuous CI matrix passing across Laravel 8→13 and PHP 7.3→8.5 with zero reported regressions.',
-    stack: ['Laravel', 'PHP 8', 'RabbitMQ', 'php-amqplib', 'GitHub Actions', 'PHPUnit'],
-    impact: [
-      '6 Merged Upstream PRs',
-      'Collaborator · Upstream Access',
-      'Rebuilt Docs · Modern Features',
-      'Laravel 8→13 · PHP 7.3→8.5',
-    ],
-    links: [
-      { label: 'Docs', href: 'https://zfhassaan.github.io/laravel-amqp', icon: 'docs' },
-      { label: 'My fork', href: 'https://github.com/zfhassaan/laravel-amqp', icon: 'github' },
-      { label: 'Upstream', href: 'https://github.com/bschmitt/laravel-amqp', icon: 'github' },
-    ],
-    visual: {
-      type: 'terminal',
-      title: 'UserService.php',
-      lines: [
-        '<span class="t-comment">// Typed RPC over RabbitMQ</span>',
-        null,
-        '<span class="t-key">$user</span> = <span class="t-fn">Rpc</span>::<span class="t-fn">call</span>(',
-        '&nbsp;&nbsp;<span class="t-val">UserService</span>::<span class="t-key">class</span>,',
-        '&nbsp;&nbsp;<span class="t-fn">GetUserRequest</span>::<span class="t-fn">make</span>([<span class="t-str">\'id\'</span> =&gt; <span class="t-val">42</span>])',
-        ');',
-        null,
-        '<span class="t-comment">// Dispatch a typed message</span>',
-        '<span class="t-fn">OrderPlaced</span>::<span class="t-fn">dispatch</span>([<span class="t-str">\'order_id\'</span> =&gt; <span class="t-val">$id</span>]);',
-        null,
-        '<span class="t-dim">// 6 PRs merged · collaborator · upstream up to date ✓</span>',
-      ],
-    },
-  },
+
   {
     id: 'dbx',
     tag: 'DevOps · Go · Systems Tooling',
