@@ -8,7 +8,7 @@
                     <h2 class="section-h2">From the Blog</h2>
                 </div>
                 <p class="blog-section-intro text-muted reveal">
-                    Articles, study material and engineering notes — pulled live from my Blogger feed.
+                    In-depth technical guides, architecture notes, and tutorials on Laravel, distributed queues, and backend engineering.
                 </p>
             </div>
 
@@ -45,12 +45,14 @@
                         <div class="home-blog-body">
                             <div class="home-blog-meta">
                                 <span>{{ formatDate(post.published) }}</span>
+                                <span class="meta-dot">·</span>
+                                <span>{{ post.readingTime || '5 min read' }}</span>
                                 <span v-if="post.tags.length" class="home-blog-tag">{{ post.tags[0] }}</span>
                             </div>
                             <h3 class="home-blog-title">{{ post.title }}</h3>
                             <p class="home-blog-excerpt">{{ post.excerpt }}…</p>
                             <span class="home-blog-cta">
-                                Read
+                                Read Article
                                 <ArrowRight :size="14" />
                             </span>
                         </div>
@@ -59,7 +61,7 @@
 
                 <div class="home-blog-foot reveal">
                     <router-link :to="{ name: 'blog' }" class="home-blog-btn home-blog-btn--primary">
-                        View all posts
+                        <span>Explore All Articles</span>
                         <ArrowRight :size="14" />
                     </router-link>
                 </div>
@@ -168,11 +170,15 @@ onMounted(loadInitial)
 .home-blog-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.05em;
     color: var(--text-muted);
+}
+
+.meta-dot {
+    color: var(--border);
 }
 
 .home-blog-tag {

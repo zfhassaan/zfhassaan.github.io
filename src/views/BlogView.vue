@@ -3,11 +3,26 @@
         <section class="section">
             <div class="container">
                 <div class="blog-head">
-                    <div class="section-label">Writing · Notes &amp; Tutorials</div>
-                    <h1 class="section-h2">Blog</h1>
+                    <div class="section-label">Engineering Notes &amp; Tutorials</div>
+                    <h1 class="section-h2">Technical Articles</h1>
                     <p class="blog-intro">
-                        Articles, study material and notes — pulled live from my Blogger feed.
+                        In-depth guides on Laravel, RabbitMQ distributed architectures, AWS deployments, payment gateway patterns, and backend performance engineering.
                     </p>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="category-filters" role="tablist" aria-label="Article categories">
+                    <button
+                        v-for="cat in categories"
+                        :key="cat.id"
+                        type="button"
+                        class="filter-pill"
+                        :class="{ active: selectedCategory === cat.id }"
+                        @click="selectedCategory = cat.id"
+                    >
+                        <span>{{ cat.label }}</span>
+                        <span v-if="cat.id === 'all'" class="filter-count">({{ posts.length }})</span>
+                    </button>
                 </div>
 
                 <!-- Loading -->
@@ -28,15 +43,20 @@
                 </div>
 
                 <!-- Empty -->
-                <div v-else-if="!posts.length" class="blog-state">
-                    <p>No posts found.</p>
+                <div v-else-if="!filteredPosts.length" class="blog-state">
+                    <p>No articles found in this category.</p>
+                    <button class="filter-pill active" @click="selectedCategory = 'all'">Show all articles</button>
                 </div>
 
                 <!-- Posts -->
                 <template v-else>
                     <div class="blog-grid">
-                        <router-link v-for="post in posts" :key="post.id" class="blog-card"
-                            :to="{ name: 'blog-post', params: { id: post.id } }">
+                        <router-link
+                            v-for="post in filteredPosts"
+                            :key="post.id"
+                            class="blog-card"
+                            :to="{ name: 'blog-post', params: { id: post.id } }"
+                        >
                             <div class="blog-thumb">
                                 <img v-if="post.thumbnail" :src="post.thumbnail" :alt="post.title" loading="lazy" />
                                 <div v-else class="blog-thumb-fallback">{{ initial(post.title) }}</div>
@@ -44,21 +64,23 @@
                             <div class="blog-card-body">
                                 <div class="blog-card-meta">
                                     <span>{{ formatDate(post.published) }}</span>
+                                    <span class="meta-dot">·</span>
+                                    <span>{{ post.readingTime || '5 min read' }}</span>
                                     <span v-if="post.tags.length" class="blog-card-tag">{{ post.tags[0] }}</span>
                                 </div>
                                 <h2 class="blog-card-title">{{ post.title }}</h2>
                                 <p class="blog-card-excerpt">{{ post.excerpt }}…</p>
                                 <span class="blog-card-cta">
-                                    Read
+                                    Read Article
                                     <ArrowRight :size="14" />
                                 </span>
                             </div>
                         </router-link>
                     </div>
 
-                    <div v-if="hasMore" class="blog-more">
+                    <div v-if="hasMore && selectedCategory === 'all'" class="blog-more">
                         <button class="blog-btn" :disabled="loadingMore" @click="loadMore">
-                            {{ loadingMore ? 'Loading…' : 'Load more posts' }}
+                            {{ loadingMore ? 'Loading…' : 'Load more articles' }}
                         </button>
                     </div>
                     <p v-if="error && posts.length" class="blog-inline-error">{{ error }}</p>
@@ -69,12 +91,33 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
 import { useBlogFeed } from '@/composables/useBlogFeed'
 import { formatDate } from '@/lib/format'
 
 const { posts, loading, loadingMore, error, hasMore, loadInitial, loadMore, retry } = useBlogFeed()
+
+const categories = [
+    { id: 'all', label: 'All Articles' },
+    { id: 'laravel', label: 'Laravel & PHP', match: ['laravel', 'php', 'lumen'] },
+    { id: 'architecture', label: 'Architecture & Queues', match: ['microservices', 'docker', 'rabbitmq', 'amqp', 'distributed'] },
+    { id: 'devops', label: 'DevOps & AWS', match: ['aws', 'lambda', 'ci', 'cd', 'deployments', 'ssh', 'bash'] },
+    { id: 'apis', label: 'APIs & Web Tools', match: ['api', 'rest', 'javascript', 'frontend', 'ux', 'tools'] },
+]
+
+const selectedCategory = ref('all')
+
+const filteredPosts = computed(() => {
+    if (selectedCategory.value === 'all') return posts.value
+    const cat = categories.find((c) => c.id === selectedCategory.value)
+    if (!cat || !cat.match) return posts.value
+    return posts.value.filter((post) => {
+        const postTags = (post.tags || []).map((t) => t.toLowerCase())
+        const titleWords = (post.title || '').toLowerCase()
+        return cat.match.some((m) => postTags.some((t) => t.includes(m)) || titleWords.includes(m))
+    })
+})
 
 function initial(title) {
     return (title || '?').trim().charAt(0).toUpperCase()
@@ -89,14 +132,13 @@ onMounted(loadInitial)
     padding-top: 72px;
 }
 
-/* Override the global 1200px cap so the listing spans the full viewport. */
 .container--full {
     max-width: none;
 }
 
 .blog-head {
     max-width: 660px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .blog-intro {
@@ -104,6 +146,46 @@ onMounted(loadInitial)
     font-size: 0.95rem;
     line-height: 1.7;
     color: var(--text-secondary);
+}
+
+/* ── Category Filters ── */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+    border-color: rgba(45, 212, 191, 0.4);
+    color: var(--text-primary);
+}
+
+.filter-pill.active {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: var(--accent);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.filter-count {
+    opacity: 0.7;
+    font-size: 10.5px;
 }
 
 .blog-grid {
@@ -119,6 +201,7 @@ onMounted(loadInitial)
     border-radius: var(--radius);
     overflow: hidden;
     background: var(--card);
+    text-decoration: none;
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -165,11 +248,16 @@ onMounted(loadInitial)
 .blog-card-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 6px;
     font-family: var(--font-mono);
     font-size: 11px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     color: var(--text-muted);
+}
+
+.meta-dot {
+    color: var(--border);
 }
 
 .blog-card-tag {
@@ -177,6 +265,8 @@ onMounted(loadInitial)
     border: 1px solid var(--border);
     border-radius: 999px;
     padding: 2px 9px;
+    font-size: 10.5px;
+    background: rgba(45, 212, 191, 0.04);
 }
 
 .blog-card-title {
@@ -219,6 +309,7 @@ onMounted(loadInitial)
     gap: 16px;
     color: var(--text-secondary);
     font-size: 0.95rem;
+    padding: 32px 0;
 }
 
 .blog-more {

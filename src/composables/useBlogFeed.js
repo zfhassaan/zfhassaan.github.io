@@ -73,6 +73,26 @@ function stripHtml(html) {
     return (tmp.textContent || '').replace(/\s+/g, ' ').trim()
 }
 
+function cleanBloggerHtml(html) {
+    if (!html) return ''
+    return html
+        // Drop embedded <style> tags so rogue rules (e.g. div { color: black }) never pollute the theme
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+        // Drop Blogger footer ads and AdSense containers
+        .replace(/<div class="blogger-post-footer"[^>]*>[\s\S]*?<\/div>/gi, '')
+        .replace(/<ins class="adsbygoogle"[^>]*>[\s\S]*?<\/ins>/gi, '')
+        // Only strip out Google AdSense scripts
+        .replace(/<script[^>]*src=["'][^"']*adsbygoogle\.js["'][^>]*><\/script>/gi, '')
+        .replace(/<script[^>]*>\s*\(adsbygoogle\s*=\s*window\.adsbygoogle\s*\|\|\s*\[\]\)\.push\(\{.*?\}\);\s*<\/script>/gi, '')
+        .trim()
+}
+
+function calculateReadingTime(text) {
+    const words = (text || '').trim().split(/\s+/).filter(Boolean).length
+    const minutes = Math.max(1, Math.ceil(words / 200))
+    return `${minutes} min read`
+}
+
 function firstImage(html) {
     const m = (html || '').match(/<img[^>]+src=["']([^"']+)["']/i)
     return m ? m[1] : ''
@@ -93,20 +113,26 @@ function readPostId(entry) {
 }
 
 function normalize(entry) {
-    const html = entry.content?.$t || entry.summary?.$t || ''
+    const rawHtml = entry.content?.$t || entry.summary?.$t || ''
+    const html = cleanBloggerHtml(rawHtml)
+    const text = stripHtml(rawHtml)
     const alt = (entry.link || []).find((l) => l.rel === 'alternate' && l.type === 'text/html')
-    const thumb = upscaleThumb(entry['media$thumbnail']?.url || '') || firstImage(html)
+    const thumb = upscaleThumb(entry['media$thumbnail']?.url || '') || firstImage(rawHtml)
+    const rawAuthor = entry.author?.[0]?.name?.$t || ''
+    const author = (!rawAuthor || rawAuthor.toLowerCase() === 'admin') ? 'Hassaan Ali' : rawAuthor
+
     return {
         id: readPostId(entry),
         title: entry.title?.$t || 'Untitled',
         url: alt?.href || '',
         published: entry.published?.$t || '',
         updated: entry.updated?.$t || '',
-        author: entry.author?.[0]?.name?.$t || '',
+        author,
         tags: (entry.category || []).map((c) => c.term).filter(Boolean),
         thumbnail: thumb,
         html,
-        excerpt: stripHtml(html).slice(0, 180),
+        excerpt: text.slice(0, 180),
+        readingTime: calculateReadingTime(text),
     }
 }
 
