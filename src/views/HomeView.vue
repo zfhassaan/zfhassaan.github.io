@@ -2,11 +2,14 @@
   <main>
     <HeroSection />
     <MetricsSection />
+    <ClientsSection />
+    <TechStackMarquee />
+    <ExpertiseSection />
     <ProjectsSection />
     <OpenSourceSection />
     <PlaygroundSection />
-    <ExpertiseSection />
-    <TimelineSection />
+    <ProcessSection />
+    <!-- Timeline Section -->
     <BlogSection />
     <ContactSection />
   </main>
@@ -18,11 +21,14 @@ import { initPortfolioEngine } from '@/composables/portfolio-engine'
 
 import HeroSection from '@/components/HeroSection.vue'
 import MetricsSection from '@/components/MetricsSection.vue'
+import ClientsSection from '@/components/ClientsSection.vue'
+import TechStackMarquee from '@/components/TechStackMarquee.vue'
+import ExpertiseSection from '@/components/ExpertiseSection.vue'
 import ProjectsSection from '@/components/ProjectsSection.vue'
 import OpenSourceSection from '@/components/OpenSourceSection.vue'
 import PlaygroundSection from '@/components/PlaygroundSection.vue'
-import ExpertiseSection from '@/components/ExpertiseSection.vue'
-import TimelineSection from '@/components/TimelineSection.vue'
+import ProcessSection from '@/components/ProcessSection.vue'
+// import TimelineSection from '@/components/TimelineSection.vue'
 import BlogSection from '@/components/BlogSection.vue'
 import ContactSection from '@/components/ContactSection.vue'
 

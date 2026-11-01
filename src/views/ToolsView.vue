@@ -35,10 +35,7 @@
                         <p class="tool-desc">{{ tool.desc }}</p>
                         <span class="tool-cta">
                             Open
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
+                            <ArrowRight :size="14" />
                         </span>
                     </router-link>
                 </div>
@@ -169,7 +166,10 @@ const filtered = computed(() => {
 
 .tool-cta {
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    white-space: nowrap;
+    width: auto;
     gap: 6px;
     margin-top: auto;
     font-family: var(--font-mono);
@@ -177,5 +177,9 @@ const filtered = computed(() => {
     font-weight: 500;
     letter-spacing: 0.06em;
     color: var(--accent);
+}
+
+.tool-cta svg {
+    flex-shrink: 0;
 }
 </style>

@@ -3,43 +3,312 @@
     <section id="contact" class="section">
         <div class="container">
             <div class="contact-inner reveal">
-                <div class="section-label">Contact</div>
-                <h2 class="contact-h2">Let's Build Something<br>at Scale</h2>
+                <div class="section-label">Start a Conversation</div>
+                <h2 class="contact-h2">Have a Technical Challenge?<br>Let's Discuss Your Project.</h2>
                 <p class="contact-sub">
-                    Available for full-time roles, contract engagements, and technical consulting. If you're building a
-                    SaaS platform, ERP system, or need engineering leadership — let's talk.
+                    Whether you are architecting a new platform, integrating mission-critical payment gateways, or scaling an existing backend system — I'm available for direct client engagements, remote contracts, and technical consulting.
                 </p>
-                <div class="contact-links">
-                    <a href="mailto:zfhassaan@gmail.com" class="contact-link magnetic">
-                        <span class="contact-link-icon">✉️</span>
-                        zfhassaan@gmail.com
-                    </a>
-                    <a href="https://github.com/zfhassaan" target="_blank" rel="noopener"
-                        class="contact-link magnetic !flex flex-row d-flex">
-                        <svg class="contact-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        GitHub
-                    </a>
-                    <a href="https://linkedin.com/in/zfhassaan" target="_blank" rel="noopener"
-                        class="contact-link magnetic !flex flex-row">
-                        <svg class="contact-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg>
-                        LinkedIn
-                    </a>
-                    <a href="#" class="contact-link magnetic !flex flex-row">
-                        <span class="contact-link-icon">📄</span>
-                        Resume / CV
-                    </a>
+
+                <!-- Direct Email Card -->
+                <div class="email-direct-card">
+                    <div class="email-card-header">
+                        <div class="email-icon-badge">
+                            <Mail :size="24" class="text-accent" />
+                        </div>
+                        <div class="email-info">
+                            <span class="email-label mono">DIRECT INQUIRIES &amp; ENGAGEMENTS</span>
+                            <a :href="mailToLink" class="email-address mono">zfhassaan@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="email-actions">
+                        <a :href="mailToLink" class="btn-primary magnetic email-act-btn">
+                            <Send :size="16" />
+                            <span>Send Email</span>
+                        </a>
+                        <a
+                            :href="gmailLink"
+                            target="_blank"
+                            rel="noopener"
+                            class="btn-secondary magnetic email-act-btn"
+                            title="Compose directly in Gmail Web"
+                        >
+                            <ExternalLink :size="16" />
+                            <span>Open in Gmail</span>
+                        </a>
+                        <button
+                            type="button"
+                            class="btn-secondary magnetic email-act-btn copy-btn"
+                            @click="copyEmail"
+                        >
+                            <Check v-if="copied" :size="16" class="text-accent" />
+                            <Copy v-else :size="16" />
+                            <span>{{ copied ? 'Copied to Clipboard' : 'Copy Email' }}</span>
+                        </button>
+                    </div>
+
+                    <div class="email-guarantee">
+                        <div class="avail-dot"></div>
+                        <span>Response guaranteed within 24 hours · Available for global remote contracts &amp; consulting</span>
+                    </div>
                 </div>
-                <div class="contact-availability">
-                    <div class="avail-dot"></div>
-                    Available for new projects — response within 24 hours
+
+                <!-- Direct profiles (No Upwork, No Fiverr) -->
+                <div class="contact-links">
+                    <a
+                        href="https://linkedin.com/in/zfhassaan"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-link magnetic"
+                        title="Connect on LinkedIn"
+                    >
+                        <Linkedin :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">LinkedIn Profile</span>
+                        <ArrowUpRight :size="14" class="contact-link-arrow" />
+                    </a>
+                    <a
+                        href="https://github.com/zfhassaan"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-link magnetic"
+                        title="View GitHub Repositories"
+                    >
+                        <Github :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">GitHub Profile</span>
+                        <ArrowUpRight :size="14" class="contact-link-arrow" />
+                    </a>
+                    <a
+                        href="https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf"
+                        download="Hassaan_Ali_Senior_Software_Engineer_Resume.pdf"
+                        class="contact-link recruiter-link magnetic"
+                        title="Download technical résumé for recruiters and engineering managers"
+                    >
+                        <FileText :size="16" class="contact-link-icon" />
+                        <span class="contact-link-text">Download Résumé (PDF)</span>
+                        <ArrowUpRight :size="14" class="contact-link-arrow" />
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 </template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import {
+    Mail,
+    Send,
+    ExternalLink,
+    Copy,
+    Check,
+    Linkedin,
+    Github,
+    FileText,
+    ArrowUpRight
+} from 'lucide-vue-next'
+
+const copied = ref(false)
+
+const emailSubject = 'Project Discussion: Technical Consultation & Engineering Inquiry'
+const emailBody = `Hi Hassaan,
+
+I came across your portfolio and would like to discuss an engineering project with you.
+
+1. Project Overview & Goals:
+[Briefly describe what you are looking to build, audit, or scale]
+
+2. Target Timeline:
+[e.g., Immediate / Within 1 month / Flexible]
+
+3. Tech Stack / Existing Codebase:
+[e.g., Laravel / Node.js / Vue / PostgreSQL / AWS / New project]
+
+Best regards,
+[Your Name]
+[Company / Organization]`
+
+const mailToLink = computed(() => {
+    return `mailto:zfhassaan@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+})
+
+const gmailLink = computed(() => {
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=zfhassaan@gmail.com&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+})
+
+function copyEmail() {
+    navigator.clipboard?.writeText('zfhassaan@gmail.com')
+    copied.value = true
+    setTimeout(() => {
+        copied.value = false
+    }, 2500)
+}
+</script>
+
+<style scoped>
+.email-direct-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px;
+    margin: 36px 0 32px 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 640px) {
+    .email-direct-card {
+        padding: 24px 20px;
+    }
+}
+
+.email-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.email-icon-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.email-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.email-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+}
+
+.email-address {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.email-address:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 640px) {
+    .email-address {
+        font-size: 1.1rem;
+        word-break: break-all;
+    }
+}
+
+.email-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.email-act-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0b0f17;
+    border: 1px solid var(--accent);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover, #34d399);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent);
+}
+
+.email-guarantee {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+    flex-shrink: 0;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.contact-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.contact-link-arrow {
+    opacity: 0.5;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.contact-link:hover .contact-link-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+}
+</style>

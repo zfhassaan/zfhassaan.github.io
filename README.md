@@ -1,9 +1,10 @@
-# Hassaan Ali — Senior Full Stack Engineer
+# Hassaan Ali — Senior Backend & Full-Stack Engineer
 
-> Personal portfolio of **Hassaan Ali (`zfhassaan`)** — a Senior Full Stack / Backend Engineer specializing in **Laravel, Node.js, Vue.js, React, distributed systems, RabbitMQ, and payment‑gateway integrations for the Pakistan fintech ecosystem**.
+> **Complex technical problems. Reliable software solutions.**  
+> Helping startups and businesses build backend systems, integrate APIs and payment providers, and develop full-stack applications designed to work reliably in production.
 
-🔗 **Live site:** [zfhassaan.github.io](https://zfhassaan.github.io)
-📍 Lahore, Pakistan · Remote‑friendly · Open to roles, contracts & consulting
+🔗 **Live site:** [zfhassaan.github.io](https://zfhassaan.github.io)  
+📍 Lahore, Pakistan · Remote-friendly (US/EU timezone overlap) · Open to direct client projects, contracts & consulting
 
 [![Deploy to GitHub Pages](https://github.com/zfhassaan/zfhassaan.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/zfhassaan/zfhassaan.github.io/actions/workflows/deploy.yml)
 ![Vue](https://img.shields.io/badge/Vue-3-42b883?logo=vuedotjs&logoColor=white)

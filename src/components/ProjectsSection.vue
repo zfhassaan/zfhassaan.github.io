@@ -1,15 +1,14 @@
 <template>
-  <!-- ══ PROJECTS ══ -->
+  <!-- ══ PROJECTS & CASE STUDIES ══ -->
   <section id="projects" class="section" aria-labelledby="projects-heading">
     <div class="container">
       <div class="projects-header">
         <div class="reveal">
-          <div class="section-label">Featured Work</div>
-          <h2 id="projects-heading" class="section-h2">Case Studies</h2>
+          <div class="section-label">Featured Case Studies</div>
+          <h2 id="projects-heading" class="section-h2">Production Problems &amp; Solutions</h2>
         </div>
         <p class="projects-intro text-muted reveal">
-          Systems built for scale — not just to ship. Each project solved real business problems at production
-          load.
+          Selected high-impact production architectures solved for government scale, enterprise retail, and high-throughput messaging.
         </p>
       </div>
 
@@ -29,24 +28,45 @@
             >
               <div class="case-info">
                 <div>
-                  <div class="case-tag">{{ active.tag }}</div>
-                  <h3 class="case-h3" style="margin-top:12px">
-                    <a :href="active.href" target="_blank" rel="noopener">
+                  <div class="case-header-row">
+                    <img
+                      v-if="active.logo"
+                      :src="active.logo"
+                      :alt="`${active.title} logo`"
+                      class="case-client-logo"
+                      :class="active.logoClass"
+                    />
+                    <div class="case-tag">{{ active.tag }}</div>
+                  </div>
+                  <h3 class="case-h3" style="margin-top:10px">
+                    <router-link :to="{ name: 'case-study-detail', params: { id: active.id } }">
                       {{ active.title }}
-                    </a>
+                    </router-link>
                   </h3>
                   <p v-if="active.subtitle" class="case-sub" v-html="active.subtitle" />
                 </div>
                 <div class="case-meta">
-                  <div class="case-meta-row">
+                  <div v-if="active.problem" class="case-meta-row">
                     <div class="case-meta-label">Problem</div>
                     <div class="case-meta-value" v-html="active.problem" />
                   </div>
-                  <div class="case-meta-row">
-                    <div class="case-meta-label">Solution</div>
-                    <div class="case-meta-value" v-html="active.solution" />
+                  <div v-if="active.constraints" class="case-meta-row">
+                    <div class="case-meta-label">Constraints</div>
+                    <div class="case-meta-value" v-html="active.constraints" />
                   </div>
-                  <div class="case-meta-row">
+                  <div v-if="active.approach" class="case-meta-row">
+                    <div class="case-meta-label">Approach</div>
+                    <div class="case-meta-value" v-html="active.approach" />
+                  </div>
+                  <div v-if="active.delivery" class="case-meta-row">
+                    <div class="case-meta-label">Ownership</div>
+                    <div class="case-meta-value" v-html="active.delivery" />
+                  </div>
+                  <div v-if="active.outcome" class="case-meta-row">
+                    <div class="case-meta-label">Outcome</div>
+                    <div class="case-meta-value" v-html="active.outcome" />
+                  </div>
+                  <div v-if="active.stack" class="case-meta-row">
                     <div class="case-meta-label">Stack</div>
                     <div class="case-meta-value">
                       <div class="tech-tags">
@@ -54,8 +74,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="case-meta-row">
-                    <div class="case-meta-label">Impact</div>
+                  <div v-if="active.impact" class="case-meta-row">
+                    <div class="case-meta-label">Proof</div>
                     <div class="case-meta-value">
                       <div class="tech-tags">
                         <span v-for="item in active.impact" :key="item" class="impact-tag">{{ item }}</span>
@@ -66,6 +86,16 @@
                     <div class="case-meta-label">Links</div>
                     <div class="case-meta-value">
                       <div class="case-links">
+                        <!-- Primary CTA to single detail page -->
+                        <router-link
+                          :to="{ name: 'case-study-detail', params: { id: active.id } }"
+                          class="case-link case-link-highlight magnetic"
+                        >
+                          <BookOpen class="case-link-icon" :size="14" />
+                          <span class="case-link-label">Full Case Study</span>
+                          <ArrowRight class="case-link-arrow" :size="12" />
+                        </router-link>
+
                         <a
                           v-for="link in active.links"
                           :key="link.href + link.label"
@@ -74,23 +104,12 @@
                           rel="noopener"
                           class="case-link magnetic"
                         >
-                          <span v-if="link.icon === 'packagist'" class="case-link-icon">📦</span>
-                          <span v-else-if="link.icon === 'docs'" class="case-link-icon">📖</span>
-                          <svg
-                            v-else-if="link.icon === 'github'"
-                            class="case-link-icon"
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                            />
-                          </svg>
-                          {{ link.label }}
-                          <span class="case-link-arrow">↗</span>
+                          <Box v-if="link.icon === 'packagist'" class="case-link-icon" :size="14" />
+                          <BookOpen v-else-if="link.icon === 'docs'" class="case-link-icon" :size="14" />
+                          <Github v-else-if="link.icon === 'github'" class="case-link-icon" :size="14" />
+                          <Globe v-else-if="link.icon === 'globe'" class="case-link-icon" :size="14" />
+                          <span class="case-link-label">{{ link.label }}</span>
+                          <ExternalLink class="case-link-arrow" :size="12" />
                         </a>
                       </div>
                     </div>
@@ -118,16 +137,23 @@
                   <template v-for="(row, rowIndex) in active.visual.rows" :key="rowIndex">
                     <div
                       class="schema-row"
-                      :style="row.boxes.length > 1 ? { gap: '6px' } : undefined"
+                      :style="row.boxes.length > 1 ? { gap: '10px' } : undefined"
                     >
                       <div
                         v-for="(box, boxIndex) in row.boxes"
                         :key="boxIndex"
                         class="schema-box"
-                        :class="{ highlight: box.highlight }"
-                        :style="box.small ? { fontSize: '10px' } : undefined"
+                        :class="{ highlight: box.highlight, 'schema-box-sm': box.small }"
                       >
-                        <span class="s-icon">{{ box.icon }}</span> {{ box.text }}
+                        <span class="s-icon">
+                          <component
+                            :is="schemaIconMap[box.icon]"
+                            v-if="schemaIconMap[box.icon]"
+                            :size="box.small ? 14 : 16"
+                          />
+                          <span v-else>{{ box.icon }}</span>
+                        </span>
+                        <span>{{ box.text }}</span>
                       </div>
                     </div>
                     <div
@@ -150,12 +176,12 @@
             aria-label="Previous project"
             @click="prev"
           >
-            ←
+            <ArrowLeft :size="16" />
           </button>
 
           <div class="projects-dots" role="tablist" aria-label="Project slides">
             <button
-              v-for="(project, index) in projects"
+              v-for="(project, index) in featuredProjects"
               :key="project.id"
               type="button"
               class="projects-dot"
@@ -170,7 +196,7 @@
           <div class="projects-pager mono">
             {{ String(activeIndex + 1).padStart(2, '0') }}
             <span class="projects-pager-sep">/</span>
-            {{ String(projects.length).padStart(2, '0') }}
+            {{ String(featuredProjects.length).padStart(2, '0') }}
           </div>
 
           <button
@@ -179,8 +205,16 @@
             aria-label="Next project"
             @click="next"
           >
-            →
+            <ArrowRight :size="16" />
           </button>
+        </div>
+
+        <!-- Link to all case studies -->
+        <div class="projects-view-all">
+          <router-link :to="{ name: 'case-studies' }" class="btn-view-all-cs magnetic">
+            <span>Explore All 9 Case Studies &amp; Projects</span>
+            <ArrowRight :size="16" />
+          </router-link>
         </div>
       </div>
     </div>
@@ -190,17 +224,69 @@
 <script setup>
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { projects } from '@/data/projects'
+import {
+  Box,
+  BookOpen,
+  Github,
+  ExternalLink,
+  ArrowLeft,
+  ArrowRight,
+  CreditCard,
+  Key,
+  Zap,
+  Globe,
+  Smartphone,
+  Check,
+  Send,
+  Lock,
+  Plus,
+  Minus,
+  QrCode,
+  ReceiptText,
+  Shield,
+  ShoppingCart,
+  Gavel,
+  Package,
+  Trophy,
+  Database,
+} from 'lucide-vue-next'
+
+const schemaIconMap = {
+  CreditCard,
+  Key,
+  Zap,
+  Globe,
+  Smartphone,
+  Check,
+  Send,
+  Lock,
+  Plus,
+  Minus,
+  QrCode,
+  ReceiptText,
+  Shield,
+  ShoppingCart,
+  Gavel,
+  Package,
+  Trophy,
+  Database,
+}
+
+// 3 Strongest projects as requested: UAE SWAT, Haier Mall, Laravel AMQP
+const FEATURED_IDS = ['uae-swat', 'haier-mall', 'laravel-amqp']
+const featuredProjects = computed(() => {
+  return FEATURED_IDS.map(id => projects.find(p => p.id === id)).filter(Boolean)
+})
 
 const activeIndex = ref(0)
 const paused = ref(false)
 const AUTO_MS = 7000
 let timer = null
 
-const active = computed(() => projects[activeIndex.value])
+const active = computed(() => featuredProjects.value[activeIndex.value] || featuredProjects.value[0])
 
 function goTo(index) {
-  activeIndex.value = (index + projects.length) % projects.length
-  restart()
+  activeIndex.value = (index + featuredProjects.value.length) % featuredProjects.value.length
 }
 
 function next() {
@@ -211,27 +297,135 @@ function prev() {
   goTo(activeIndex.value - 1)
 }
 
+function startTimer() {
+  stopTimer()
+  timer = setInterval(() => {
+    if (!paused.value) next()
+  }, AUTO_MS)
+}
+
+function stopTimer() {
+  if (timer) {
+    clearInterval(timer)
+    timer = null
+  }
+}
+
 function pause() {
   paused.value = true
-  clearInterval(timer)
-  timer = null
 }
 
 function resume() {
   paused.value = false
-  restart()
 }
 
-function restart() {
-  clearInterval(timer)
-  timer = null
-  if (paused.value || typeof window === 'undefined') return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  timer = setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % projects.length
-  }, AUTO_MS)
-}
+onMounted(() => {
+  startTimer()
+})
 
-onMounted(() => restart())
-onBeforeUnmount(() => clearInterval(timer))
+onBeforeUnmount(() => {
+  stopTimer()
+})
 </script>
+
+<style scoped>
+.case-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.case-client-logo {
+  height: 28px;
+  max-width: 120px;
+  object-fit: contain;
+}
+
+.case-client-logo.logo-swat {
+  height: 32px;
+}
+
+.case-client-logo.logo-haier {
+  height: 22px;
+}
+
+.case-client-logo.logo-amqp {
+  height: 30px;
+}
+
+.case-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.case-link {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  gap: 8px !important;
+  padding: 8px 14px !important;
+  text-decoration: none;
+  font-size: 0.8125rem;
+}
+
+.case-link-highlight {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.case-link-highlight:hover {
+  background: var(--accent) !important;
+  color: #0b0f17 !important;
+}
+
+.case-link-icon,
+.case-link-arrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.case-link-label {
+  white-space: nowrap !important;
+}
+
+.projects-view-all {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-view-all-cs {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-view-all-cs:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+</style>
