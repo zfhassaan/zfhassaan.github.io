@@ -47,6 +47,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { ArrowRight } from 'lucide-vue-next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
