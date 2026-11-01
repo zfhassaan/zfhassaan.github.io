@@ -7,16 +7,6 @@
       <path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60" />
       <path stroke="#C8102E" stroke-width="6" d="M30 0v30M0 15h60" />
     </svg>
-    <svg v-else-if="code === 'ur'" viewBox="0 0 120 80">
-      <path fill="#01411C" d="M0 0h120v80H0z" />
-      <path fill="#fff" d="M0 0h30v80H0z" />
-      <circle cx="68" cy="40" r="16" fill="#fff" />
-      <circle cx="75" cy="36" r="13" fill="#01411C" />
-      <polygon
-        fill="#fff"
-        points="94,33.2 95.6,37.9 100.6,37.9 96.6,40.8 98.1,45.6 94,42.8 89.9,45.6 91.4,40.8 87.4,37.9 92.4,37.9"
-      />
-    </svg>
     <svg v-else-if="code === 'fr'" viewBox="0 0 3 2">
       <path fill="#fff" d="M0 0h3v2H0z" />
       <path fill="#002395" d="M0 0h1v2H0z" />

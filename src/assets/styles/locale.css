@@ -123,8 +123,7 @@ html[dir='rtl'] .lang-option {
   direction: ltr;
 }
 
-html[lang='ar'],
-html[lang='ur'] {
+html[lang='ar'] {
   --font-head: 'Noto Sans Arabic', 'Space Grotesk', sans-serif;
   --font-body: 'Noto Sans Arabic', 'Inter', sans-serif;
 }

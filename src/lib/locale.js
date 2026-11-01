@@ -1,6 +1,5 @@
 export const LOCALES = [
   { code: 'en', native: 'English', dir: 'ltr' },
-  { code: 'ur', native: 'اردو', dir: 'rtl' },
   { code: 'fr', native: 'Français', dir: 'ltr' },
   { code: 'es', native: 'Español', dir: 'ltr' },
   { code: 'nl', native: 'Nederlands', dir: 'ltr' },
@@ -11,7 +10,7 @@ export const LOCALES = [
 const STORAGE_KEY = 'site-locale'
 
 const COUNTRY = {
-  PK: 'ur',
+  PK: 'en',
   NL: 'nl', AW: 'nl', CW: 'nl', SX: 'nl', BQ: 'nl', SR: 'nl', BE: 'nl',
   FR: 'fr', MC: 'fr', LU: 'fr', SN: 'fr', CI: 'fr', ML: 'fr', BF: 'fr', NE: 'fr',
   TD: 'fr', CM: 'fr', GA: 'fr', CG: 'fr', CD: 'fr', MG: 'fr', HT: 'fr',
@@ -25,7 +24,7 @@ const COUNTRY = {
 }
 
 const TIMEZONE = {
-  'Asia/Karachi': 'ur',
+  'Asia/Karachi': 'en',
   'Europe/Berlin': 'de',
   'Europe/Vienna': 'de',
   'Europe/Zurich': 'de',
@@ -66,6 +65,10 @@ export function localeMeta(code) {
 export function readSavedLocale() {
   try {
     const value = localStorage.getItem(STORAGE_KEY)
+    if (value === 'ur') {
+      localStorage.setItem(STORAGE_KEY, 'en')
+      return 'en'
+    }
     return LOCALES.some((item) => item.code === value) ? value : ''
   } catch {
     return ''
