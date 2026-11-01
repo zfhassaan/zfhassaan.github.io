@@ -1,13 +1,26 @@
+import { writeFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+
+// GitHub Pages runs Jekyll by default, and Jekyll hides every file whose name
+// starts with "_". Vue's build emits _plugin-vue_export-helper-*.js, so without
+// this marker the browser never receives that module and the page stays blank.
+function githubPagesNoJekyll() {
+  return {
+    name: 'github-pages-nojekyll',
+    closeBundle() {
+      writeFileSync(fileURLToPath(new URL('./docs/.nojekyll', import.meta.url)), '')
+    },
+  }
+}
 
 // Production build is emitted into ./docs so GitHub Pages can serve the site
 // directly from the "master /docs" source. The site lives at the domain root
 // (zfhassaan.github.io), so base stays "/".
 export default defineConfig({
   base: '/',
-  plugins: [vue()],
+  plugins: [vue(), githubPagesNoJekyll()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
