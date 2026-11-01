@@ -224,6 +224,8 @@
             toggleEl.addEventListener('click', () => {
                 open = !open;
                 menuEl.classList.toggle('open', open);
+                toggleEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+                document.body.classList.toggle('nav-open', open);
 
                 if (open) {
                     gsap.to(spans[0], { rotation: 45, y: 6.5, duration: 0.25, ease: 'power2.out' });
@@ -238,11 +240,18 @@
                 }
             });
 
-            menuEl.querySelectorAll('.mobile-menu-links a').forEach(a => a.addEventListener('click', () => {
+            function closeMenu() {
                 open = false;
                 menuEl.classList.remove('open');
+                toggleEl.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('nav-open');
                 gsap.to(spans, { rotation: 0, y: 0, opacity: 1, duration: 0.22 });
-            }));
+            }
+
+            menuEl.querySelectorAll('.mobile-menu-links a, .mobile-menu-cta').forEach(a => a.addEventListener('click', closeMenu));
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && open) closeMenu();
+            });
         }
 
         /* ════════════════════════════════════════════

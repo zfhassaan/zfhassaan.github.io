@@ -17,6 +17,11 @@
                 :aria-label="t('nav.githubAria')">
                 <Github :size="20" />
             </a>
+            <button class="theme-toggle mobile-menu-icon" onclick="toggleTheme()" :aria-label="t('nav.themeAria')"
+                :title="t('nav.themeAria')">
+                <Sun class="theme-icon-sun" :size="18" />
+                <Moon class="theme-icon-moon" :size="18" />
+            </button>
             <router-link class="mobile-menu-cta" :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">
                 {{ t('nav.discuss') }}
             </router-link>
@@ -26,7 +31,7 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
-import { Github } from 'lucide-vue-next'
+import { Github, Sun, Moon } from 'lucide-vue-next'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
 const { t } = useI18n()

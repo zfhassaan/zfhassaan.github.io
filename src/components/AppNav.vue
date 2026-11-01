@@ -27,7 +27,7 @@
                 <Moon class="theme-icon-moon" :size="18" />
             </button>
             <router-link class="nav-cta magnetic" :to="{ name: 'home', hash: '#contact' }">{{ t('nav.discuss') }}</router-link>
-            <button class="nav-toggle" id="navToggle" :aria-label="t('nav.menuAria')">
+            <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" :aria-label="t('nav.menuAria')">
                 <span></span><span></span><span></span>
             </button>
         </div>

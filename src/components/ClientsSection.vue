@@ -114,6 +114,14 @@ const clients = [
   transform: translateY(-2px);
 }
 
+.ribbon-item:hover .ribbon-label {
+  color: var(--text-primary);
+}
+
+.ribbon-item:hover .ribbon-tag {
+  color: var(--text-muted);
+}
+
 .ribbon-logo {
   height: 28px;
   max-width: 70px;
@@ -125,6 +133,11 @@ const clients = [
 
 .ribbon-item:hover .ribbon-logo {
   opacity: 1;
+}
+
+.ribbon-item:hover .ribbon-logo:not(.logo-haier):not(.logo-auction),
+.ribbon-item:hover .logo-haier,
+.ribbon-item:hover .logo-auction {
   filter: grayscale(0);
 }
 
