@@ -8,13 +8,19 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "extract": "node scripts/extract.mjs"
+    "extract": "node scripts/extract.mjs",
+    "fbr:slabs": "node scripts/update-fbr-slabs.mjs"
   },
   "dependencies": {
+    "@jsquash/jpeg": "^1.6.0",
+    "@jsquash/oxipng": "^2.3.0",
+    "@jsquash/webp": "^1.5.0",
     "@vueuse/core": "^14.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^1.0.0",
+    "pdf-lib": "^1.17.1",
+    "qrcode": "^1.5.4",
     "radix-vue": "^1.9.17",
     "tailwind-merge": "^3.6.0",
     "vue": "^3.5.38",

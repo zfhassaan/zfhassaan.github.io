@@ -4,16 +4,12 @@
 
 /*
  * shadcn-vue design tokens.
- * The portfolio is a dark-only experience, so the token values below mirror
- * the brand palette defined in portfolio.css (teal accent on deep-navy).
+ * Dark tokens match the portfolio palette. Light overrides follow data-theme="light".
  */
 @layer base {
   :root {
     --background: 218 48% 5%;
     --foreground: 210 40% 98%;
-
-    --card: 222 46% 14%;
-    --card-foreground: 210 40% 98%;
 
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
@@ -27,16 +23,41 @@
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 172 66% 50%;
-    --accent-foreground: 218 48% 5%;
+    /* Prefixed so they do not collide with the portfolio's --accent, --card, and --border. */
+    --ui-accent: 217 33% 17%;
+    --ui-accent-foreground: 210 40% 98%;
+    --ui-card: 222 46% 14%;
+    --ui-card-foreground: 210 40% 98%;
+    --ui-border: 217 33% 20%;
+    --ui-input: 217 33% 20%;
 
     --destructive: 0 63% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
     --ring: 172 66% 50%;
 
     --radius: 0.5rem;
+  }
+
+  :root[data-theme="light"] {
+    --background: 220 33% 94%;
+    --foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 174 77% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 40%;
+    --ui-accent: 210 40% 96%;
+    --ui-accent-foreground: 222 47% 11%;
+    --ui-card: 0 0% 100%;
+    --ui-card-foreground: 222 47% 11%;
+    --ui-border: 214 32% 86%;
+    --ui-input: 214 32% 86%;
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 174 77% 32%;
   }
 }

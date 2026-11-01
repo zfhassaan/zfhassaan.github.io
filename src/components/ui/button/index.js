@@ -31,3 +31,4 @@ export const buttonVariants = cva(
 )
 
 export { buttonVariants as variants }
+export { default as Button } from './Button.vue'

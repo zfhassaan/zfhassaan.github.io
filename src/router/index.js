@@ -24,9 +24,9 @@ const routes = [
     component: () => import('@/views/ToolsView.vue'),
   },
   {
-    path: '/tools/json',
-    name: 'tools-json',
-    component: () => import('@/views/tools/JsonToolView.vue'),
+    path: '/tools/:slug',
+    name: 'tool',
+    component: () => import('@/views/tools/ToolHost.vue'),
   },
   // Anything unknown falls back to the resume.
   { path: '/:pathMatch(.*)*', redirect: '/' },

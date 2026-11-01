@@ -3,25 +3,37 @@
         <section class="section">
             <div class="container">
                 <div class="tools-head">
-                    <div class="section-label">Utilities · Client-side</div>
-                    <h1 class="section-h2">Developer Tools</h1>
+                    <div class="section-label">Utilities · Free · No signup</div>
+                    <h1 class="section-h2">Tools</h1>
                     <p class="tools-intro">
-                        A small, growing set of fast, privacy-friendly tools that run entirely in your
-                        browser — nothing is uploaded to a server.
+                        {{ tools.length }} free tools for text, images, PDFs, and everyday calculations.
+                        They run in your browser, so files are not uploaded.
                     </p>
                 </div>
 
-                <div class="tools-grid">
-                    <router-link v-for="tool in tools" :key="tool.name" class="tool-card"
-                        :class="{ 'tool-card--soon': !tool.to }" :to="tool.to || ''"
-                        @click="!tool.to && $event.preventDefault()">
+                <div class="tools-controls">
+                    <Input v-model="query" class="tools-search" type="search" placeholder="Search tools" aria-label="Search tools" />
+                    <div class="tools-filters">
+                        <Button type="button" size="sm" :variant="category === 'All' ? 'default' : 'outline'" @click="category = 'All'">
+                            All
+                        </Button>
+                        <Button v-for="name in categories" :key="name" type="button" size="sm"
+                            :variant="category === name ? 'default' : 'outline'" @click="category = name">
+                            {{ name }}
+                        </Button>
+                    </div>
+                </div>
+
+                <div v-if="filtered.length" class="tools-grid">
+                    <router-link v-for="tool in filtered" :key="tool.slug" class="tool-card"
+                        :to="{ name: 'tool', params: { slug: tool.slug } }">
                         <div class="tool-card-top">
                             <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
-                            <span v-if="!tool.to" class="tool-badge">Soon</span>
+                            <Badge variant="outline">{{ tool.category }}</Badge>
                         </div>
                         <h2 class="tool-name">{{ tool.name }}</h2>
                         <p class="tool-desc">{{ tool.desc }}</p>
-                        <span v-if="tool.to" class="tool-cta">
+                        <span class="tool-cta">
                             Open
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2.5">
@@ -30,32 +42,30 @@
                         </span>
                     </router-link>
                 </div>
+                <p v-else class="tools-empty">No tools match that search.</p>
             </div>
         </section>
     </main>
 </template>
 
 <script setup>
-const tools = [
-    {
-        name: 'JSON Formatter',
-        icon: '{ }',
-        desc: 'Beautify, validate, and minify JSON with adjustable indentation.',
-        to: { name: 'tools-json' },
-    },
-    {
-        name: 'QR Code Generator',
-        icon: '▦',
-        desc: 'Turn any text or URL into a downloadable QR code.',
-        to: null,
-    },
-    {
-        name: 'PDF Merge',
-        icon: '⧉',
-        desc: 'Combine multiple PDF files into one, right in the browser.',
-        to: null,
-    },
-]
+import { computed, ref } from 'vue'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { categories, tools } from '@/data/tools'
+
+const query = ref('')
+const category = ref('All')
+
+const filtered = computed(() => {
+    const term = query.value.trim().toLowerCase()
+    return tools.filter((tool) => {
+        if (category.value !== 'All' && tool.category !== category.value) return false
+        if (!term) return true
+        return `${tool.name} ${tool.desc} ${tool.category}`.toLowerCase().includes(term)
+    })
+})
 </script>
 
 <style scoped>
@@ -80,6 +90,25 @@ const tools = [
     color: var(--text-secondary);
 }
 
+.tools-controls {
+    margin-bottom: 28px;
+}
+
+.tools-search {
+    width: min(100%, 420px);
+    margin-bottom: 16px;
+}
+
+.tools-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tools-empty {
+    color: var(--text-muted);
+}
+
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -94,18 +123,15 @@ const tools = [
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--card);
+    color: inherit;
+    text-decoration: none;
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tool-card:not(.tool-card--soon):hover {
+.tool-card:hover {
     border-color: rgba(45, 212, 191, 0.45);
     transform: translateY(-3px);
     box-shadow: 0 18px 40px -28px var(--glow-strong);
-}
-
-.tool-card--soon {
-    opacity: 0.6;
-    cursor: default;
 }
 
 .tool-card-top {
@@ -126,17 +152,6 @@ const tools = [
     font-family: var(--font-mono);
     font-size: 18px;
     font-weight: 600;
-}
-
-.tool-badge {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 3px 10px;
 }
 
 .tool-name {

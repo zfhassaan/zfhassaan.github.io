@@ -20,8 +20,8 @@ export default {
       // Tailwind/shadcn layer shares the same source of truth as the legacy
       // styles in src/assets/styles/portfolio.css.
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
+        border: 'hsl(var(--ui-border))',
+        input: 'hsl(var(--ui-input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -42,16 +42,16 @@ export default {
           foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: 'hsl(var(--ui-accent))',
+          foreground: 'hsl(var(--ui-accent-foreground))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: 'hsl(var(--ui-card))',
+          foreground: 'hsl(var(--ui-card-foreground))',
         },
         // Raw brand tokens (match :root in portfolio.css)
         brand: {

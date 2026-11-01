@@ -19,6 +19,14 @@
                     </p>
                 </div>
 
+                <FileDropzone
+                    :model-value="jsonFile ? [jsonFile] : []"
+                    accept=".json,.txt,application/json,text/plain"
+                    title="Drop a JSON file"
+                    hint="Click to browse, or paste into the editor."
+                    @update:model-value="onFiles"
+                />
+
                 <div class="json-workspace">
                     <!-- Input editor -->
                     <div class="json-panel">
@@ -44,10 +52,6 @@
 
                     <!-- Action column -->
                     <div class="json-actions">
-                        <button class="jt-btn" @click="triggerUpload">Upload Data</button>
-                        <input ref="fileEl" type="file" accept=".json,.txt,application/json,text/plain" hidden
-                            @change="onUpload" />
-
                         <button class="jt-btn" @click="validate">Validate</button>
 
                         <select v-model="indent" class="jt-select" aria-label="Indentation">
@@ -101,6 +105,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import FileDropzone from '@/components/tools/FileDropzone.vue'
 
 const input = ref('')
 const output = ref('')
@@ -115,7 +120,7 @@ const cursorCol = ref(1)
 
 const inputEl = ref(null)
 const outputEl = ref(null)
-const fileEl = ref(null)
+const jsonFile = ref(null)
 
 const SAMPLE = `{"name":"zfhassaan","role":"Senior Full Stack Engineer","stack":["Laravel","Node.js","Vue"],"active":true,"projects":42}`
 
@@ -259,18 +264,14 @@ function toCsv(data) {
 }
 
 /* ── File I/O ── */
-function triggerUpload() {
-    fileEl.value?.click()
-}
-
-function onUpload(e) {
-    const file = e.target.files?.[0]
+function onFiles(list) {
+    const file = list[0] || null
+    jsonFile.value = file
     if (!file) return
     const reader = new FileReader()
     reader.onload = () => {
         input.value = String(reader.result || '')
         beautify()
-        e.target.value = ''
     }
     reader.readAsText(file)
 }

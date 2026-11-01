@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import './assets/styles/tailwind.css'
 import './assets/styles/portfolio.css'
+import './assets/styles/tool-ui.css'
 import App from './App.vue'
 import router from './router'
 
