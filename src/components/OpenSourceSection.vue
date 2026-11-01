@@ -378,7 +378,8 @@ const { t } = useI18n()
 }
 
 .btn-primary-sm:hover {
-    background: var(--accent-hover, #34d399);
+    background: #14b8a6;
+    color: var(--on-accent);
 }
 
 .btn-secondary-sm {
@@ -390,6 +391,53 @@ const { t } = useI18n()
 .btn-secondary-sm:hover {
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--accent);
+    color: var(--text-primary);
+}
+
+:root[data-theme="light"] .os-pill {
+    background: rgba(15, 23, 42, 0.04);
+    color: #334155;
+}
+
+:root[data-theme="light"] .rmq-mini-flow {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.1);
+    color: #334155;
+}
+
+:root[data-theme="light"] .rmq-mini-node {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .barcode-preview-box {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+:root[data-theme="light"] .b-bar {
+    background: #0f766e;
+    opacity: 1;
+}
+
+:root[data-theme="light"] .barcode-preview-sub {
+    color: #475569;
+}
+
+:root[data-theme="light"] .btn-primary-sm:hover {
+    background: #0f766e;
+    color: var(--on-accent);
+}
+
+:root[data-theme="light"] .btn-secondary-sm:hover {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: #0d9488;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .os-footer-note {
+    background: rgba(15, 23, 42, 0.03);
 }
 
 .os-footer-note {
