@@ -3,11 +3,10 @@
     <section id="playground" class="section">
         <div class="container">
             <div class="reveal" style="margin-bottom:40px">
-                <div class="section-label">Live Demo</div>
-                <h2 class="section-h2">Request Lifecycle</h2>
+                <div class="section-label">{{ t('playground.label') }}</div>
+                <h2 class="section-h2">{{ t('playground.title') }}</h2>
                 <p style="font-size:0.9rem;color:var(--text-muted);margin-top:12px;max-width:500px;line-height:1.65">
-                    Follow a real request as it flows through a distributed system — trigger events and watch each
-                    stage respond in real time.
+                    {{ t('playground.sub') }}
                 </p>
             </div>
 
@@ -15,11 +14,11 @@
                 <div class="playground-header">
                     <div class="playground-title">
                         <Layers :size="14" class="text-accent inline-block mr-1" />
-                        <span>distributed-system / request-lifecycle</span>
+                        <span>{{ t('playground.path') }}</span>
                     </div>
                     <div class="pg-status">
                         <div class="pg-status-dot"></div>
-                        System Operational · <span id="pg-rps" style="color:var(--accent)">0</span> req/s
+                        {{ t('playground.status') }} · <span id="pg-rps" style="color:var(--accent)">0</span> req/s
                     </div>
                 </div>
                 <div class="playground-body">
@@ -29,9 +28,8 @@
                             <div class="pg-stage-line" id="line-0"></div>
                             <div class="pg-dot" id="dot-0"><Globe :size="16" /></div>
                             <div class="pg-stage-info">
-                                <div class="pg-stage-name">Client Request</div>
-                                <div class="pg-stage-desc">HTTP request from browser or mobile app, with auth token and
-                                    payload</div>
+                                <div class="pg-stage-name">{{ t('playground.client') }}</div>
+                                <div class="pg-stage-desc">{{ t('playground.clientDesc') }}</div>
                                 <div class="pg-metrics">
                                     <span class="pg-metric">POST /api/orders</span>
                                     <span class="pg-metric">Bearer token valid</span>
@@ -42,9 +40,8 @@
                             <div class="pg-stage-line" id="line-1"></div>
                             <div class="pg-dot" id="dot-1"><Zap :size="16" /></div>
                             <div class="pg-stage-info">
-                                <div class="pg-stage-name">API Gateway</div>
-                                <div class="pg-stage-desc">JWT validation, rate limiting (1000 req/min), request routing
-                                    and transformation</div>
+                                <div class="pg-stage-name">{{ t('playground.gateway') }}</div>
+                                <div class="pg-stage-desc">{{ t('playground.gatewayDesc') }}</div>
                                 <div class="pg-metrics">
                                     <span class="pg-metric">Auth: valid</span>
                                     <span class="pg-metric">Rate: 142/1000</span>
@@ -56,9 +53,8 @@
                             <div class="pg-stage-line" id="line-2"></div>
                             <div class="pg-dot" id="dot-2"><Layers :size="16" /></div>
                             <div class="pg-stage-info">
-                                <div class="pg-stage-name">Message Queue</div>
-                                <div class="pg-stage-desc">Job serialized and dispatched to RabbitMQ. Immediate
-                                    acknowledgement returned to client.</div>
+                                <div class="pg-stage-name">{{ t('playground.queue') }}</div>
+                                <div class="pg-stage-desc">{{ t('playground.queueDesc') }}</div>
                                 <div class="pg-metrics">
                                     <span class="pg-metric">Queue: orders.critical</span>
                                     <span class="pg-metric" id="pg-queue-depth">depth: 0</span>
@@ -69,9 +65,8 @@
                             <div class="pg-stage-line" id="line-3"></div>
                             <div class="pg-dot" id="dot-3"><Cpu :size="16" /></div>
                             <div class="pg-stage-info">
-                                <div class="pg-stage-name">Worker Processing</div>
-                                <div class="pg-stage-desc">Laravel/Node worker picks job. Validates business logic,
-                                    checks inventory, calculates pricing.</div>
+                                <div class="pg-stage-name">{{ t('playground.worker') }}</div>
+                                <div class="pg-stage-desc">{{ t('playground.workerDesc') }}</div>
                                 <div class="pg-metrics">
                                     <span class="pg-metric">Worker #3</span>
                                     <span class="pg-metric" id="pg-proc-time">~82ms</span>
@@ -81,9 +76,8 @@
                         <div class="pg-stage" id="stage-db">
                             <div class="pg-dot" id="dot-4"><Database :size="16" /></div>
                             <div class="pg-stage-info">
-                                <div class="pg-stage-name">Database Write</div>
-                                <div class="pg-stage-desc">Transaction committed. Cache invalidated. Webhook fired.
-                                    Event sourced to audit log.</div>
+                                <div class="pg-stage-name">{{ t('playground.database') }}</div>
+                                <div class="pg-stage-desc">{{ t('playground.databaseDesc') }}</div>
                                 <div class="pg-metrics">
                                     <span class="pg-metric">TX committed</span>
                                     <span class="pg-metric">Cache: cleared</span>
@@ -109,17 +103,19 @@
                     </div>
                 </div>
                 <div class="pg-actions">
-                    <button class="pg-btn pg-btn-primary magnetic" id="pg-send-btn" onclick="triggerRequest()">
-                        <Play :size="14" />
-                        <span>Send Request</span>
+                    <button class="pg-btn pg-btn-primary magnetic" id="pg-send-btn" onclick="triggerRequest()"
+                        :data-idle="t('playground.send')" :data-busy="t('playground.busy')">
+                        <Play class="pg-icon-idle" :size="14" />
+                        <Loader2 class="pg-icon-busy" :size="14" />
+                        <span>{{ t('playground.send') }}</span>
                     </button>
                     <button class="pg-btn pg-btn-secondary magnetic" onclick="clearLog()">
                         <Trash2 :size="14" />
-                        <span>Clear Log</span>
+                        <span>{{ t('playground.clear') }}</span>
                     </button>
                     <button class="pg-btn pg-btn-secondary magnetic" onclick="triggerBurst()">
                         <Zap :size="14" />
-                        <span>Burst (10x)</span>
+                        <span>{{ t('playground.burst') }}</span>
                     </button>
                 </div>
             </div>
@@ -128,7 +124,9 @@
 </template>
 
 <script setup>
-import { Layers, Globe, Zap, Cpu, Database, Play, Trash2 } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
+import { Layers, Globe, Zap, Cpu, Database, Play, Loader2, Trash2 } from 'lucide-vue-next'
+const { t } = useI18n()
 </script>
 
 <style scoped>
@@ -153,5 +151,22 @@ import { Layers, Globe, Zap, Cpu, Database, Play, Trash2 } from 'lucide-vue-next
 
 .pg-btn svg {
     flex-shrink: 0 !important;
+}
+
+.pg-icon-busy {
+    display: none;
+}
+
+.pg-btn.is-busy .pg-icon-idle {
+    display: none;
+}
+
+.pg-btn.is-busy .pg-icon-busy {
+    display: block;
+    animation: pg-spin 0.8s linear infinite;
+}
+
+@keyframes pg-spin {
+    to { transform: rotate(360deg); }
 }
 </style>

@@ -1,0 +1,192 @@
+.lang-switch-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lang-switch {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 28px 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lang-flag {
+  display: inline-flex;
+  width: 18px;
+  height: 12px;
+  border-radius: 2px;
+  overflow: hidden;
+  flex: 0 0 18px;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.2);
+}
+
+.lang-flag svg {
+  display: block;
+  width: 18px;
+  height: 12px;
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  min-width: 168px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lang-option:hover,
+.lang-option[aria-selected='true'] {
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-secondary));
+  color: var(--text-primary);
+}
+
+:root[data-theme='light'] .lang-switch,
+:root[data-theme='light'] .lang-menu {
+  background-color: var(--surface);
+}
+
+:root[data-theme='light'] .lang-switch {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+:root[data-theme='light'] .service-tag,
+:root[data-theme='light'] .tech-tag,
+:root[data-theme='light'] .impact-tag {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-secondary);
+}
+
+html[dir='rtl'] #nav,
+html[dir='rtl'] .nav-logo,
+html[dir='rtl'] .nav-links,
+html[dir='rtl'] .nav-actions,
+html[dir='rtl'] .nav-cta,
+html[dir='rtl'] .mobile-menu-footer,
+html[dir='rtl'] .projects-controls,
+html[dir='rtl'] .projects-dots,
+html[dir='rtl'] .cd-footer-nav,
+html[dir='rtl'] .cd-nav-dir,
+html[dir='rtl'] footer,
+html[dir='rtl'] .footer-links {
+  direction: ltr;
+}
+
+html[dir='rtl'] .nav-icon-link svg,
+html[dir='rtl'] .theme-toggle svg,
+html[dir='rtl'] .projects-nav-btn svg,
+html[dir='rtl'] .mobile-menu-icon svg {
+  transform: none;
+}
+
+html[dir='rtl'] .lang-switch,
+html[dir='rtl'] .lang-option {
+  direction: ltr;
+}
+
+html[lang='ar'],
+html[lang='ur'] {
+  --font-head: 'Noto Sans Arabic', 'Space Grotesk', sans-serif;
+  --font-body: 'Noto Sans Arabic', 'Inter', sans-serif;
+}
+
+html[dir='rtl'] .arch-diagram,
+html[dir='rtl'] pre,
+html[dir='rtl'] code,
+html[dir='rtl'] .tu-output,
+html[dir='rtl'] .tu-textarea,
+html[dir='rtl'] .mono {
+  direction: ltr;
+  text-align: left;
+}
+
+html[dir='rtl'] .hero-actions svg,
+html[dir='rtl'] .tool-cta svg,
+html[dir='rtl'] .blog-card-cta svg,
+html[dir='rtl'] .home-blog-btn svg,
+html[dir='rtl'] .os-footer-link svg {
+  transform: scaleX(-1);
+}
+
+html[dir='rtl'] .metric-item,
+html[dir='rtl'] .metric-label,
+html[dir='rtl'] .metric-sub,
+html[dir='rtl'] .pg-stage-info,
+html[dir='rtl'] .pg-stage-name,
+html[dir='rtl'] .pg-stage-desc,
+html[dir='rtl'] .os-card,
+html[dir='rtl'] .os-card-desc,
+html[dir='rtl'] .os-footer-note,
+html[dir='rtl'] .case-sub,
+html[dir='rtl'] .case-meta-value,
+html[dir='rtl'] .service-minimal-card {
+  text-align: right;
+}
+
+html[dir='rtl'] .case-study.reverse > * {
+  direction: rtl;
+}
+
+html[dir='rtl'] .metric-sub {
+  direction: rtl;
+}
+
+html[dir='rtl'] .metric-number {
+  direction: ltr;
+  text-align: right;
+}
+
+html[dir='rtl'] .metric-item {
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+html[dir='rtl'] .metric-item:last-child {
+  border-left: none;
+}
+
+@media (max-width: 768px) {
+  html[dir='rtl'] .metric-item:nth-child(2),
+  html[dir='rtl'] .metric-item:nth-child(4) {
+    border-left: none;
+  }
+}

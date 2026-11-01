@@ -1,16 +1,19 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { GripVertical, Upload, X } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { formatBytes } from '@/lib/tool-files'
+
+const { t } = useI18n()
 
 const props = defineProps({
   modelValue: { type: Array, default: () => [] },
   accept: { type: String, default: '' },
   multiple: { type: Boolean, default: false },
   reorder: { type: Boolean, default: false },
-  title: { type: String, default: 'Drop a file here' },
-  hint: { type: String, default: 'or click to browse' },
+  title: { type: String, default: '' },
+  hint: { type: String, default: '' },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -35,7 +38,7 @@ function commit(list) {
   const incoming = [...list]
   const accepted = incoming.filter(allowed)
   if (incoming.length && !accepted.length) {
-    notice.value = 'That file type is not accepted here.'
+    notice.value = t('drop.rejected')
     return
   }
   notice.value = ''
@@ -96,8 +99,8 @@ function onItemDrop(index) {
       @drop.prevent="onDrop"
     >
       <Upload class="h-5 w-5 text-primary" />
-      <p class="text-sm font-medium text-foreground">{{ title }}</p>
-      <p class="text-sm text-muted-foreground">{{ hint }}</p>
+      <p class="text-sm font-medium text-foreground">{{ title || t('drop.title') }}</p>
+      <p class="text-sm text-muted-foreground">{{ hint || t('drop.hint') }}</p>
       <input
         ref="inputEl"
         class="hidden"
@@ -126,7 +129,7 @@ function onItemDrop(index) {
           <p class="truncate text-sm text-foreground">{{ file.name }}</p>
           <p class="text-xs text-muted-foreground">{{ formatBytes(file.size) }}</p>
         </div>
-        <Button variant="ghost" size="icon" type="button" aria-label="Remove file" @click.stop="remove(index)">
+        <Button variant="ghost" size="icon" type="button" :aria-label="t('drop.remove')" @click.stop="remove(index)">
           <X />
         </Button>
       </li>

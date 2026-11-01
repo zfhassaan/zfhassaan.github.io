@@ -4,12 +4,12 @@
         <span id="expertise" style="position:relative;top:-84px;display:block;visibility:hidden;"></span>
         <div class="container">
             <div class="reveal" style="margin-bottom:16px">
-                <div class="section-label">Services &amp; Capabilities</div>
-                <h2 class="section-h2">What I Build &amp; Deliver</h2>
+                <div class="section-label">{{ t('services.label') }}</div>
+                <h2 class="section-h2">{{ t('services.title') }}</h2>
             </div>
             <p style="font-size:0.92rem;color:var(--text-muted);max-width:620px;line-height:1.65;margin-bottom:0"
                 class="reveal">
-                Direct engineering services for founders, engineering teams, and product leaders who require reliable backend architecture and verifiable results.
+                {{ t('services.intro') }}
             </p>
 
             <div class="services-minimal-grid">
@@ -18,14 +18,12 @@
                     <div class="service-icon-wrap">
                         <Server :size="20" class="service-icon" />
                     </div>
-                    <h3 class="service-title">Backend Architecture &amp; APIs</h3>
-                    <p class="service-desc">
-                        High-throughput Laravel (PHP 8.x) and Node.js backend services. Clean REST and GraphQL APIs engineered for sub-second latency, maintainability, and scale.
-                    </p>
+                    <h3 class="service-title">{{ t('services.s1title') }}</h3>
+                    <p class="service-desc">{{ t('services.s1desc') }}</p>
                     <div class="service-tags">
-                        <span class="service-tag">Laravel 12</span>
-                        <span class="service-tag">REST &amp; GraphQL</span>
-                        <span class="service-tag">MySQL &amp; Postgres</span>
+                        <span class="service-tag">{{ t('services.tagLaravel') }}</span>
+                        <span class="service-tag">{{ t('services.tagRest') }}</span>
+                        <span class="service-tag">{{ t('services.tagDb') }}</span>
                     </div>
                 </div>
 
@@ -34,14 +32,12 @@
                     <div class="service-icon-wrap">
                         <CreditCard :size="20" class="service-icon" />
                     </div>
-                    <h3 class="service-title">Payment Gateways &amp; Fintech</h3>
-                    <p class="service-desc">
-                        Production checkout integrations, 3DS verification, webhook reconciliation, and tamper-proof immutable double-entry ledgers.
-                    </p>
+                    <h3 class="service-title">{{ t('services.s2title') }}</h3>
+                    <p class="service-desc">{{ t('services.s2desc') }}</p>
                     <div class="service-tags">
-                        <span class="service-tag">JazzCash &amp; PayFast</span>
-                        <span class="service-tag">Idempotent Webhooks</span>
-                        <span class="service-tag">Ledger Systems</span>
+                        <span class="service-tag">{{ t('services.tagPay') }}</span>
+                        <span class="service-tag">{{ t('services.tagWebhooks') }}</span>
+                        <span class="service-tag">{{ t('services.tagLedger') }}</span>
                     </div>
                 </div>
 
@@ -50,14 +46,12 @@
                     <div class="service-icon-wrap">
                         <Layers :size="20" class="service-icon" />
                     </div>
-                    <h3 class="service-title">Distributed Systems &amp; Queues</h3>
-                    <p class="service-desc">
-                        Asynchronous event pipelines, RabbitMQ topologies, dead-letter retry queues (DLQ), and high-performance background workers.
-                    </p>
+                    <h3 class="service-title">{{ t('services.s3title') }}</h3>
+                    <p class="service-desc">{{ t('services.s3desc') }}</p>
                     <div class="service-tags">
-                        <span class="service-tag">RabbitMQ (AMQP)</span>
-                        <span class="service-tag">Redis Pub/Sub</span>
-                        <span class="service-tag">Go CLI Tooling</span>
+                        <span class="service-tag">{{ t('services.tagAmqp') }}</span>
+                        <span class="service-tag">{{ t('services.tagRedis') }}</span>
+                        <span class="service-tag">{{ t('services.tagGo') }}</span>
                     </div>
                 </div>
 
@@ -66,14 +60,12 @@
                     <div class="service-icon-wrap">
                         <Gauge :size="20" class="service-icon" />
                     </div>
-                    <h3 class="service-title">Performance Audits &amp; Optimization</h3>
-                    <p class="service-desc">
-                        Resolving database query bottlenecks, eliminating concurrency race conditions with row-locking, and zero-downtime legacy upgrades.
-                    </p>
+                    <h3 class="service-title">{{ t('services.s4title') }}</h3>
+                    <p class="service-desc">{{ t('services.s4desc') }}</p>
                     <div class="service-tags">
-                        <span class="service-tag">Query Profiling</span>
-                        <span class="service-tag">Concurrency Locks</span>
-                        <span class="service-tag">Zero Downtime</span>
+                        <span class="service-tag">{{ t('services.tagQuery') }}</span>
+                        <span class="service-tag">{{ t('services.tagLocks') }}</span>
+                        <span class="service-tag">{{ t('services.tagZero') }}</span>
                     </div>
                 </div>
             </div>
@@ -82,7 +74,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Server, CreditCard, Layers, Gauge } from 'lucide-vue-next'
+const { t } = useI18n()
 </script>
 
 <style scoped>

@@ -682,6 +682,18 @@
                 LINES.forEach(l => l?.classList.remove('active'));
             }
 
+            function setSendState(busy) {
+                const button = ELS.sendBtn;
+                if (!button) return;
+                button.classList.toggle('is-busy', busy);
+                button.style.opacity = busy ? '0.65' : '1';
+                const label = button.querySelector('span');
+                if (!label) return;
+                label.textContent = busy
+                    ? (button.dataset.busy || 'Processing…')
+                    : (button.dataset.idle || label.textContent);
+            }
+
             /* ── Public API ── */
             window.triggerRequest = function () {
                 if (window.pgState.running) return;
@@ -693,13 +705,13 @@
                 const qDepth = Math.floor(Math.random() * 8) + 1;
                 const reqId = 'req_' + Math.random().toString(36).slice(2, 10);
 
-                if (ELS.sendBtn) { ELS.sendBtn.textContent = '⏳ Processing…'; ELS.sendBtn.style.opacity = '0.65'; }
+                setSendState(true);
 
                 const tl = gsap.timeline({
                     onComplete() {
                         clearStages();
                         window.pgState.running = false;
-                        if (ELS.sendBtn) { ELS.sendBtn.textContent = '▶ Send Request'; ELS.sendBtn.style.opacity = '1'; }
+                        setSendState(false);
                     }
                 });
 
@@ -712,7 +724,7 @@
                     .add(() => {
                         setStage(1);
                         if (ELS.gwLatency) ELS.gwLatency.textContent = `~${gwMs}ms`;
-                        addLog(`{ts} <span class="log-label">[GATEWAY]</span> Auth ✓ · rate:142/1000 · routed → order-service · <span class="log-ok">${gwMs}ms</span>`);
+                        addLog(`{ts} <span class="log-label">[GATEWAY]</span> Auth OK · rate:142/1000 · routed → order-service · <span class="log-ok">${gwMs}ms</span>`);
                     })
                     .to({}, { duration: 0.38 })
                     .add(() => {
@@ -724,14 +736,14 @@
                     .add(() => {
                         setStage(3);
                         if (ELS.procTime) ELS.procTime.textContent = `~${procMs}ms`;
-                        addLog(`{ts} <span class="log-label">[WORKER]</span> Worker#3 · inventory ✓ · pricing calc · <span class="log-warn">${procMs}ms</span>`);
+                        addLog(`{ts} <span class="log-label">[WORKER]</span> Worker#3 · inventory OK · pricing calc · <span class="log-warn">${procMs}ms</span>`);
                     })
                     .to({}, { duration: 0.52 })
                     .add(() => {
                         setStage(4);
                         if (ELS.totalTime) ELS.totalTime.textContent = `total: ${totalMs}ms`;
                         if (ELS.rps) ELS.rps.textContent = ++window.pgState.rps;
-                        addLog(`{ts} <span class="log-label">[DB]</span> TX committed · cache cleared · webhook fired · <span class="log-ok">✓ ${totalMs}ms</span>`);
+                        addLog(`{ts} <span class="log-label">[DB]</span> TX committed · cache cleared · webhook fired · <span class="log-ok">OK ${totalMs}ms</span>`);
                     })
                     .to({}, { duration: 0.65 });
             };
@@ -754,7 +766,7 @@
                         .to({}, { duration: 0.18 });
                 }
                 batchTL.add(() => {
-                    addLog(`{ts} <span class="log-label">[BURST]</span> <span class="log-ok">✓ 10 jobs queued · avg ~${Math.floor(Math.random() * 20) + 72}ms</span>`);
+                    addLog(`{ts} <span class="log-label">[BURST]</span> <span class="log-ok">OK 10 jobs queued · avg ~${Math.floor(Math.random() * 20) + 72}ms</span>`);
                 });
             };
         }

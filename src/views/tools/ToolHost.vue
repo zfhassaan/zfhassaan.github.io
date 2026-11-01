@@ -1,10 +1,14 @@
 <script setup>
 import { computed, defineAsyncComponent, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { tools } from '@/data/tools'
 import ToolPage from '@/components/tools/ToolPage.vue'
+import { useCopy } from '@/composables/useCopy'
 
 const route = useRoute()
+const { t, locale } = useI18n()
+const { toolField } = useCopy()
 const slug = computed(() => String(route.params.slug || ''))
 const tool = computed(() => tools.find((item) => item.slug === slug.value) || null)
 
@@ -17,8 +21,9 @@ const view = computed(() => {
 })
 
 const defaultTitle = document.title
-watch(tool, (value) => {
-    document.title = value ? `${value.name} · zfhassaan` : defaultTitle
+watch([tool, locale], () => {
+    const value = tool.value
+    document.title = value ? `${toolField(value, 'name')} · zfhassaan` : t('meta.title')
 }, { immediate: true })
 onUnmounted(() => { document.title = defaultTitle })
 </script>
@@ -31,9 +36,9 @@ onUnmounted(() => { document.title = defaultTitle })
     <main v-else class="tool-page">
         <section class="section">
             <div class="container">
-                <router-link :to="{ name: 'tools' }" class="back-link">All tools</router-link>
-                <h1 class="section-h2">Tool not found</h1>
-                <p class="tool-intro">That tool is not in the catalog.</p>
+                <router-link :to="{ name: 'tools' }" class="back-link">{{ t('tools.back') }}</router-link>
+                <h1 class="section-h2">{{ t('tools.missing') }}</h1>
+                <p class="tool-intro">{{ t('tools.missingBody') }}</p>
             </div>
         </section>
     </main>

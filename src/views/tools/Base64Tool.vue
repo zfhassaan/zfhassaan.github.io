@@ -2,26 +2,26 @@
     <div class="tu-stack">
         <div class="tu-split">
             <label class="tu-card tu-stack">
-                <span class="tu-label">Input</span>
-                <textarea v-model="input" class="tu-textarea" spellcheck="false" placeholder="Text to encode or decode"></textarea>
+                <span class="tu-label">{{ t('base64.input') }}</span>
+                <textarea v-model="input" class="tu-textarea" spellcheck="false" :placeholder="t('base64.placeholder')"></textarea>
             </label>
             <div class="tu-card tu-stack">
-                <span class="tu-label">Output</span>
+                <span class="tu-label">{{ t('base64.output') }}</span>
                 <pre class="tu-output">{{ output }}</pre>
                 <p v-if="error" class="tu-error">{{ error }}</p>
             </div>
         </div>
         <FileDropzone
             :model-value="picked"
-            title="Drop a file to encode"
-            hint="Click to browse. The Base64 is the raw file bytes."
+            :title="t('base64.title')"
+            :hint="t('base64.hint')"
             @update:model-value="onPicked"
         />
         <div class="tu-actions">
-            <button class="tu-btn tu-btn-primary" type="button" @click="encode">Encode</button>
-            <button class="tu-btn" type="button" @click="decode">Decode</button>
-            <button class="tu-btn" type="button" :disabled="!output" @click="copy">{{ copied ? 'Copied' : 'Copy' }}</button>
-            <button class="tu-btn" type="button" :disabled="!output" @click="save">Download</button>
+            <button class="tu-btn tu-btn-primary" type="button" @click="encode">{{ t('base64.encode') }}</button>
+            <button class="tu-btn" type="button" @click="decode">{{ t('base64.decode') }}</button>
+            <button class="tu-btn" type="button" :disabled="!output" @click="copy">{{ copied ? t('hash.copied') : t('hash.copy') }}</button>
+            <button class="tu-btn" type="button" :disabled="!output" @click="save">{{ t('image.download') }}</button>
         </div>
         <p class="tu-hint">Text uses UTF-8. File encoding returns the raw Base64 of the file bytes.</p>
     </div>
@@ -29,6 +29,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 import { copyText, decodeUtf8Base64, downloadText, encodeUtf8Base64, bytesToBase64 } from '@/lib/tool-files'
 

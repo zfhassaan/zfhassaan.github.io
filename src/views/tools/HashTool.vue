@@ -1,13 +1,13 @@
 <template>
     <div class="tu-stack">
         <label class="tu-card tu-stack">
-            <span class="tu-label">Text</span>
-            <textarea v-model="text" class="tu-textarea" spellcheck="false" placeholder="Text to hash" @input="fromText"></textarea>
+            <span class="tu-label">{{ t('hash.text') }}</span>
+            <textarea v-model="text" class="tu-textarea" spellcheck="false" :placeholder="t('hash.placeholder')" @input="fromText"></textarea>
         </label>
         <FileDropzone
             :model-value="picked"
-            title="Drop a file to hash"
-            hint="Click to browse. Hashing stays on this device."
+            :title="t('hash.title')"
+            :hint="t('hash.hint')"
             @update:model-value="onPicked"
         />
         <p v-if="source" class="tu-hint">{{ source }}</p>
@@ -16,7 +16,7 @@
                 <div class="tu-label">{{ row.name }}</div>
                 <div class="tu-output">{{ row.value || '—' }}</div>
                 <button class="tu-btn" type="button" style="margin-top:10px" :disabled="!row.value" @click="copy(row)">
-                    {{ copied === row.name ? 'Copied' : 'Copy' }}
+                    {{ copied === row.name ? t('hash.copied') : t('hash.copy') }}
                 </button>
             </div>
         </div>
@@ -26,6 +26,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 import { md5 } from '@/lib/md5'
 import { copyText, shaHex } from '@/lib/tool-files'

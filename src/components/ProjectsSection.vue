@@ -4,11 +4,11 @@
     <div class="container">
       <div class="projects-header">
         <div class="reveal">
-          <div class="section-label">Featured Case Studies</div>
-          <h2 id="projects-heading" class="section-h2">Production Problems &amp; Solutions</h2>
+          <div class="section-label">{{ t('projects.label') }}</div>
+          <h2 id="projects-heading" class="section-h2">{{ t('projects.title') }}</h2>
         </div>
         <p class="projects-intro text-muted reveal">
-          Selected high-impact production architectures solved for government scale, enterprise retail, and high-throughput messaging.
+          {{ t('projects.intro') }}
         </p>
       </div>
 
@@ -36,38 +36,39 @@
                       class="case-client-logo"
                       :class="active.logoClass"
                     />
-                    <div class="case-tag">{{ active.tag }}</div>
+                    <div class="case-tag">{{ projectField(active, 'tag') }}</div>
                   </div>
                   <h3 class="case-h3" style="margin-top:10px">
                     <router-link :to="{ name: 'case-study-detail', params: { id: active.id } }">
-                      {{ active.title }}
+                      {{ projectField(active, 'title') }}
                     </router-link>
                   </h3>
-                  <p v-if="active.subtitle" class="case-sub" v-html="active.subtitle" />
+                  <p v-if="active.subtitle" class="case-sub" v-html="projectField(active, 'subtitle')" />
                 </div>
                 <div class="case-meta">
                   <div v-if="active.problem" class="case-meta-row">
-                    <div class="case-meta-label">Problem</div>
-                    <div class="case-meta-value" v-html="active.problem" />
+                    <div class="case-meta-label">{{ t('projects.problem') }}</div>
+                    <div v-if="te(`projects.items.${active.id}.problem`)" class="case-meta-value">{{ projectField(active, 'problem') }}</div>
+                    <div v-else class="case-meta-value" v-html="active.problem" />
                   </div>
                   <div v-if="active.constraints" class="case-meta-row">
-                    <div class="case-meta-label">Constraints</div>
-                    <div class="case-meta-value" v-html="active.constraints" />
+                    <div class="case-meta-label">{{ t('projects.constraints') }}</div>
+                    <div class="case-meta-value" v-html="projectField(active, 'constraints')" />
                   </div>
                   <div v-if="active.approach" class="case-meta-row">
-                    <div class="case-meta-label">Approach</div>
-                    <div class="case-meta-value" v-html="active.approach" />
+                    <div class="case-meta-label">{{ t('projects.approach') }}</div>
+                    <div class="case-meta-value" v-html="projectField(active, 'approach')" />
                   </div>
                   <div v-if="active.delivery" class="case-meta-row">
-                    <div class="case-meta-label">Ownership</div>
-                    <div class="case-meta-value" v-html="active.delivery" />
+                    <div class="case-meta-label">{{ t('projects.ownership') }}</div>
+                    <div class="case-meta-value" v-html="projectField(active, 'delivery')" />
                   </div>
                   <div v-if="active.outcome" class="case-meta-row">
-                    <div class="case-meta-label">Outcome</div>
-                    <div class="case-meta-value" v-html="active.outcome" />
+                    <div class="case-meta-label">{{ t('projects.outcome') }}</div>
+                    <div class="case-meta-value" v-html="projectField(active, 'outcome')" />
                   </div>
                   <div v-if="active.stack" class="case-meta-row">
-                    <div class="case-meta-label">Stack</div>
+                    <div class="case-meta-label">{{ t('projects.stack') }}</div>
                     <div class="case-meta-value">
                       <div class="tech-tags">
                         <span v-for="item in active.stack" :key="item" class="tech-tag">{{ item }}</span>
@@ -75,15 +76,15 @@
                     </div>
                   </div>
                   <div v-if="active.impact" class="case-meta-row">
-                    <div class="case-meta-label">Proof</div>
+                    <div class="case-meta-label">{{ t('projects.proof') }}</div>
                     <div class="case-meta-value">
                       <div class="tech-tags">
-                        <span v-for="item in active.impact" :key="item" class="impact-tag">{{ item }}</span>
+                        <span v-for="(item, index) in projectList(active, 'impact')" :key="index" class="impact-tag">{{ item }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="case-meta-row">
-                    <div class="case-meta-label">Links</div>
+                    <div class="case-meta-label">{{ t('projects.links') }}</div>
                     <div class="case-meta-value">
                       <div class="case-links">
                         <!-- Primary CTA to single detail page -->
@@ -92,12 +93,12 @@
                           class="case-link case-link-highlight magnetic"
                         >
                           <BookOpen class="case-link-icon" :size="14" />
-                          <span class="case-link-label">Full Case Study</span>
+                          <span class="case-link-label">{{ t('projects.full') }}</span>
                           <ArrowRight class="case-link-arrow" :size="12" />
                         </router-link>
 
                         <a
-                          v-for="link in active.links"
+                          v-for="(link, index) in active.links"
                           :key="link.href + link.label"
                           :href="link.href"
                           target="_blank"
@@ -108,7 +109,7 @@
                           <BookOpen v-else-if="link.icon === 'docs'" class="case-link-icon" :size="14" />
                           <Github v-else-if="link.icon === 'github'" class="case-link-icon" :size="14" />
                           <Globe v-else-if="link.icon === 'globe'" class="case-link-icon" :size="14" />
-                          <span class="case-link-label">{{ link.label }}</span>
+                          <span class="case-link-label">{{ linkLabel(active, link, index) }}</span>
                           <ExternalLink class="case-link-arrow" :size="12" />
                         </a>
                       </div>
@@ -128,7 +129,7 @@
                   <div class="terminal-body">
                     <template v-for="(line, lineIndex) in active.visual.lines" :key="lineIndex">
                       <br v-if="line === null" />
-                      <div v-else v-html="line" />
+                      <div v-else v-html="visualLine(active, line, lineIndex)" />
                     </template>
                   </div>
                 </div>
@@ -153,7 +154,7 @@
                           />
                           <span v-else>{{ box.icon }}</span>
                         </span>
-                        <span>{{ box.text }}</span>
+                        <span>{{ schemaText(active, rowIndex, boxIndex, box.text) }}</span>
                       </div>
                     </div>
                     <div
@@ -187,7 +188,7 @@
               class="projects-dot"
               role="tab"
               :aria-selected="index === activeIndex"
-              :aria-label="`Show ${project.title}`"
+              :aria-label="projectField(project, 'title')"
               :class="{ active: index === activeIndex }"
               @click="goTo(index)"
             />
@@ -212,7 +213,7 @@
         <!-- Link to all case studies -->
         <div class="projects-view-all">
           <router-link :to="{ name: 'case-studies' }" class="btn-view-all-cs magnetic">
-            <span>Explore All 9 Case Studies &amp; Projects</span>
+            <span>{{ t('projects.explore') }}</span>
             <ArrowRight :size="16" />
           </router-link>
         </div>
@@ -224,6 +225,9 @@
 <script setup>
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { projects } from '@/data/projects'
+import { useCopy } from '@/composables/useCopy'
+
+const { t, te, projectField, projectList, linkLabel, visualLine, schemaText } = useCopy()
 import {
   Box,
   BookOpen,
@@ -385,7 +389,7 @@ onBeforeUnmount(() => {
 
 .case-link-highlight:hover {
   background: var(--accent) !important;
-  color: #0b0f17 !important;
+  color: var(--on-accent) !important;
 }
 
 .case-link-icon,

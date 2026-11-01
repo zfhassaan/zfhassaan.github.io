@@ -5,21 +5,21 @@
             :accept="mode === 'images' ? 'image/jpeg,image/png' : 'application/pdf'"
             :multiple="mode !== 'split'"
             :reorder="mode !== 'split'"
-            :title="mode === 'split' ? 'Drop a PDF to split' : mode === 'images' ? 'Drop JPEG or PNG images' : 'Drop PDFs to merge'"
-            :hint="mode === 'split' ? 'Click to browse. Encrypted PDFs are rejected.' : 'Click to browse. Drag files in the list to change their order.'"
+            :title="mode === 'split' ? t('pdf.splitTitle') : mode === 'images' ? t('pdf.imagesTitle') : t('pdf.mergeTitle')"
+            :hint="mode === 'split' ? t('pdf.splitHint') : t('pdf.hint')"
             @update:model-value="onFiles"
         />
 
         <label v-if="mode === 'split'">
-            <span class="tu-label">Pages</span>
+            <span class="tu-label">{{ t('pdf.pages') }}</span>
             <input v-model="range" class="tu-input" placeholder="1-3,5" />
         </label>
-        <p v-if="pageCount" class="tu-hint">This PDF has {{ pageCount }} pages.</p>
+        <p v-if="pageCount" class="tu-hint">{{ t('pdf.pageCount', { count: pageCount }) }}</p>
         <p v-if="error" class="tu-error">{{ error }}</p>
 
         <div class="tu-actions">
             <button class="tu-btn tu-btn-primary" type="button" :disabled="!files.length || busy" @click="run">
-                {{ busy ? 'Working…' : action }}
+                {{ busy ? t('pdf.working') : action }}
             </button>
         </div>
     </div>
@@ -27,6 +27,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { PDFDocument } from 'pdf-lib'
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 import { downloadBlob } from '@/lib/tool-files'
@@ -35,13 +36,15 @@ const props = defineProps({
     mode: { type: String, required: true },
 })
 
+const { t } = useI18n()
+
 const files = ref([])
 const range = ref('1-1')
 const error = ref('')
 const busy = ref(false)
 const pageCount = ref(0)
 
-const action = computed(() => ({ merge: 'Merge PDFs', split: 'Extract pages', images: 'Create PDF' }[props.mode]))
+const action = computed(() => ({ merge: t('pdf.merge'), split: t('pdf.split'), images: t('pdf.images') }[props.mode]))
 
 async function onFiles(list) {
     error.value = ''

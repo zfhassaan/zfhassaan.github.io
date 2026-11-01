@@ -20,7 +20,7 @@
                     <h1 class="section-h2">Post not available</h1>
                     <p>{{ error || "We couldn't find this post in the feed." }}</p>
                     <div class="post-state-actions">
-                        <router-link :to="{ name: 'blog' }" class="blog-btn">Back to blog</router-link>
+                        <router-link :to="{ name: 'blog' }" class="blog-btn">{{ t('blog.back') }}</router-link>
                     </div>
                 </div>
 
@@ -80,9 +80,7 @@
                         <div class="author-info">
                             <div class="author-badge">Author &amp; Systems Engineer</div>
                             <h3 class="author-name">Hassaan Ali</h3>
-                            <p class="author-bio">
-                                Senior Backend &amp; Full-Stack Engineer with 9+ years building high-throughput Laravel APIs, RabbitMQ event architectures, and mission-critical payment gateways. Author of open-source packages with 2.5M+ downloads.
-                            </p>
+                            <p class="author-bio">{{ t('blog.author') }}</p>
                             <div class="author-actions">
                                 <router-link :to="{ name: 'home', hash: '#contact' }" class="btn-primary magnetic author-cta">
                                     <span>Hire or Discuss a Project</span>
@@ -107,7 +105,7 @@
                     <footer class="post-footer">
                         <router-link :to="{ name: 'blog' }" class="blog-btn magnetic">
                             <ArrowLeft :size="14" />
-                            <span>Back to All Articles</span>
+                            <span>{{ t('blog.backAll') }}</span>
                         </router-link>
                         <a v-if="post.url" :href="post.url" target="_blank" rel="noopener" class="original-link" title="Open original source feed">
                             <span>Original source on Blogger</span>
@@ -122,6 +120,8 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import { useRoute } from 'vue-router'
 import {
     ArrowLeft,
@@ -863,7 +863,7 @@ watch(() => route.params.id, (id) => { if (id) load(id) }, { immediate: true })
 
 .post-content :deep(button:not(.code-copy-btn):hover) {
     background: var(--accent) !important;
-    color: #070b14 !important;
+    color: var(--on-accent) !important;
 }
 
 /* Skeletons */

@@ -5,23 +5,21 @@
       <nav class="cs-breadcrumb" aria-label="Breadcrumb">
         <router-link to="/" class="cs-back-link">
           <ArrowLeft :size="16" />
-          <span>Back to Overview</span>
+          <span>{{ t('projects.back') }}</span>
         </router-link>
         <span class="cs-sep">/</span>
-        <span class="cs-current">Case Studies</span>
+        <span class="cs-current">{{ t('projects.current') }}</span>
       </nav>
 
       <!-- Hero / Header -->
       <header class="cs-header">
-        <div class="section-label">Production Architectures · Engineering Case Studies</div>
-        <h1 class="cs-title">Case Studies &amp; Delivered Platforms</h1>
-        <p class="cs-lead text-muted">
-          Every project represents complex technical requirements solved for production — with deliberate architecture, concrete constraints, and verifiable outcomes.
-        </p>
+        <div class="section-label">{{ t('projects.pageLabel') }}</div>
+        <h1 class="cs-title">{{ t('projects.pageTitle') }}</h1>
+        <p class="cs-lead text-muted">{{ t('projects.pageLead') }}</p>
       </header>
 
       <!-- Category Filter Tabs -->
-      <div class="cs-filters" role="tablist" aria-label="Filter Case Studies">
+      <div class="cs-filters" role="tablist" :aria-label="t('projects.filterAria')">
         <button
           v-for="filter in filters"
           :key="filter.id"
@@ -44,7 +42,7 @@
         >
           <div class="cs-card-top">
             <div class="cs-card-badge-row">
-              <span class="cs-tag mono">{{ project.tag }}</span>
+              <span class="cs-tag mono">{{ projectField(project, 'tag') }}</span>
             </div>
 
             <div class="cs-card-brand">
@@ -57,7 +55,7 @@
               />
               <h2 class="cs-card-title">
                 <router-link :to="{ name: 'case-study-detail', params: { id: project.id } }">
-                  {{ project.title }}
+                  {{ projectField(project, 'title') }}
                 </router-link>
               </h2>
             </div>
@@ -65,8 +63,9 @@
 
           <div class="cs-card-body">
             <p class="cs-card-problem">
-              <strong class="mono text-accent">Problem: </strong>
-              <span v-html="project.problem" />
+              <strong class="mono text-accent">{{ t('projects.problem') }}: </strong>
+              <span v-if="te(`projects.items.${project.id}.problem`)">{{ projectField(project, 'problem') }}</span>
+              <span v-else v-html="project.problem" />
             </p>
 
             <!-- Key metrics / proof -->
@@ -89,7 +88,7 @@
               :to="{ name: 'case-study-detail', params: { id: project.id } }"
               class="cs-btn-primary"
             >
-              <span>Read Full Case Study</span>
+              <span>{{ t('projects.read') }}</span>
               <ArrowRight :size="14" />
             </router-link>
 
@@ -135,6 +134,9 @@
 import { ref, computed } from 'vue'
 import { projects } from '@/data/projects'
 import { ArrowLeft, ArrowRight, ExternalLink, Mail } from 'lucide-vue-next'
+import { useCopy } from '@/composables/useCopy'
+
+const { t, te, projectField } = useCopy()
 
 const activeFilter = ref('all')
 
@@ -145,10 +147,10 @@ const categories = {
 }
 
 const filters = computed(() => [
-  { id: 'all', label: 'All Case Studies', count: projects.length },
-  { id: 'enterprise', label: 'Enterprise & Platforms', count: categories.enterprise.length },
-  { id: 'fintech', label: 'Fintech & Payment SDKs', count: categories.fintech.length },
-  { id: 'opensource', label: 'Open Source & Queues', count: categories.opensource.length },
+  { id: 'all', label: t('projects.all'), count: projects.length },
+  { id: 'enterprise', label: t('projects.enterprise'), count: categories.enterprise.length },
+  { id: 'fintech', label: t('projects.fintech'), count: categories.fintech.length },
+  { id: 'opensource', label: t('projects.opensource'), count: categories.opensource.length },
 ])
 
 const filteredProjects = computed(() => {
@@ -263,7 +265,7 @@ const filteredProjects = computed(() => {
 .cs-filter-btn.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #0b0f17;
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -421,7 +423,7 @@ const filteredProjects = computed(() => {
   gap: 6px;
   padding: 8px 14px;
   background: var(--accent);
-  color: #0b0f17;
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -491,7 +493,7 @@ const filteredProjects = computed(() => {
   gap: 8px;
   padding: 12px 22px;
   background: var(--accent);
-  color: #0b0f17;
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 600;

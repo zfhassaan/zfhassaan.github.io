@@ -5,10 +5,10 @@
       <nav class="about-breadcrumb" aria-label="Breadcrumb">
         <router-link to="/" class="about-back-link">
           <ArrowLeft :size="16" />
-          <span>Back to Overview</span>
+          <span>{{ t('about.back') }}</span>
         </router-link>
         <span class="about-sep">/</span>
-        <span class="about-current">About Me</span>
+        <span class="about-current">{{ t('about.current') }}</span>
       </nav>
 
       <!-- Profile Header Hero -->
@@ -21,16 +21,14 @@
             width="120"
             height="120"
           />
-          <div class="about-status-dot" title="Available for client engagements & contracts"></div>
+          <div class="about-status-dot" :title="t('about.available')"></div>
         </div>
 
         <div class="about-hero-text">
-          <div class="section-label">Senior Software Engineer · Backend &amp; Distributed Systems</div>
+          <div class="section-label">{{ t('about.role') }}</div>
           <h1 class="about-name">Hassaan Ali</h1>
-          <p class="about-handle mono text-accent">@zfhassaan · Lahore, Pakistan (Global Remote)</p>
-          <p class="about-bio-lead">
-            I build resilient backend systems, mission-critical payment gateways, and high-throughput messaging pipelines that don't fail under pressure.
-          </p>
+          <p class="about-handle mono text-accent">{{ t('about.place') }}</p>
+          <p class="about-bio-lead">{{ t('about.lead') }}</p>
         </div>
       </section>
 
@@ -38,19 +36,19 @@
       <div class="about-stats-grid">
         <div class="about-stat-card">
           <span class="about-stat-num mono">9+</span>
-          <span class="about-stat-label">Years Production Experience</span>
+          <span class="about-stat-label">{{ t('about.years') }}</span>
         </div>
         <div class="about-stat-card">
           <span class="about-stat-num mono">2.5M+</span>
-          <span class="about-stat-label">Package Downloads (Open Source)</span>
+          <span class="about-stat-label">{{ t('about.downloads') }}</span>
         </div>
         <div class="about-stat-card">
           <span class="about-stat-num mono">40+</span>
-          <span class="about-stat-label">Countries Served via UAE SWAT</span>
+          <span class="about-stat-label">{{ t('about.countries') }}</span>
         </div>
         <div class="about-stat-card">
           <span class="about-stat-num mono">100%</span>
-          <span class="about-stat-label">Direct Client Delivery Record</span>
+          <span class="about-stat-label">{{ t('about.record') }}</span>
         </div>
       </div>
 
@@ -62,17 +60,14 @@
           <section class="about-section-card">
             <h2 class="about-h2">
               <User :size="20" class="text-accent" />
-              <span>Background &amp; Journey</span>
+              <span>{{ t('about.background') }}</span>
             </h2>
             <div class="about-prose">
+              <p>{{ t('about.bio1') }}</p>
+              <p>{{ t('about.bio2') }}</p>
               <p>
-                Over the past 9+ years, I have architected and maintained production backends spanning enterprise retail marketplaces, government competition platforms, real-time live auction engines, and fintech transaction ledgers.
-              </p>
-              <p>
-                I specialize in <strong>PHP/Laravel</strong>, <strong>Node.js</strong>, <strong>Go</strong>, and <strong>distributed queue architectures (RabbitMQ / AMQP)</strong>. My work focuses on solving difficult technical challenges: preventing concurrency race conditions, guaranteeing transaction idempotency, optimizing relational databases under heavy read/write pressure, and keeping message queues unblocked.
-              </p>
-              <p>
-                As an upstream collaborator on <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener" class="text-accent">bschmitt/laravel-amqp</a> (2.5M+ downloads), I believe in contributing back to foundational tools. If a community library has a bug or drifts behind framework versions, I fix it upstream so entire ecosystems benefit.
+                <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener" class="text-accent">bschmitt/laravel-amqp</a>
+                — {{ t('about.bio3') }}
               </p>
             </div>
           </section>
@@ -81,28 +76,22 @@
           <section class="about-section-card">
             <h2 class="about-h2">
               <ShieldCheck :size="20" class="text-accent" />
-              <span>Engineering Philosophy</span>
+              <span>{{ t('about.philosophy') }}</span>
             </h2>
             <div class="about-pillars">
               <div class="about-pillar">
-                <h3 class="about-pillar-title">1. Correctness Over Cleverness</h3>
-                <p class="about-pillar-desc">
-                  Financial calculations and inventory mutations must never rely on optimistic assumptions. I enforce immutable double-entry ledgers, database row-level locking (<span class="mono">SELECT ... FOR UPDATE</span>), and cryptographic hash checks to ensure zero double-spend or data corruption.
-                </p>
+                <h3 class="about-pillar-title">{{ t('about.ph1') }}</h3>
+                <p class="about-pillar-desc">{{ t('about.ph1d') }} <span class="mono">SELECT ... FOR UPDATE</span></p>
               </div>
 
               <div class="about-pillar">
-                <h3 class="about-pillar-title">2. Predictable Performance Under Load</h3>
-                <p class="about-pillar-desc">
-                  Scalability is not about throwing more servers at a slow query. It's about index design, query profiling with <span class="mono">EXPLAIN ANALYZE</span>, Redis caching strategies, and offloading heavy workloads to asynchronous worker pools with dead-letter exchange (DLQ) retry policies.
-                </p>
+                <h3 class="about-pillar-title">{{ t('about.ph2') }}</h3>
+                <p class="about-pillar-desc">{{ t('about.ph2d') }} <span class="mono">EXPLAIN ANALYZE</span></p>
               </div>
 
               <div class="about-pillar">
-                <h3 class="about-pillar-title">3. Comprehensive Automated Verification</h3>
-                <p class="about-pillar-desc">
-                  Production confidence requires automated CI matrices. Every SDK and backend module I author is backed by strict PHPUnit / integration tests across multiple runtime versions before touching production.
-                </p>
+                <h3 class="about-pillar-title">{{ t('about.ph3') }}</h3>
+                <p class="about-pillar-desc">{{ t('about.ph3d') }}</p>
               </div>
             </div>
           </section>
@@ -111,37 +100,31 @@
           <section class="about-section-card">
             <h2 class="about-h2">
               <Trophy :size="20" class="text-accent" />
-              <span>Key Career Milestones</span>
+              <span>{{ t('about.milestones') }}</span>
             </h2>
             <ul class="about-milestones">
               <li class="about-milestone-item">
                 <div class="milestone-dot"></div>
                 <div class="milestone-content">
-                  <span class="milestone-year mono">Government Scale</span>
-                  <strong class="milestone-title">UAE SWAT Challenge (Dubai Police)</strong>
-                  <p class="milestone-desc">
-                    Delivered the official tournament and registration portal for Dubai Police using WordPress, PHP, and Elementor on AWS hosting, serving teams from 40+ countries without a single outage.
-                  </p>
+                  <span class="milestone-year mono">{{ t('about.m1k') }}</span>
+                  <strong class="milestone-title">{{ t('about.m1t') }}</strong>
+                  <p class="milestone-desc">{{ t('about.m1d') }}</p>
                 </div>
               </li>
               <li class="about-milestone-item">
                 <div class="milestone-dot"></div>
                 <div class="milestone-content">
-                  <span class="milestone-year mono">Enterprise Retail</span>
-                  <strong class="milestone-title">Haier Mall D2C Marketplace</strong>
-                  <p class="milestone-desc">
-                    Architected direct-to-consumer e-commerce backend handling seasonal promotional flash spikes, multi-provider payment reconciliation, and complex multi-region logistics calculations.
-                  </p>
+                  <span class="milestone-year mono">{{ t('about.m2k') }}</span>
+                  <strong class="milestone-title">{{ t('about.m2t') }}</strong>
+                  <p class="milestone-desc">{{ t('about.m2d') }}</p>
                 </div>
               </li>
               <li class="about-milestone-item">
                 <div class="milestone-dot"></div>
                 <div class="milestone-content">
-                  <span class="milestone-year mono">Open Source</span>
-                  <strong class="milestone-title">Upstream Collaborator · Laravel AMQP (2.5M+ Downloads)</strong>
-                  <p class="milestone-desc">
-                    Promoted to collaborator with 6 merged PRs, restoring upgrade paths across modern PHP 8 and Laravel 10/11/12/13 releases for millions of production microservices worldwide.
-                  </p>
+                  <span class="milestone-year mono">{{ t('about.m3k') }}</span>
+                  <strong class="milestone-title">{{ t('about.m3t') }}</strong>
+                  <p class="milestone-desc">{{ t('about.m3d') }}</p>
                 </div>
               </li>
             </ul>
@@ -154,11 +137,11 @@
           <div class="about-side-card">
             <h3 class="about-side-title">
               <Code2 :size="16" class="text-accent" />
-              <span>Core Competencies</span>
+              <span>{{ t('about.skills') }}</span>
             </h3>
 
             <div class="skill-category">
-              <span class="skill-cat-title mono">Languages &amp; Runtimes</span>
+              <span class="skill-cat-title mono">{{ t('about.sk1') }}</span>
               <div class="skill-cat-tags">
                 <span class="skill-tag">PHP 8.x</span>
                 <span class="skill-tag">JavaScript / ESNext</span>
@@ -169,7 +152,7 @@
             </div>
 
             <div class="skill-category">
-              <span class="skill-cat-title mono">Frameworks &amp; Core</span>
+              <span class="skill-cat-title mono">{{ t('about.sk2') }}</span>
               <div class="skill-cat-tags">
                 <span class="skill-tag">Laravel 8→13</span>
                 <span class="skill-tag">Vue.js 3</span>
@@ -179,7 +162,7 @@
             </div>
 
             <div class="skill-category">
-              <span class="skill-cat-title mono">Data &amp; Queuing</span>
+              <span class="skill-cat-title mono">{{ t('about.sk3') }}</span>
               <div class="skill-cat-tags">
                 <span class="skill-tag">RabbitMQ (AMQP)</span>
                 <span class="skill-tag">Redis Pub/Sub</span>
@@ -243,6 +226,8 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -600,7 +585,7 @@ import {
   gap: 8px;
   padding: 10px 16px;
   background: var(--accent);
-  color: #0b0f17;
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 600;

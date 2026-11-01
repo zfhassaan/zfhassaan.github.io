@@ -1,79 +1,79 @@
 <template>
     <div class="tu-stack">
         <div v-if="kind === 'tip'" class="tu-fields">
-            <label><span class="tu-label">Bill</span><input v-model.number="bill" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Tip %</span><input v-model.number="tipPct" class="tu-input" type="number" min="0" step="0.5" /></label>
-            <label><span class="tu-label">People</span><input v-model.number="people" class="tu-input" type="number" min="1" /></label>
+            <label><span class="tu-label">{{ t('finance.bill') }}</span><input v-model.number="bill" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.tipPct') }}</span><input v-model.number="tipPct" class="tu-input" type="number" min="0" step="0.5" /></label>
+            <label><span class="tu-label">{{ t('finance.people') }}</span><input v-model.number="people" class="tu-input" type="number" min="1" /></label>
         </div>
         <div v-else-if="kind === 'vat'" class="tu-fields">
-            <label><span class="tu-label">Amount</span><input v-model.number="vatAmount" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Tax %</span><input v-model.number="vatRate" class="tu-input" type="number" min="0" step="0.1" /></label>
+            <label><span class="tu-label">{{ t('finance.amount') }}</span><input v-model.number="vatAmount" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.taxPct') }}</span><input v-model.number="vatRate" class="tu-input" type="number" min="0" step="0.1" /></label>
             <label>
-                <span class="tu-label">Mode</span>
+                <span class="tu-label">{{ t('finance.mode') }}</span>
                 <select v-model="vatMode" class="tu-select">
-                    <option value="add">Add tax</option>
-                    <option value="extract">Extract included tax</option>
+                    <option value="add">{{ t('finance.addTax') }}</option>
+                    <option value="extract">{{ t('finance.extractTax') }}</option>
                 </select>
             </label>
         </div>
         <div v-else-if="kind === 'percentage'" class="tu-fields">
             <label>
-                <span class="tu-label">Question</span>
+                <span class="tu-label">{{ t('finance.question') }}</span>
                 <select v-model="pctMode" class="tu-select">
-                    <option value="of">What is X% of Y</option>
-                    <option value="ratio">X is what % of Y</option>
-                    <option value="change">Percent change from A to B</option>
+                    <option value="of">{{ t('finance.of') }}</option>
+                    <option value="ratio">{{ t('finance.ratio') }}</option>
+                    <option value="change">{{ t('finance.changeQ') }}</option>
                 </select>
             </label>
-            <label><span class="tu-label">{{ pctMode === 'change' ? 'From' : 'X' }}</span><input v-model.number="pctA" class="tu-input" type="number" step="any" /></label>
-            <label><span class="tu-label">{{ pctMode === 'change' ? 'To' : 'Y' }}</span><input v-model.number="pctB" class="tu-input" type="number" step="any" /></label>
+            <label><span class="tu-label">{{ pctMode === 'change' ? t('finance.from') : 'X' }}</span><input v-model.number="pctA" class="tu-input" type="number" step="any" /></label>
+            <label><span class="tu-label">{{ pctMode === 'change' ? t('finance.to') : 'Y' }}</span><input v-model.number="pctB" class="tu-input" type="number" step="any" /></label>
         </div>
         <div v-else-if="kind === 'mortgage'" class="tu-fields">
-            <label><span class="tu-label">Principal</span><input v-model.number="principal" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Annual rate %</span><input v-model.number="rate" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Years</span><input v-model.number="years" class="tu-input" type="number" min="1" /></label>
-            <label><span class="tu-label">Extra / month</span><input v-model.number="extra" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.principal') }}</span><input v-model.number="principal" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.annualRate') }}</span><input v-model.number="rate" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.years') }}</span><input v-model.number="years" class="tu-input" type="number" min="1" /></label>
+            <label><span class="tu-label">{{ t('finance.extra') }}</span><input v-model.number="extra" class="tu-input" type="number" min="0" /></label>
         </div>
         <div v-else-if="kind === 'compound'" class="tu-fields">
-            <label><span class="tu-label">Starting amount</span><input v-model.number="start" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Annual rate %</span><input v-model.number="growth" class="tu-input" type="number" step="0.01" /></label>
-            <label><span class="tu-label">Years</span><input v-model.number="horizon" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Monthly addition</span><input v-model.number="monthly" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.starting') }}</span><input v-model.number="start" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.annualRate') }}</span><input v-model.number="growth" class="tu-input" type="number" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.years') }}</span><input v-model.number="horizon" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.monthlyAdd') }}</span><input v-model.number="monthly" class="tu-input" type="number" min="0" /></label>
         </div>
         <div v-else-if="kind === 'paypal'" class="tu-fields">
-            <label><span class="tu-label">Amount</span><input v-model.number="ppAmount" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Fee %</span><input v-model.number="ppRate" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Fixed fee</span><input v-model.number="ppFixed" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.amount') }}</span><input v-model.number="ppAmount" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.feePct') }}</span><input v-model.number="ppRate" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.fixed') }}</span><input v-model.number="ppFixed" class="tu-input" type="number" min="0" step="0.01" /></label>
             <label>
-                <span class="tu-label">Amount is</span>
+                <span class="tu-label">{{ t('finance.amountIs') }}</span>
                 <select v-model="ppMode" class="tu-select">
-                    <option value="gross">What the buyer pays</option>
-                    <option value="net">What you want to keep</option>
+                    <option value="gross">{{ t('finance.buyer') }}</option>
+                    <option value="net">{{ t('finance.keepWant') }}</option>
                 </select>
             </label>
         </div>
         <div v-else-if="kind === 'freelance'" class="tu-fields">
-            <label><span class="tu-label">Income goal / year</span><input v-model.number="goal" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Expenses / year</span><input v-model.number="expenses" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Tax %</span><input v-model.number="tax" class="tu-input" type="number" min="0" max="80" /></label>
-            <label><span class="tu-label">Billable weeks</span><input v-model.number="weeks" class="tu-input" type="number" min="1" /></label>
-            <label><span class="tu-label">Hours / week</span><input v-model.number="hours" class="tu-input" type="number" min="1" /></label>
+            <label><span class="tu-label">{{ t('finance.goal') }}</span><input v-model.number="goal" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.expenses') }}</span><input v-model.number="expenses" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.taxPct') }}</span><input v-model.number="tax" class="tu-input" type="number" min="0" max="80" /></label>
+            <label><span class="tu-label">{{ t('finance.weeks') }}</span><input v-model.number="weeks" class="tu-input" type="number" min="1" /></label>
+            <label><span class="tu-label">{{ t('finance.hours') }}</span><input v-model.number="hours" class="tu-input" type="number" min="1" /></label>
         </div>
         <div v-else-if="kind === 'zakat'" class="tu-fields">
-            <label><span class="tu-label">Cash & savings</span><input v-model.number="cash" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Gold grams</span><input v-model.number="goldG" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Gold price / gram</span><input v-model.number="goldPrice" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Silver grams</span><input v-model.number="silverG" class="tu-input" type="number" min="0" step="0.01" /></label>
-            <label><span class="tu-label">Silver price / gram</span><input v-model.number="silverPrice" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Investments</span><input v-model.number="investments" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Debts you owe</span><input v-model.number="debts" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.cash') }}</span><input v-model.number="cash" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.goldG') }}</span><input v-model.number="goldG" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.goldP') }}</span><input v-model.number="goldPrice" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.silverG') }}</span><input v-model.number="silverG" class="tu-input" type="number" min="0" step="0.01" /></label>
+            <label><span class="tu-label">{{ t('finance.silverP') }}</span><input v-model.number="silverPrice" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.investments') }}</span><input v-model.number="investments" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.debts') }}</span><input v-model.number="debts" class="tu-input" type="number" min="0" /></label>
         </div>
         <div v-else-if="kind === 'cricket'" class="tu-fields">
-            <label><span class="tu-label">Runs</span><input v-model.number="runs" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Overs bowled</span><input v-model="overs" class="tu-input" placeholder="12.3" /></label>
-            <label><span class="tu-label">Target</span><input v-model.number="target" class="tu-input" type="number" min="0" /></label>
-            <label><span class="tu-label">Innings overs</span><input v-model="innings" class="tu-input" placeholder="20" /></label>
-            <label><span class="tu-label">Balls / over</span><input v-model.number="ballsPer" class="tu-input" type="number" min="1" max="10" /></label>
+            <label><span class="tu-label">{{ t('finance.runs') }}</span><input v-model.number="runs" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.overs') }}</span><input v-model="overs" class="tu-input" placeholder="12.3" /></label>
+            <label><span class="tu-label">{{ t('finance.target') }}</span><input v-model.number="target" class="tu-input" type="number" min="0" /></label>
+            <label><span class="tu-label">{{ t('finance.innings') }}</span><input v-model="innings" class="tu-input" placeholder="20" /></label>
+            <label><span class="tu-label">{{ t('finance.balls') }}</span><input v-model.number="ballsPer" class="tu-input" type="number" min="1" max="10" /></label>
         </div>
 
         <p v-if="financeError" class="tu-error">{{ financeError }}</p>
@@ -88,6 +88,9 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
     kind: { type: String, required: true },
@@ -160,9 +163,9 @@ const result = computed(() => {
         const total = bill.value + totalTip
         const n = Math.max(1, people.value || 1)
         return { rows: [
-            { label: 'Tip', value: money(totalTip) },
-            { label: 'Total', value: money(total) },
-            { label: 'Per person', value: money(total / n) },
+            { label: t('finance.tip'), value: money(totalTip) },
+            { label: t('finance.total'), value: money(total) },
+            { label: t('finance.per'), value: money(total / n) },
         ] }
     }
     if (kind === 'vat') {
@@ -170,31 +173,31 @@ const result = computed(() => {
         if (vatMode.value === 'add') {
             const taxDue = vatAmount.value * rateN
             return { rows: [
-                { label: 'Tax', value: money(taxDue) },
-                { label: 'Gross', value: money(vatAmount.value + taxDue) },
+                { label: t('finance.tax'), value: money(taxDue) },
+                { label: t('finance.gross'), value: money(vatAmount.value + taxDue) },
             ] }
         }
         const net = vatAmount.value / (1 + rateN)
         return { rows: [
-            { label: 'Net', value: money(net) },
-            { label: 'Tax included', value: money(vatAmount.value - net) },
+            { label: t('finance.net'), value: money(net) },
+            { label: t('finance.included'), value: money(vatAmount.value - net) },
         ] }
     }
     if (kind === 'percentage') {
-        if (pctMode.value === 'of') return { rows: [{ label: 'Result', value: num(pctB.value * pctA.value / 100) }] }
+        if (pctMode.value === 'of') return { rows: [{ label: t('finance.result'), value: num(pctB.value * pctA.value / 100) }] }
         if (pctMode.value === 'ratio') {
-            if (!pctB.value) return { error: 'Y cannot be zero.' }
-            return { rows: [{ label: 'Percent', value: `${num(pctA.value / pctB.value * 100)}%` }] }
+            if (!pctB.value) return { error: t('finance.yZero') }
+            return { rows: [{ label: t('finance.percent'), value: `${num(pctA.value / pctB.value * 100)}%` }] }
         }
-        if (!pctA.value) return { error: 'The starting value cannot be zero.' }
-        return { rows: [{ label: 'Change', value: `${num((pctB.value - pctA.value) / pctA.value * 100)}%` }] }
+        if (!pctA.value) return { error: t('finance.startZero') }
+        return { rows: [{ label: t('finance.change'), value: `${num((pctB.value - pctA.value) / pctA.value * 100)}%` }] }
     }
     if (kind === 'mortgage') {
         const n = years.value * 12
         const r = rate.value / 100 / 12
-        if (principal.value <= 0 || n <= 0) return { error: 'Enter a principal and a term.' }
+        if (principal.value <= 0 || n <= 0) return { error: t('finance.principalError') }
         const payment = r === 0 ? principal.value / n : principal.value * r * (1 + r) ** n / ((1 + r) ** n - 1)
-        if (payment + extra.value <= principal.value * r) return { error: 'The payment does not cover the interest.' }
+        if (payment + extra.value <= principal.value * r) return { error: t('finance.interestError') }
         let balance = principal.value
         let months = 0
         let interestPaid = 0
@@ -207,10 +210,10 @@ const result = computed(() => {
             months += 1
         }
         return { rows: [
-            { label: 'Monthly payment', value: money(payment) },
-            { label: 'With extra', value: money(payment + extra.value) },
-            { label: 'Interest paid', value: money(interestPaid) },
-            { label: 'Months', value: String(months) },
+            { label: t('finance.monthlyPay'), value: money(payment) },
+            { label: t('finance.withExtra'), value: money(payment + extra.value) },
+            { label: t('finance.interest'), value: money(interestPaid) },
+            { label: t('finance.months'), value: String(months) },
         ] }
     }
     if (kind === 'compound') {
@@ -220,36 +223,36 @@ const result = computed(() => {
         for (let i = 0; i < months; i++) balance = balance * (1 + r) + monthly.value
         const contributed = start.value + monthly.value * months
         return { rows: [
-            { label: 'Future value', value: money(balance) },
-            { label: 'Contributed', value: money(contributed) },
-            { label: 'Growth', value: money(balance - contributed) },
+            { label: t('finance.future'), value: money(balance) },
+            { label: t('finance.contributed'), value: money(contributed) },
+            { label: t('finance.growth'), value: money(balance - contributed) },
         ] }
     }
     if (kind === 'paypal') {
         const rateN = ppRate.value / 100
-        if (rateN >= 1) return { error: 'The percentage has to be under 100.' }
+        if (rateN >= 1) return { error: t('finance.feeError') }
         if (ppMode.value === 'gross') {
             const fee = ppAmount.value * rateN + ppFixed.value
             return { rows: [
-                { label: 'Fee', value: money(fee) },
-                { label: 'You keep', value: money(ppAmount.value - fee) },
+                { label: t('finance.fee'), value: money(fee) },
+                { label: t('finance.youKeep'), value: money(ppAmount.value - fee) },
             ] }
         }
         const gross = (ppAmount.value + ppFixed.value) / (1 - rateN)
         return { rows: [
-            { label: 'Ask for', value: money(gross) },
-            { label: 'Fee', value: money(gross - ppAmount.value) },
+            { label: t('finance.ask'), value: money(gross) },
+            { label: t('finance.fee'), value: money(gross - ppAmount.value) },
         ] }
     }
     if (kind === 'freelance') {
         const billable = weeks.value * hours.value
         const keep = 1 - tax.value / 100
-        if (billable <= 0 || keep <= 0) return { error: 'Check the tax rate and the hours.' }
+        if (billable <= 0 || keep <= 0) return { error: t('finance.hoursError') }
         const hourly = (goal.value + expenses.value) / keep / billable
         return { rows: [
-            { label: 'Hourly', value: money(hourly) },
-            { label: 'Daily (8h)', value: money(hourly * 8) },
-            { label: 'Monthly', value: money(hourly * hours.value * 52 / 12) },
+            { label: t('finance.hourly'), value: money(hourly) },
+            { label: t('finance.daily'), value: money(hourly * 8) },
+            { label: t('finance.monthly'), value: money(hourly * hours.value * 52 / 12) },
         ] }
     }
     if (kind === 'zakat') {
@@ -257,25 +260,25 @@ const result = computed(() => {
         const nisab = 87.48 * goldPrice.value
         const due = wealth >= nisab ? wealth * 0.025 : 0
         return { rows: [
-            { label: 'Zakatable wealth', value: money(wealth) },
-            { label: 'Gold nisab', value: money(nisab) },
-            { label: 'Zakat due', value: money(due) },
+            { label: t('finance.wealth'), value: money(wealth) },
+            { label: t('finance.nisab'), value: money(nisab) },
+            { label: t('finance.due'), value: money(due) },
         ] }
     }
     const per = Math.max(1, ballsPer.value || 6)
     const bowled = parseOvers(overs.value, per)
     const total = parseOvers(innings.value, per)
-    if (bowled === null || total === null) return { error: `Overs look like 12.3, and the ball count must be under ${per}.` }
-    if (bowled > total) return { error: 'Overs bowled cannot pass the innings length.' }
+    if (bowled === null || total === null) return { error: t('finance.oversError', { per }) }
+    if (bowled > total) return { error: t('finance.oversLong') }
     const current = bowled ? runs.value / (bowled / per) : 0
     const need = Math.max(0, target.value - runs.value)
     const left = total - bowled
     const required = left ? need / (left / per) : 0
     return { rows: [
-        { label: 'Current RR', value: num(current) },
-        { label: 'Required RR', value: left ? num(required) : '—' },
-        { label: 'Runs needed', value: String(need) },
-        { label: 'Balls left', value: String(left) },
+        { label: t('finance.crr'), value: num(current) },
+        { label: t('finance.rrr'), value: left ? num(required) : '—' },
+        { label: t('finance.need'), value: String(need) },
+        { label: t('finance.left'), value: String(left) },
     ] }
 })
 

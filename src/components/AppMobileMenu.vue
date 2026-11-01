@@ -2,29 +2,34 @@
 <!-- MOBILE MENU -->
     <div id="mobile-menu">
         <nav class="mobile-menu-links" aria-label="Mobile navigation">
-            <router-link :to="{ name: 'about' }" @click="closeMenu">About</router-link>
-            <router-link :to="{ name: 'case-studies' }" @click="closeMenu">Case Studies</router-link>
-            <router-link :to="{ name: 'home', hash: '#services' }" @click="closeMenu">Services</router-link>
-            <router-link :to="{ name: 'home', hash: '#opensource' }" @click="closeMenu">Contributions</router-link>
-            <router-link :to="{ name: 'home', hash: '#process' }" @click="closeMenu">Process</router-link>
-            <router-link :to="{ name: 'blog' }" @click="closeMenu">Blog</router-link>
-            <router-link :to="{ name: 'tools' }" @click="closeMenu">Tools</router-link>
-            <router-link :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">Contact</router-link>
+            <router-link :to="{ name: 'about' }" @click="closeMenu">{{ t('nav.about') }}</router-link>
+            <router-link :to="{ name: 'case-studies' }" @click="closeMenu">{{ t('nav.caseStudies') }}</router-link>
+            <router-link :to="{ name: 'home', hash: '#services' }" @click="closeMenu">{{ t('nav.services') }}</router-link>
+            <router-link :to="{ name: 'home', hash: '#opensource' }" @click="closeMenu">{{ t('nav.contributions') }}</router-link>
+            <router-link :to="{ name: 'home', hash: '#process' }" @click="closeMenu">{{ t('nav.process') }}</router-link>
+            <router-link :to="{ name: 'blog' }" @click="closeMenu">{{ t('nav.blog') }}</router-link>
+            <router-link :to="{ name: 'tools' }" @click="closeMenu">{{ t('nav.tools') }}</router-link>
+            <router-link :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">{{ t('nav.contact') }}</router-link>
         </nav>
         <div class="mobile-menu-footer">
+            <LanguageSwitcher />
             <a href="https://github.com/zfhassaan" target="_blank" rel="noopener" class="mobile-menu-icon"
-                aria-label="GitHub profile">
+                :aria-label="t('nav.githubAria')">
                 <Github :size="20" />
             </a>
             <router-link class="mobile-menu-cta" :to="{ name: 'home', hash: '#contact' }" @click="closeMenu">
-                Discuss Project
+                {{ t('nav.discuss') }}
             </router-link>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Github } from 'lucide-vue-next'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+
+const { t } = useI18n()
 
 function closeMenu() {
     document.getElementById('mobile-menu')?.classList.remove('open')

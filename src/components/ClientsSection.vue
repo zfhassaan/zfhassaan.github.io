@@ -3,11 +3,11 @@
   <section id="clients" class="section">
     <div class="container">
       <div class="reveal" style="margin-bottom: 20px">
-        <div class="section-label">Proven Track Record · Clients &amp; Platforms</div>
-        <h2 class="section-h2">Trusted by Government &amp; Enterprise Teams</h2>
+        <div class="section-label">{{ t('clients.label') }}</div>
+        <h2 class="section-h2">{{ t('clients.title') }}</h2>
       </div>
       <p class="clients-sub text-muted reveal">
-        Production systems delivered for government organizations, enterprise retail, real-time auction platforms, and verified international freelance engagements.
+        {{ t('clients.sub') }}
       </p>
 
       <!-- Client Logo Bar (Single Row / Flex Ribbon) -->
@@ -19,17 +19,17 @@
           target="_blank"
           rel="noopener"
           class="ribbon-item magnetic"
-          :title="`${c.name} — ${c.tag}`"
+          :title="`${clientName(c.id)} — ${t(`clients.items.${c.id}.tag`)}`"
         >
           <img
             :src="c.logo"
-            :alt="`${c.name} logo`"
+            :alt="t('clients.logo', { name: clientName(c.id) })"
             class="ribbon-logo"
             :class="c.logoClass"
           />
           <div class="ribbon-meta">
-            <span class="ribbon-label">{{ c.name }}</span>
-            <span class="ribbon-tag mono">{{ c.badge }}</span>
+            <span class="ribbon-label">{{ clientName(c.id) }}</span>
+            <span class="ribbon-tag mono">{{ t(`clients.items.${c.id}.badge`) }}</span>
           </div>
         </a>
       </div>
@@ -38,51 +38,41 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+function clientName(id) {
+  return t(`clients.items.${id}.name`)
+}
 const clients = [
   {
     id: 'uae-swat',
-    name: 'UAE SWAT Challenge',
     url: 'https://www.uaeswatchallenge.com/en',
     logo: '/images/clients/uae-swat-challenge.svg',
     logoClass: 'logo-swat',
-    badge: 'Dubai Police',
-    tag: 'Dubai Police · Global Special Forces Event'
   },
   {
     id: 'haier-mall',
-    name: 'Haier Mall',
     url: 'https://www.haiermall.pk',
     logo: '/images/clients/haier-white.svg',
     logoClass: 'logo-haier',
-    badge: 'Enterprise Retail',
-    tag: 'Haier · Flagship Retail & Appliance Marketplace'
   },
   {
     id: 'online-auction',
-    name: 'Online Auction',
     url: 'https://onlineauction.ae',
     logo: '/images/clients/online-auction-white.svg',
     logoClass: 'logo-auction',
-    badge: 'Real-Time WebSockets',
-    tag: 'UAE Digital Asset & Vehicle Auction Platform'
   },
   {
     id: 'zoom-packaging',
-    name: 'Zoom Packaging',
     url: 'https://zoompackaging.com/',
     logo: '/images/clients/zoom-packaging.png',
     logoClass: 'logo-zoom',
-    badge: 'B2B Manufacturing (USA)',
-    tag: 'Custom Packaging & Wholesale Box Manufacturer (Austin, TX)'
   },
   {
     id: 'laravel-amqp',
-    name: 'Laravel AMQP',
     url: 'https://zfhassaan.github.io/laravel-amqp',
     logo: '/images/clients/laravel-amqp.png',
     logoClass: 'logo-amqp',
-    badge: '2.5M+ Downloads',
-    tag: 'RabbitMQ Messaging Toolkit · Upstream Collaborator'
   }
 ]
 </script>

@@ -10,15 +10,15 @@
 
         <div v-if="mode === 'compress'" class="tu-fields">
             <label>
-                <span class="tu-label">Quality · {{ Math.round(quality * 100) }}%</span>
+                <span class="tu-label">{{ t('image.quality', { n: Math.round(quality * 100) }) }}</span>
                 <input v-model.number="quality" class="tu-input" type="range" min="0.4" max="1" step="0.01" />
             </label>
             <label>
-                <span class="tu-label">Max edge (px, optional)</span>
+                <span class="tu-label">{{ t('image.edge') }}</span>
                 <input v-model.number="maxEdge" class="tu-input" type="number" min="0" placeholder="1600" />
             </label>
             <label>
-                <span class="tu-label">Format</span>
+                <span class="tu-label">{{ t('image.format') }}</span>
                 <select v-model="format" class="tu-select">
                     <option value="image/jpeg">JPEG</option>
                     <option value="image/webp">WebP</option>
@@ -29,16 +29,16 @@
 
         <div v-else-if="mode === 'resize'" class="tu-fields">
             <label>
-                <span class="tu-label">Width</span>
+                <span class="tu-label">{{ t('image.width') }}</span>
                 <input v-model.number="width" class="tu-input" type="number" min="1" @input="onWidth" />
             </label>
             <label>
-                <span class="tu-label">Height</span>
+                <span class="tu-label">{{ t('image.height') }}</span>
                 <input v-model.number="height" class="tu-input" type="number" min="1" @input="onHeight" />
             </label>
-            <label class="tu-check"><input v-model="lock" type="checkbox" /> Lock aspect ratio</label>
+            <label class="tu-check"><input v-model="lock" type="checkbox" /> {{ t('image.lock') }}</label>
             <label>
-                <span class="tu-label">Format</span>
+                <span class="tu-label">{{ t('image.format') }}</span>
                 <select v-model="format" class="tu-select">
                     <option value="image/png">PNG</option>
                     <option value="image/jpeg">JPEG</option>
@@ -49,7 +49,7 @@
 
         <div v-else-if="mode === 'convert' || mode === 'strip'" class="tu-fields">
             <label>
-                <span class="tu-label">Format</span>
+                <span class="tu-label">{{ t('image.format') }}</span>
                 <select v-model="format" class="tu-select">
                     <option value="image/jpeg">JPEG</option>
                     <option value="image/png">PNG</option>
@@ -68,7 +68,7 @@
             <div v-for="icon in icons" :key="icon.size" class="tu-card tu-stack">
                 <span class="tu-label">{{ icon.size }} × {{ icon.size }}</span>
                 <img class="tu-preview" :src="icon.url" :width="icon.size" :height="icon.size" alt="" />
-                <button class="tu-btn" type="button" @click="downloadBlob(icon.blob, `favicon-${icon.size}.png`)">Download</button>
+                <button class="tu-btn" type="button" @click="downloadBlob(icon.blob, `favicon-${icon.size}.png`)">{{ t('image.download') }}</button>
             </div>
         </div>
 
@@ -76,9 +76,9 @@
 
         <div class="tu-actions">
             <button v-if="mode !== 'favicon'" class="tu-btn tu-btn-primary" type="button" :disabled="!file || busy" @click="run">
-                {{ busy ? 'Working…' : actionLabel }}
+                {{ busy ? t('pdf.working') : actionLabel }}
             </button>
-            <button v-if="blob" class="tu-btn" type="button" @click="downloadBlob(blob, filename)">Download</button>
+            <button v-if="blob" class="tu-btn" type="button" @click="downloadBlob(blob, filename)">{{ t('image.download') }}</button>
         </div>
         <p v-if="mode === 'strip'" class="tu-hint">Re-encoding drops EXIF, GPS, and camera notes. The pixels are drawn again, so the file is a new image.</p>
     </div>
@@ -86,6 +86,7 @@
 
 <script setup>
 import { computed, onUnmounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 import { encodeImage } from '@/lib/image-codec'
 import { downloadBlob, formatBytes } from '@/lib/tool-files'
@@ -93,6 +94,8 @@ import { downloadBlob, formatBytes } from '@/lib/tool-files'
 const props = defineProps({
     mode: { type: String, required: true },
 })
+
+const { t } = useI18n()
 
 const file = ref(null)
 const error = ref('')
@@ -113,24 +116,22 @@ const engine = ref('')
 let natural = { w: 0, h: 0 }
 
 const actionLabel = computed(() => ({
-    compress: 'Compress',
-    resize: 'Resize',
-    convert: 'Convert',
-    strip: 'Strip metadata',
-}[props.mode] || 'Run'))
+    compress: t('image.runCompress'),
+    resize: t('image.runResize'),
+    convert: t('image.runConvert'),
+    strip: t('image.runStrip'),
+}[props.mode] || t('image.run')))
 
 const dropTitle = computed(() => ({
-    compress: 'Drop an image to compress',
-    resize: 'Drop an image to resize',
-    convert: 'Drop an image to convert',
-    strip: 'Drop a photo to strip metadata',
-    favicon: 'Drop an image for favicons',
-}[props.mode] || 'Drop an image'))
+    compress: t('image.compress'),
+    resize: t('image.resize'),
+    convert: t('image.convert'),
+    strip: t('image.strip'),
+    favicon: t('image.favicon'),
+}[props.mode] || t('image.fallback')))
 
 const dropHint = computed(() => (
-    props.mode === 'favicon'
-        ? 'Click to browse. Icons are encoded with OxiPNG.'
-        : 'Click to browse, or drop a file. JPEG, PNG, and WebP are encoded with WebAssembly.'
+    props.mode === 'favicon' ? t('image.faviconHint') : t('image.hint')
 ))
 
 const beforeLabel = computed(() => formatBytes(before.value))

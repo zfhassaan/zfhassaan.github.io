@@ -3,10 +3,10 @@
     <section id="opensource" class="section">
         <div class="container">
             <div class="os-header reveal">
-                <div class="section-label">Open Source &amp; Community Contributions</div>
-                <h2 class="section-h2">Tooling, Ecosystem Packages &amp; Upstream Code</h2>
+                <div class="section-label">{{ t('opensource.label') }}</div>
+                <h2 class="section-h2">{{ t('opensource.title') }}</h2>
                 <p class="os-header-sub text-muted">
-                    Active contributor to widely used enterprise libraries and author of developer tooling designed for high-reliability systems.
+                    {{ t('opensource.sub') }}
                 </p>
             </div>
 
@@ -16,7 +16,7 @@
                 <div class="os-card reveal">
                     <div class="os-card-badge">
                         <Check :size="14" class="text-accent" />
-                        <span>Upstream Collaborator · 6 Merged PRs</span>
+                        <span>{{ t('opensource.badge1') }}</span>
                     </div>
 
                     <div class="os-card-header">
@@ -28,19 +28,16 @@
                         <span class="os-pill mono">RabbitMQ · AMQP</span>
                     </div>
 
-                    <p class="os-card-desc">
-                        Official collaborator on the premier RabbitMQ integration package for Laravel (2.5M+ downloads).
-                        Maintained compatibility across modern Laravel/PHP versions, standardized RPC messaging patterns, and rebuilt the complete documentation portal.
-                    </p>
+                    <p class="os-card-desc">{{ t('opensource.desc1') }}</p>
 
                     <div class="os-stat-row">
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="counter" data-target="2500000" data-display="2.5" data-suffix="M+">2.5M+</span></div>
-                            <div class="os-stat-label">Downloads</div>
+                            <div class="os-stat-label">{{ t('opensource.downloads') }}</div>
                         </div>
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="os-stat-accent">6</span></div>
-                            <div class="os-stat-label">Merged PRs</div>
+                            <div class="os-stat-label">{{ t('opensource.prs') }}</div>
                         </div>
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="os-stat-accent">PHP 8+</span></div>
@@ -49,25 +46,25 @@
                     </div>
 
                     <!-- Compact Message Flow -->
-                    <div class="rmq-mini-flow">
+                    <div class="rmq-mini-flow" dir="ltr">
                         <span class="rmq-mini-node">Producer</span>
-                        <span class="rmq-mini-arrow">→</span>
+                        <ArrowRight class="rmq-mini-arrow" :size="14" :stroke-width="1.75" />
                         <span class="rmq-mini-node">Exchange</span>
-                        <span class="rmq-mini-arrow">→</span>
+                        <ArrowRight class="rmq-mini-arrow" :size="14" :stroke-width="1.75" />
                         <span class="rmq-mini-node">Queue</span>
-                        <span class="rmq-mini-arrow">→</span>
+                        <ArrowRight class="rmq-mini-arrow" :size="14" :stroke-width="1.75" />
                         <span class="rmq-mini-node">Consumer</span>
                     </div>
 
                     <div class="os-card-actions">
                         <a href="https://zfhassaan.github.io/laravel-amqp" target="_blank" rel="noopener" class="btn-primary-sm magnetic">
                             <Globe :size="14" />
-                            <span>Official Documentation</span>
+                            <span>{{ t('opensource.docs') }}</span>
                             <ExternalLink :size="12" />
                         </a>
                         <a href="https://github.com/bschmitt/laravel-amqp" target="_blank" rel="noopener" class="btn-secondary-sm magnetic">
                             <Github :size="14" />
-                            <span>Upstream Repo</span>
+                            <span>{{ t('opensource.repo') }}</span>
                         </a>
                     </div>
                 </div>
@@ -76,7 +73,7 @@
                 <div class="os-card reveal">
                     <div class="os-card-badge">
                         <Sparkles :size="14" class="text-accent" />
-                        <span>Author &amp; Maintainer · Developer Tooling</span>
+                        <span>{{ t('opensource.badge2') }}</span>
                     </div>
 
                     <div class="os-card-header">
@@ -88,10 +85,7 @@
                         <span class="os-pill mono">SVG · Canvas · QR</span>
                     </div>
 
-                    <p class="os-card-desc">
-                        A modern, standalone barcode and QR code generation suite engineered for speed and crisp vector fidelity.
-                        Supports Code 128, EAN-13, UPC-A, ITF, and QR code formats with zero runtime bloat.
-                    </p>
+                    <p class="os-card-desc">{{ t('opensource.desc2') }}</p>
 
                     <div class="os-stat-row">
                         <div class="os-stat">
@@ -100,7 +94,7 @@
                         </div>
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="os-stat-accent">10+</span></div>
-                            <div class="os-stat-label">Symbologies</div>
+                            <div class="os-stat-label">{{ t('opensource.symbologies') }}</div>
                         </div>
                         <div class="os-stat">
                             <div class="os-stat-num"><span class="os-stat-accent">Open</span></div>
@@ -125,10 +119,10 @@
                             target="_blank"
                             rel="noopener"
                             class="btn-primary-sm magnetic"
-                            title="Submit a feature or enhancement request"
+                            :title="t('opensource.featureTitle')"
                         >
                             <PlusCircle :size="14" />
-                            <span>Request Feature / Enhancement</span>
+                            <span>{{ t('opensource.feature') }}</span>
                             <ExternalLink :size="12" />
                         </a>
                         <a
@@ -138,7 +132,7 @@
                             class="btn-secondary-sm magnetic"
                         >
                             <Github :size="14" />
-                            <span>GitHub Repo</span>
+                            <span>{{ t('opensource.githubRepo') }}</span>
                         </a>
                     </div>
                 </div>
@@ -148,9 +142,10 @@
             <div class="os-footer-note reveal">
                 <Github :size="16" class="text-accent" />
                 <span>
-                    Explore more open source packages, SDKs, and CLI tools on GitHub:
+                    {{ t('opensource.more') }}
                     <a href="https://github.com/zfhassaan" target="_blank" rel="noopener" class="os-footer-link">
-                        github.com/zfhassaan &rarr;
+                        github.com/zfhassaan
+                        <ArrowRight :size="14" />
                     </a>
                 </span>
             </div>
@@ -159,7 +154,9 @@
 </template>
 
 <script setup>
-import { Check, Globe, Github, ExternalLink, Sparkles, PlusCircle } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
+import { Check, Globe, Github, ExternalLink, Sparkles, PlusCircle, ArrowRight } from 'lucide-vue-next'
+const { t } = useI18n()
 </script>
 
 <style scoped>
@@ -376,7 +373,7 @@ import { Check, Globe, Github, ExternalLink, Sparkles, PlusCircle } from 'lucide
 
 .btn-primary-sm {
     background: var(--accent);
-    color: #0b0f17;
+    color: var(--on-accent);
     font-weight: 600;
 }
 
@@ -413,7 +410,10 @@ import { Check, Globe, Github, ExternalLink, Sparkles, PlusCircle } from 'lucide
     color: var(--accent);
     font-weight: 500;
     text-decoration: none;
-    margin-left: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-inline-start: 4px;
 }
 
 .os-footer-link:hover {

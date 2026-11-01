@@ -3,11 +3,11 @@
     <div class="container">
       <!-- Breadcrumb -->
       <nav class="cd-breadcrumb" aria-label="Breadcrumb">
-        <router-link to="/" class="cd-back-link">Home</router-link>
+        <router-link to="/" class="cd-back-link">{{ t('projects.home') }}</router-link>
         <span class="cd-sep">/</span>
-        <router-link :to="{ name: 'case-studies' }" class="cd-back-link">Case Studies</router-link>
+        <router-link :to="{ name: 'case-studies' }" class="cd-back-link">{{ t('projects.current') }}</router-link>
         <span class="cd-sep">/</span>
-        <span class="cd-current">{{ project.title }}</span>
+        <span class="cd-current">{{ projectField(project, 'title') }}</span>
       </nav>
 
       <!-- Case Study Header -->
@@ -20,15 +20,15 @@
             class="cd-client-logo"
             :class="project.logoClass"
           />
-          <span class="cd-tag mono">{{ project.tag }}</span>
+          <span class="cd-tag mono">{{ projectField(project, 'tag') }}</span>
         </div>
 
-        <h1 class="cd-title">{{ project.title }}</h1>
-        <p v-if="project.subtitle" class="cd-subtitle text-muted" v-html="project.subtitle" />
+        <h1 class="cd-title">{{ projectField(project, 'title') }}</h1>
+        <p v-if="project.subtitle" class="cd-subtitle text-muted" v-html="projectField(project, 'subtitle')" />
 
         <!-- Impact proof bar -->
         <div v-if="project.impact && project.impact.length" class="cd-impact-bar">
-          <div v-for="metric in project.impact" :key="metric" class="cd-impact-item">
+          <div v-for="(metric, index) in projectList(project, 'impact')" :key="index" class="cd-impact-item">
             <CheckCircle2 :size="15" class="text-accent" />
             <span class="mono">{{ metric }}</span>
           </div>
@@ -43,55 +43,56 @@
           <section class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">01</span>
-              <h2 class="cd-block-title">The Engineering Challenge</h2>
+              <h2 class="cd-block-title">{{ t('projects.challenge') }}</h2>
             </div>
-            <div class="cd-block-body" v-html="project.problem" />
+            <div v-if="te(`projects.items.${project.id}.problem`)" class="cd-block-body">{{ projectField(project, 'problem') }}</div>
+            <div v-else class="cd-block-body" v-html="project.problem" />
           </section>
 
           <!-- Constraints -->
           <section v-if="project.constraints" class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">02</span>
-              <h2 class="cd-block-title">Production Constraints</h2>
+              <h2 class="cd-block-title">{{ t('projects.prodConstraints') }}</h2>
             </div>
-            <div class="cd-block-body" v-html="project.constraints" />
+            <div class="cd-block-body" v-html="projectField(project, 'constraints')" />
           </section>
 
           <!-- Approach & Architecture -->
           <section v-if="project.approach" class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">03</span>
-              <h2 class="cd-block-title">Architectural Approach</h2>
+              <h2 class="cd-block-title">{{ t('projects.arch') }}</h2>
             </div>
-            <div class="cd-block-body" v-html="project.approach" />
+            <div class="cd-block-body" v-html="projectField(project, 'approach')" />
           </section>
 
           <!-- Delivery & Ownership -->
           <section v-if="project.delivery" class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">04</span>
-              <h2 class="cd-block-title">Engineering Ownership</h2>
+              <h2 class="cd-block-title">{{ t('projects.engOwnership') }}</h2>
             </div>
-            <div class="cd-block-body" v-html="project.delivery" />
+            <div class="cd-block-body" v-html="projectField(project, 'delivery')" />
           </section>
 
           <!-- Outcome & Results -->
           <section v-if="project.outcome" class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">05</span>
-              <h2 class="cd-block-title">Verifiable Outcomes</h2>
+              <h2 class="cd-block-title">{{ t('projects.results') }}</h2>
             </div>
-            <div class="cd-block-body" v-html="project.outcome" />
+            <div class="cd-block-body" v-html="projectField(project, 'outcome')" />
           </section>
 
           <!-- Stack -->
           <section class="cd-block">
             <div class="cd-block-header">
               <span class="cd-block-num mono">06</span>
-              <h2 class="cd-block-title">Technology Stack</h2>
+              <h2 class="cd-block-title">{{ t('projects.stack') }}</h2>
             </div>
             <div class="cd-tech-tags">
-              <span v-for="t in project.stack" :key="t" class="cd-tech-tag mono">{{ t }}</span>
+              <span v-for="item in project.stack" :key="item" class="cd-tech-tag mono">{{ item }}</span>
             </div>
           </section>
         </div>
@@ -117,7 +118,7 @@
               <div class="terminal-body">
                 <template v-for="(line, lineIndex) in project.visual.lines" :key="lineIndex">
                   <br v-if="line === null" />
-                  <div v-else v-html="line" />
+                  <div v-else v-html="visualLine(project, line, lineIndex)" />
                 </template>
               </div>
             </div>
@@ -143,7 +144,7 @@
                       />
                       <span v-else>{{ box.icon }}</span>
                     </span>
-                    <span>{{ box.text }}</span>
+                    <span>{{ schemaText(project, rowIndex, boxIndex, box.text) }}</span>
                   </div>
                 </div>
                 <div
@@ -164,7 +165,7 @@
             </div>
             <div class="cd-links-list">
               <a
-                v-for="link in project.links"
+                v-for="(link, index) in project.links"
                 :key="link.href"
                 :href="link.href"
                 target="_blank"
@@ -176,7 +177,7 @@
                   <BookOpen v-else-if="link.icon === 'docs'" :size="16" />
                   <Github v-else-if="link.icon === 'github'" :size="16" />
                   <Globe v-else :size="16" />
-                  <span class="cd-link-label">{{ link.label }}</span>
+                  <span class="cd-link-label">{{ linkLabel(project, link, index) }}</span>
                 </div>
                 <ArrowUpRight :size="14" class="cd-link-arrow" />
               </a>
@@ -239,11 +240,11 @@
   <!-- 404 Fallback if not found -->
   <main v-else class="case-detail-page">
     <div class="container text-center" style="padding: 120px 0">
-      <h1 class="cd-title">Case Study Not Found</h1>
+      <h1 class="cd-title">{{ t('projects.missing') }}</h1>
       <p class="text-muted" style="margin-bottom: 24px">The requested case study could not be located.</p>
       <router-link :to="{ name: 'case-studies' }" class="btn-primary-cd">
         <ArrowLeft :size="16" />
-        <span>Back to Case Studies</span>
+        <span>{{ t('projects.backList') }}</span>
       </router-link>
     </div>
   </main>
@@ -253,6 +254,9 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { projects } from '@/data/projects'
+import { useCopy } from '@/composables/useCopy'
+
+const { t, te, projectField, projectList, linkLabel, visualLine, schemaText } = useCopy()
 import {
   ArrowLeft,
   ArrowRight,
@@ -617,7 +621,7 @@ const nextProject = computed(() => {
   width: 100%;
   padding: 10px 18px;
   background: var(--accent);
-  color: #0b0f17;
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 600;

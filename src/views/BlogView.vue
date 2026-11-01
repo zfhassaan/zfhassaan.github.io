@@ -3,11 +3,9 @@
         <section class="section">
             <div class="container">
                 <div class="blog-head">
-                    <div class="section-label">Engineering Notes &amp; Tutorials</div>
-                    <h1 class="section-h2">Technical Articles</h1>
-                    <p class="blog-intro">
-                        In-depth guides on Laravel, RabbitMQ distributed architectures, AWS deployments, payment gateway patterns, and backend performance engineering.
-                    </p>
+                    <div class="section-label">{{ t('blog.pageLabel') }}</div>
+                    <h1 class="section-h2">{{ t('blog.pageTitle') }}</h1>
+                    <p class="blog-intro">{{ t('blog.pageIntro') }}</p>
                 </div>
 
                 <!-- Category Filters -->
@@ -39,12 +37,12 @@
                 <!-- Error -->
                 <div v-else-if="error && !posts.length" class="blog-state">
                     <p>{{ error }}</p>
-                    <button class="blog-btn" @click="retry">Try again</button>
+                    <button class="blog-btn" @click="retry">{{ t('blog.retry') }}</button>
                 </div>
 
                 <!-- Empty -->
                 <div v-else-if="!filteredPosts.length" class="blog-state">
-                    <p>No articles found in this category.</p>
+                    <p>{{ t('blog.empty') }}</p>
                     <button class="filter-pill active" @click="selectedCategory = 'all'">Show all articles</button>
                 </div>
 
@@ -71,7 +69,7 @@
                                 <h2 class="blog-card-title">{{ post.title }}</h2>
                                 <p class="blog-card-excerpt">{{ post.excerpt }}…</p>
                                 <span class="blog-card-cta">
-                                    Read Article
+                                    {{ t('blog.read') }}
                                     <ArrowRight :size="14" />
                                 </span>
                             </div>
@@ -93,24 +91,27 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 import { useBlogFeed } from '@/composables/useBlogFeed'
 import { formatDate } from '@/lib/format'
 
 const { posts, loading, loadingMore, error, hasMore, loadInitial, loadMore, retry } = useBlogFeed()
 
-const categories = [
-    { id: 'all', label: 'All Articles' },
-    { id: 'laravel', label: 'Laravel & PHP', match: ['laravel', 'php', 'lumen'] },
-    { id: 'architecture', label: 'Architecture & Queues', match: ['microservices', 'docker', 'rabbitmq', 'amqp', 'distributed'] },
-    { id: 'devops', label: 'DevOps & AWS', match: ['aws', 'lambda', 'ci', 'cd', 'deployments', 'ssh', 'bash'] },
-    { id: 'apis', label: 'APIs & Web Tools', match: ['api', 'rest', 'javascript', 'frontend', 'ux', 'tools'] },
-]
+const { t } = useI18n()
+
+const categories = computed(() => [
+    { id: 'all', label: t('blog.catAll') },
+    { id: 'laravel', label: t('blog.catLaravel'), match: ['laravel', 'php', 'lumen'] },
+    { id: 'architecture', label: t('blog.catArch'), match: ['microservices', 'docker', 'rabbitmq', 'amqp', 'distributed'] },
+    { id: 'devops', label: t('blog.catDevops'), match: ['aws', 'lambda', 'ci', 'cd', 'deployments', 'ssh', 'bash'] },
+    { id: 'apis', label: t('blog.catApis'), match: ['api', 'rest', 'javascript', 'frontend', 'ux', 'tools'] },
+])
 
 const selectedCategory = ref('all')
 
 const filteredPosts = computed(() => {
     if (selectedCategory.value === 'all') return posts.value
-    const cat = categories.find((c) => c.id === selectedCategory.value)
+    const cat = categories.value.find((c) => c.id === selectedCategory.value)
     if (!cat || !cat.match) return posts.value
     return posts.value.filter((post) => {
         const postTags = (post.tags || []).map((t) => t.toLowerCase())

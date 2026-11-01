@@ -3,12 +3,12 @@
     <section id="process" class="section">
         <div class="container">
             <div class="reveal" style="margin-bottom:20px">
-                <div class="section-label">Working Process &amp; Trust</div>
-                <h2 class="section-h2">How We Work Together</h2>
+                <div class="section-label">{{ t('process.label') }}</div>
+                <h2 class="section-h2">{{ t('process.title') }}</h2>
             </div>
             <p style="font-size:0.92rem;color:var(--text-muted);max-width:620px;line-height:1.65;margin-bottom:0"
                 class="reveal">
-                A structured, milestone-driven engagement model designed to remove friction, provide predictable delivery, and keep international clients informed every step of the way.
+                {{ t('process.intro') }}
             </p>
 
             <!-- 4-step process timeline -->
@@ -16,60 +16,52 @@
                 <div class="process-step reveal">
                     <div class="step-num">01</div>
                     <div class="step-header">
-                        <div class="step-badge">Phase 1</div>
-                        <h3 class="step-title">Technical Discovery &amp; Scope Alignment</h3>
+                        <div class="step-badge">{{ t('process.phase', { n: 1 }) }}</div>
+                        <h3 class="step-title">{{ t('process.p1title') }}</h3>
                     </div>
-                    <p class="step-desc">
-                        We begin by reviewing your core business problem, existing architecture, and technical constraints. Rather than jumping straight into code, we clarify requirements, identify hidden edge cases, and evaluate third-party APIs or payment providers.
-                    </p>
+                    <p class="step-desc">{{ t('process.p1desc') }}</p>
                     <div class="step-deliverable">
-                        <span class="deliverable-label">Deliverable:</span>
-                        <span>Architectural summary, scope breakdown, and milestone timeline</span>
+                        <span class="deliverable-label">{{ t('process.deliverable') }}</span>
+                        <span>{{ t('process.p1out') }}</span>
                     </div>
                 </div>
 
                 <div class="process-step reveal">
                     <div class="step-num">02</div>
                     <div class="step-header">
-                        <div class="step-badge">Phase 2</div>
-                        <h3 class="step-title">Milestone Planning &amp; Agreement</h3>
+                        <div class="step-badge">{{ t('process.phase', { n: 2 }) }}</div>
+                        <h3 class="step-title">{{ t('process.p2title') }}</h3>
                     </div>
-                    <p class="step-desc">
-                        Every project is broken into distinct, verifiable milestones with defined acceptance criteria. You have complete transparency over what will be delivered, when it will be ready, and the exact investment involved — with zero surprise scope creep.
-                    </p>
+                    <p class="step-desc">{{ t('process.p2desc') }}</p>
                     <div class="step-deliverable">
-                        <span class="deliverable-label">Deliverable:</span>
-                        <span>Prioritized milestone contract, acceptance criteria &amp; delivery dates</span>
+                        <span class="deliverable-label">{{ t('process.deliverable') }}</span>
+                        <span>{{ t('process.p2out') }}</span>
                     </div>
                 </div>
 
                 <div class="process-step reveal">
                     <div class="step-num">03</div>
                     <div class="step-header">
-                        <div class="step-badge">Phase 3</div>
-                        <h3 class="step-title">Iterative Delivery &amp; Async Updates</h3>
+                        <div class="step-badge">{{ t('process.phase', { n: 3 }) }}</div>
+                        <h3 class="step-title">{{ t('process.p3title') }}</h3>
                     </div>
-                    <p class="step-desc">
-                        Work proceeds in focused sprints with frequent commits, automated tests, and staging deployments. I provide proactive written updates and Loom video walkthroughs, maintaining 4–6 hours of daily overlap with US and European time zones.
-                    </p>
+                    <p class="step-desc">{{ t('process.p3desc') }}</p>
                     <div class="step-deliverable">
-                        <span class="deliverable-label">Deliverable:</span>
-                        <span>Staging preview URLs, GitHub PRs with test coverage &amp; video walkthroughs</span>
+                        <span class="deliverable-label">{{ t('process.deliverable') }}</span>
+                        <span>{{ t('process.p3out') }}</span>
                     </div>
                 </div>
 
                 <div class="process-step reveal">
                     <div class="step-num">04</div>
                     <div class="step-header">
-                        <div class="step-badge">Phase 4</div>
-                        <h3 class="step-title">Production Launch &amp; Knowledge Transfer</h3>
+                        <div class="step-badge">{{ t('process.phase', { n: 4 }) }}</div>
+                        <h3 class="step-title">{{ t('process.p4title') }}</h3>
                     </div>
-                    <p class="step-desc">
-                        Zero-downtime deployment, production telemetry checks, and comprehensive documentation. After launch, I provide a warranty support window and clean knowledge handover so your team can maintain and scale the system with complete confidence.
-                    </p>
+                    <p class="step-desc">{{ t('process.p4desc') }}</p>
                     <div class="step-deliverable">
-                        <span class="deliverable-label">Deliverable:</span>
-                        <span>Production release, OpenAPI/Postman specs, runbook &amp; warranty support</span>
+                        <span class="deliverable-label">{{ t('process.deliverable') }}</span>
+                        <span>{{ t('process.p4out') }}</span>
                     </div>
                 </div>
             </div>
@@ -79,41 +71,33 @@
                 <div class="trust-card">
                     <div class="trust-card-header">
                         <div class="trust-icon"><Globe :size="20" /></div>
-                        <h4 class="trust-title">Global Time Zone Overlap</h4>
+                        <h4 class="trust-title">{{ t('process.t1title') }}</h4>
                     </div>
-                    <div class="trust-desc">
-                        Based in Lahore (UTC+5), offering 4–6 hours of regular working overlap with teams in North America (EST/PST mornings), Europe, and the Middle East.
-                    </div>
+                    <div class="trust-desc">{{ t('process.t1desc') }}</div>
                 </div>
 
                 <div class="trust-card">
                     <div class="trust-card-header">
                         <div class="trust-icon"><MessageSquare :size="20" /></div>
-                        <h4 class="trust-title">Clear, Proactive Communication</h4>
+                        <h4 class="trust-title">{{ t('process.t2title') }}</h4>
                     </div>
-                    <div class="trust-desc">
-                        Concise async updates via Slack, email, or Loom. Technical trade-offs, potential roadblocks, and timelines are communicated early so there are no surprises.
-                    </div>
+                    <div class="trust-desc">{{ t('process.t2desc') }}</div>
                 </div>
 
                 <div class="trust-card">
                     <div class="trust-card-header">
                         <div class="trust-icon"><Shield :size="20" /></div>
-                        <h4 class="trust-title">Production-Grade Standards</h4>
+                        <h4 class="trust-title">{{ t('process.t3title') }}</h4>
                     </div>
-                    <div class="trust-desc">
-                        Automated test suites (PHPUnit, Pest, Jest), strict typing, database row locks for financial transactions, and cryptographic verification come standard.
-                    </div>
+                    <div class="trust-desc">{{ t('process.t3desc') }}</div>
                 </div>
 
                 <div class="trust-card">
                     <div class="trust-card-header">
                         <div class="trust-icon"><Users :size="20" /></div>
-                        <h4 class="trust-title">Direct Senior Ownership</h4>
+                        <h4 class="trust-title">{{ t('process.t4title') }}</h4>
                     </div>
-                    <div class="trust-desc">
-                        No agency overhead or middle management. You work directly with a senior engineer who takes personal ownership of system reliability and business success.
-                    </div>
+                    <div class="trust-desc">{{ t('process.t4desc') }}</div>
                 </div>
             </div>
         </div>
@@ -121,7 +105,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Globe, MessageSquare, Shield, Users } from 'lucide-vue-next'
+const { t } = useI18n()
 </script>
 
 <style scoped>

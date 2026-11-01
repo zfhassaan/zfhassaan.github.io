@@ -12,8 +12,19 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { initGlobalChrome } from '@/composables/portfolio-engine'
+import { applyDocumentLocale } from '@/lib/locale'
+
+const route = useRoute()
+const { locale, t } = useI18n()
+
+watch(locale, (code) => {
+  applyDocumentLocale(code)
+  if (route.name !== 'tool') document.title = t('meta.title')
+})
 
 import AppCursor from '@/components/AppCursor.vue'
 import AppMobileMenu from '@/components/AppMobileMenu.vue'

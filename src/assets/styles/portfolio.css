@@ -16,6 +16,7 @@
             --border: rgba(255, 255, 255, 0.08);
             --glow: rgba(45, 212, 191, 0.18);
             --glow-strong: rgba(45, 212, 191, 0.35);
+            --on-accent: #070B14;
             --font-head: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -47,6 +48,7 @@
             --border: rgba(15, 23, 42, 0.08);
             --glow: rgba(13, 148, 136, 0.10);
             --glow-strong: rgba(13, 148, 136, 0.22);
+            --on-accent: #020617;
             color-scheme: light;
         }
 
@@ -304,26 +306,31 @@
         /* ═══════════════════════════════════════════════
    CURSOR
 ═══════════════════════════════════════════════ */
-        #cursor-dot {
+        #cursor-dot,
+        #cursor-ring {
             position: fixed;
+            top: 0;
+            left: 0;
+            right: auto;
+            direction: ltr;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-dot {
             width: 5px;
             height: 5px;
             background: var(--accent);
             border-radius: 50%;
-            pointer-events: none;
             z-index: 10000;
-            transform: translate(-50%, -50%);
         }
 
         #cursor-ring {
-            position: fixed;
             width: 28px;
             height: 28px;
             border: 1px solid rgba(45, 212, 191, 0.5);
             border-radius: 50%;
-            pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
         }
 
         @media (max-width: 768px) {
@@ -900,7 +907,7 @@
             gap: 8px;
             padding: 12px 28px;
             background: var(--accent);
-            color: var(--bg-primary);
+            color: var(--on-accent);
             font-family: var(--font-head);
             font-size: 14px;
             font-weight: 700;
@@ -1242,11 +1249,14 @@
         }
 
         .projects-nav-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             width: 40px;
+            min-width: 40px;
             height: 40px;
+            padding: 0;
+            flex: 0 0 40px;
             border: 1px solid var(--border);
             border-radius: var(--radius);
             background: transparent;
@@ -2371,7 +2381,7 @@
 
         .pg-stage-line {
             position: absolute;
-            left: 19px;
+            inset-inline-start: 19px;
             top: 44px;
             width: 1px;
             height: calc(100% - 12px);
@@ -2614,7 +2624,7 @@
 
         .pg-btn-primary {
             background: var(--accent);
-            color: var(--bg-primary);
+            color: var(--on-accent);
         }
 
         .pg-btn-primary:hover {
@@ -3184,8 +3194,7 @@
         .contact-link,
         .back-link,
         .tool-cta,
-        .jt-btn,
-        .projects-nav-btn {
+        .jt-btn {
             display: inline-flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -3211,8 +3220,7 @@
         .contact-link svg,
         .back-link svg,
         .tool-cta svg,
-        .jt-btn svg,
-        .projects-nav-btn svg {
+        .jt-btn svg {
             flex-shrink: 0 !important;
             display: inline-block;
         }

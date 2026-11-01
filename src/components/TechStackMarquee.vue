@@ -1,6 +1,6 @@
 <template>
   <!-- ══ TECH STACK CONTINUOUS LOGO SLIDER ══ -->
-  <section class="tech-marquee-section" aria-label="Core Technical Stack">
+  <section class="tech-marquee-section" :aria-label="t('clients.stack')">
 
     <!-- Seamless Infinite Logo Ticker (No background, No border, No boundary) -->
     <div
@@ -34,6 +34,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const isPaused = ref(false)
 

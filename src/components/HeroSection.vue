@@ -4,36 +4,36 @@
         <div class="hero-left">
             <div class="hero-eyebrow" id="hero-badge">
                 <div class="hero-eyebrow-dot"></div>
-                Senior Backend &amp; Full-Stack Engineer · Direct Client Engagements
+                {{ t('hero.eyebrow') }}
             </div>
             <h1 class="hero-h1" id="hero-h1">
-                <span class="hero-title-row">Complex technical problems.</span>
-                <span class="hero-title-row"><span class="accent-word">Reliable software</span> solutions.</span>
+                <span class="hero-title-row">{{ t('hero.line1') }}</span>
+                <span class="hero-title-row"><span class="accent-word">{{ t('hero.accent') }}</span> {{ t('hero.line2') }}</span>
             </h1>
             <p class="hero-sub" id="hero-sub">
-                I help startups and businesses build backend systems, integrate APIs and payment providers, and develop full-stack applications designed to work reliably in production.
+                {{ t('hero.sub') }}
             </p>
             <div class="hero-actions" id="hero-actions">
                 <router-link :to="{ name: 'home', hash: '#contact' }" class="btn-primary magnetic">
-                    Discuss Your Project
+                    {{ t('hero.cta') }}
                     <ArrowRight :size="14" />
                 </router-link>
                 <router-link :to="{ name: 'home', hash: '#projects' }" class="btn-secondary magnetic">
-                    Explore My Work
+                    {{ t('hero.work') }}
                 </router-link>
             </div>
             <div class="hero-stats" id="hero-stats">
                 <div class="hero-stat-pill">
-                    <Check :size="14" class="pill-check" /> Scalable Backend Systems
+                    <Check :size="14" class="pill-check" /> {{ t('hero.pill1') }}
                 </div>
                 <div class="hero-stat-pill">
-                    <Check :size="14" class="pill-check" /> Mission-Critical Payments &amp; APIs
+                    <Check :size="14" class="pill-check" /> {{ t('hero.pill2') }}
                 </div>
                 <div class="hero-stat-pill">
-                    <Check :size="14" class="pill-check" /> 9+ Years · Proven Delivery
+                    <Check :size="14" class="pill-check" /> {{ t('hero.pill3') }}
                 </div>
                 <div class="hero-stat-pill">
-                    <Check :size="14" class="pill-check" /> Async Communication &amp; Global Overlap
+                    <Check :size="14" class="pill-check" /> {{ t('hero.pill4') }}
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                  Coordinate grid: spine centered at x=210, symmetric workers at
                  x=108 / x=312, annotation column right-aligned at x=374. -->
             <svg id="arch-svg" class="arch-diagram" viewBox="0 0 440 480" xmlns="http://www.w3.org/2000/svg" role="img"
-                aria-label="Distributed system architecture: users flow through the API gateway into a queue, fan out to two workers, and persist to the database.">
+                :aria-label="t('hero.diagram')">
                 <defs>
                     <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="5.2" refY="3" orient="auto"
                         markerUnits="userSpaceOnUse">
@@ -81,23 +81,23 @@
                 <g class="arch-node" id="node-users" transform="translate(140,18)">
                     <rect x="0" y="0" width="140" height="52" rx="10" />
                     <User class="arch-icon" x="18" y="16" :size="20" />
-                    <text class="arch-label" x="84" y="22">USERS</text>
-                    <text class="arch-meta" x="84" y="37">Client requests</text>
+                    <text class="arch-label" x="84" y="22">{{ t('hero.users') }}</text>
+                    <text class="arch-meta" x="84" y="37">{{ t('hero.requests') }}</text>
                 </g>
 
                 <!-- API GATEWAY -->
                 <g class="arch-node" id="node-api" transform="translate(102,120)">
                     <rect x="0" y="0" width="216" height="60" rx="10" />
                     <Zap class="arch-icon" x="22" y="20" :size="20" />
-                    <text class="arch-label" x="120" y="25">API GATEWAY</text>
-                    <text class="arch-meta" x="120" y="41">Auth · Rate limit · Route</text>
+                    <text class="arch-label" x="120" y="25">{{ t('hero.gateway') }}</text>
+                    <text class="arch-meta" x="120" y="41">{{ t('hero.gatewayMeta') }}</text>
                 </g>
 
                 <!-- QUEUE -->
                 <g class="arch-node" id="node-queue" transform="translate(118,230)">
                     <rect x="0" y="0" width="184" height="60" rx="10" />
                     <Layers class="arch-icon" x="20" y="20" :size="20" />
-                    <text class="arch-label" x="102" y="25">QUEUE</text>
+                    <text class="arch-label" x="102" y="25">{{ t('hero.queue') }}</text>
                     <text class="arch-meta" x="102" y="41">RabbitMQ · Redis</text>
                 </g>
 
@@ -105,7 +105,7 @@
                 <g class="arch-node" id="node-worker-a" transform="translate(56,340)">
                     <rect x="0" y="0" width="104" height="50" rx="10" />
                     <Cpu class="arch-icon" x="14" y="16" :size="18" />
-                    <text class="arch-label arch-label-sm" x="64" y="21">WORKER</text>
+                    <text class="arch-label arch-label-sm" x="64" y="21">{{ t('hero.worker') }}</text>
                     <text class="arch-meta" x="64" y="34">Go</text>
                 </g>
 
@@ -113,7 +113,7 @@
                 <g class="arch-node" id="node-worker-b" transform="translate(260,340)">
                     <rect x="0" y="0" width="104" height="50" rx="10" />
                     <Cpu class="arch-icon" x="14" y="16" :size="18" />
-                    <text class="arch-label arch-label-sm" x="64" y="21">WORKER</text>
+                    <text class="arch-label arch-label-sm" x="64" y="21">{{ t('hero.worker') }}</text>
                     <text class="arch-meta" x="64" y="34">Laravel</text>
                 </g>
 
@@ -121,7 +121,7 @@
                 <g class="arch-node" id="node-db" transform="translate(110,418)">
                     <rect x="0" y="0" width="200" height="60" rx="10" />
                     <Database class="arch-icon" x="20" y="20" :size="20" />
-                    <text class="arch-label" x="110" y="25">DATABASE</text>
+                    <text class="arch-label" x="110" y="25">{{ t('hero.database') }}</text>
                     <text class="arch-meta" x="110" y="41">MySQL · PostgreSQL · Redis</text>
                 </g>
 
@@ -151,7 +151,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { ArrowRight, Check, User, Zap, Layers, Cpu, Database } from 'lucide-vue-next'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>

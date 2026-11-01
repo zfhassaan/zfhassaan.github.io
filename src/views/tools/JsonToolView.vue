@@ -4,23 +4,20 @@
             <div class="container">
                 <router-link :to="{ name: 'tools' }" class="back-link">
                     <ArrowLeft :size="14" />
-                    All tools
+                    {{ t('jsonPage.back') }}
                 </router-link>
 
                 <div class="json-head">
-                    <div class="section-label">JSON · Format · Validate · Convert</div>
-                    <h1 class="section-h2">JSON Formatter</h1>
-                    <p class="json-intro">
-                        Beautify, validate, minify and convert JSON to CSV, XML or YAML — and
-                        upload or download files. Everything runs locally in your browser.
-                    </p>
+                    <div class="section-label">{{ t('jsonPage.kicker') }}</div>
+                    <h1 class="section-h2">{{ t('jsonPage.title') }}</h1>
+                    <p class="json-intro">{{ t('jsonPage.intro') }}</p>
                 </div>
 
                 <FileDropzone
                     :model-value="jsonFile ? [jsonFile] : []"
                     accept=".json,.txt,application/json,text/plain"
-                    title="Drop a JSON file"
-                    hint="Click to browse, or paste into the editor."
+                    :title="t('jsonPage.drop')"
+                    :hint="t('jsonPage.dropHint')"
                     @update:model-value="onFiles"
                 />
 
@@ -102,6 +99,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 
 const input = ref('')
@@ -602,12 +601,12 @@ const inputBytes = computed(() => {
 
 .jt-btn-primary {
     background: var(--accent);
-    color: var(--bg-primary);
+    color: var(--on-accent);
     border-color: var(--accent);
 }
 
 .jt-btn-primary:hover:not(:disabled) {
-    color: var(--bg-primary);
+    color: var(--on-accent);
     box-shadow: 0 8px 24px -10px var(--glow-strong);
 }
 

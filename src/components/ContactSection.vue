@@ -3,11 +3,9 @@
     <section id="contact" class="section">
         <div class="container">
             <div class="contact-inner reveal">
-                <div class="section-label">Start a Conversation</div>
-                <h2 class="contact-h2">Have a Technical Challenge?<br>Let's Discuss Your Project.</h2>
-                <p class="contact-sub">
-                    Whether you are architecting a new platform, integrating mission-critical payment gateways, or scaling an existing backend system — I'm available for direct client engagements, remote contracts, and technical consulting.
-                </p>
+                <div class="section-label">{{ t('contact.label') }}</div>
+                <h2 class="contact-h2">{{ t('contact.title') }}</h2>
+                <p class="contact-sub">{{ t('contact.sub') }}</p>
 
                 <!-- Direct Email Card -->
                 <div class="email-direct-card">
@@ -16,7 +14,7 @@
                             <Mail :size="24" class="text-accent" />
                         </div>
                         <div class="email-info">
-                            <span class="email-label mono">DIRECT INQUIRIES &amp; ENGAGEMENTS</span>
+                            <span class="email-label mono">{{ t('contact.inquiries') }}</span>
                             <a :href="mailToLink" class="email-address mono">zfhassaan@gmail.com</a>
                         </div>
                     </div>
@@ -24,17 +22,17 @@
                     <div class="email-actions">
                         <a :href="mailToLink" class="btn-primary magnetic email-act-btn">
                             <Send :size="16" />
-                            <span>Send Email</span>
+                            <span>{{ t('contact.send') }}</span>
                         </a>
                         <a
                             :href="gmailLink"
                             target="_blank"
                             rel="noopener"
                             class="btn-secondary magnetic email-act-btn"
-                            title="Compose directly in Gmail Web"
+                            :title="t('contact.gmailTitle')"
                         >
                             <ExternalLink :size="16" />
-                            <span>Open in Gmail</span>
+                            <span>{{ t('contact.gmail') }}</span>
                         </a>
                         <button
                             type="button"
@@ -43,13 +41,13 @@
                         >
                             <Check v-if="copied" :size="16" class="text-accent" />
                             <Copy v-else :size="16" />
-                            <span>{{ copied ? 'Copied to Clipboard' : 'Copy Email' }}</span>
+                            <span>{{ copied ? t('contact.copied') : t('contact.copy') }}</span>
                         </button>
                     </div>
 
                     <div class="email-guarantee">
                         <div class="avail-dot"></div>
-                        <span>Response guaranteed within 24 hours · Available for global remote contracts &amp; consulting</span>
+                        <span>{{ t('contact.guarantee') }}</span>
                     </div>
                 </div>
 
@@ -63,7 +61,7 @@
                         title="Connect on LinkedIn"
                     >
                         <Linkedin :size="16" class="contact-link-icon" />
-                        <span class="contact-link-text">LinkedIn Profile</span>
+                        <span class="contact-link-text">{{ t('contact.linkedin') }}</span>
                         <ArrowUpRight :size="14" class="contact-link-arrow" />
                     </a>
                     <a
@@ -74,17 +72,17 @@
                         title="View GitHub Repositories"
                     >
                         <Github :size="16" class="contact-link-icon" />
-                        <span class="contact-link-text">GitHub Profile</span>
+                        <span class="contact-link-text">{{ t('contact.github') }}</span>
                         <ArrowUpRight :size="14" class="contact-link-arrow" />
                     </a>
                     <a
                         href="https://github.com/zfhassaan/zfhassaan.github.io/raw/master/public/resume.pdf"
                         download="Hassaan_Ali_Senior_Software_Engineer_Resume.pdf"
                         class="contact-link recruiter-link magnetic"
-                        title="Download technical résumé for recruiters and engineering managers"
+                        :title="t('contact.resumeTitle')"
                     >
                         <FileText :size="16" class="contact-link-icon" />
-                        <span class="contact-link-text">Download Résumé (PDF)</span>
+                        <span class="contact-link-text">{{ t('contact.resume') }}</span>
                         <ArrowUpRight :size="14" class="contact-link-arrow" />
                     </a>
                 </div>
@@ -95,6 +93,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import {
     Mail,
     Send,
@@ -236,7 +236,7 @@ function copyEmail() {
 
 .btn-primary {
     background: var(--accent);
-    color: #0b0f17;
+    color: var(--on-accent);
     border: 1px solid var(--accent);
 }
 

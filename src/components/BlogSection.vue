@@ -4,11 +4,11 @@
         <div class="container">
             <div class="blog-section-header">
                 <div class="reveal">
-                    <div class="section-label">Writing · Notes &amp; Tutorials</div>
-                    <h2 class="section-h2">From the Blog</h2>
+                    <div class="section-label">{{ t('blog.label') }}</div>
+                    <h2 class="section-h2">{{ t('blog.title') }}</h2>
                 </div>
                 <p class="blog-section-intro text-muted reveal">
-                    In-depth technical guides, architecture notes, and tutorials on Laravel, distributed queues, and backend engineering.
+                    {{ t('blog.intro') }}
                 </p>
             </div>
 
@@ -26,7 +26,7 @@
             <!-- Error -->
             <div v-else-if="error && !latest.length" class="home-blog-state reveal">
                 <p>{{ error }}</p>
-                <button class="home-blog-btn" @click="retry">Try again</button>
+                <button class="home-blog-btn" @click="retry">{{ t('blog.retry') }}</button>
             </div>
 
             <!-- Posts -->
@@ -52,7 +52,7 @@
                             <h3 class="home-blog-title">{{ post.title }}</h3>
                             <p class="home-blog-excerpt">{{ post.excerpt }}…</p>
                             <span class="home-blog-cta">
-                                Read Article
+                                {{ t('blog.read') }}
                                 <ArrowRight :size="14" />
                             </span>
                         </div>
@@ -61,7 +61,7 @@
 
                 <div class="home-blog-foot reveal">
                     <router-link :to="{ name: 'blog' }" class="home-blog-btn home-blog-btn--primary">
-                        <span>Explore All Articles</span>
+                        <span>{{ t('blog.all') }}</span>
                         <ArrowRight :size="14" />
                     </router-link>
                 </div>
@@ -72,6 +72,8 @@
 
 <script setup>
 import { computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import { ArrowRight } from 'lucide-vue-next'
 import { useBlogFeed } from '@/composables/useBlogFeed'
 import { formatDate } from '@/lib/format'
@@ -269,12 +271,12 @@ onMounted(loadInitial)
 
 .home-blog-btn--primary {
     background: var(--accent);
-    color: var(--bg-primary);
+    color: var(--on-accent);
     border-color: var(--accent);
 }
 
 .home-blog-btn--primary:hover {
-    color: var(--bg-primary);
+    color: var(--on-accent);
     box-shadow: 0 8px 24px -10px var(--glow-strong);
 }
 

@@ -2,37 +2,37 @@
     <div class="tu-stack">
         <div class="tu-fields">
             <label>
-                <span class="tu-label">Income is</span>
+                <span class="tu-label">{{ t('tax.basis') }}</span>
                 <select v-model="basis" class="tu-select">
-                    <option value="annual">Annual taxable income</option>
-                    <option value="monthly">Monthly salary</option>
+                    <option value="annual">{{ t('tax.annual') }}</option>
+                    <option value="monthly">{{ t('tax.monthly') }}</option>
                 </select>
             </label>
             <label>
-                <span class="tu-label">{{ basis === 'monthly' ? 'Monthly amount (Rs)' : 'Annual amount (Rs)' }}</span>
+                <span class="tu-label">{{ t('tax.amount') }}</span>
                 <input v-model.number="amount" class="tu-input" type="number" min="0" step="1000" />
             </label>
             <label>
-                <span class="tu-label">Taxpayer</span>
+                <span class="tu-label">{{ t('tax.person') }}</span>
                 <select v-model="person" class="tu-select">
-                    <option value="salaried">Salaried individual</option>
-                    <option value="business">Business individual or AOP</option>
+                    <option value="salaried">{{ t('tax.salaried') }}</option>
+                    <option value="business">{{ t('tax.business') }}</option>
                 </select>
             </label>
             <label v-if="person === 'business'" class="tu-check">
                 <input v-model="professional" type="checkbox" />
-                Professional firm (top rate 40%)
+                {{ t('tax.professional') }}
             </label>
         </div>
 
         <div class="tu-stats tax-stats">
-            <div class="tu-stat"><b>{{ pkr(result.income) }}</b><span>Annual income</span></div>
-            <div class="tu-stat"><b>{{ pkr(result.tax) }}</b><span>Annual tax</span></div>
-            <div class="tu-stat"><b>{{ pkr(result.tax / 12) }}</b><span>Monthly tax</span></div>
-            <div class="tu-stat"><b>{{ pkr(result.income - result.tax) }}</b><span>After tax / year</span></div>
-            <div class="tu-stat"><b>{{ pkr((result.income - result.tax) / 12) }}</b><span>After tax / month</span></div>
-            <div class="tu-stat"><b>{{ pct(result.effective) }}</b><span>Effective rate</span></div>
-            <div class="tu-stat"><b>{{ pct(result.marginal) }}</b><span>Marginal rate</span></div>
+            <div class="tu-stat"><b>{{ pkr(result.income) }}</b><span>{{ t('tax.income') }}</span></div>
+            <div class="tu-stat"><b>{{ pkr(result.tax) }}</b><span>{{ t('tax.annualTax') }}</span></div>
+            <div class="tu-stat"><b>{{ pkr(result.tax / 12) }}</b><span>{{ t('tax.monthlyTax') }}</span></div>
+            <div class="tu-stat"><b>{{ pkr(result.income - result.tax) }}</b><span>{{ t('tax.afterYear') }}</span></div>
+            <div class="tu-stat"><b>{{ pkr((result.income - result.tax) / 12) }}</b><span>{{ t('tax.afterMonth') }}</span></div>
+            <div class="tu-stat"><b>{{ pct(result.effective) }}</b><span>{{ t('tax.effective') }}</span></div>
+            <div class="tu-stat"><b>{{ pct(result.marginal) }}</b><span>{{ t('tax.marginal') }}</span></div>
         </div>
 
         <p class="tu-hint">
@@ -43,10 +43,10 @@
 
         <div class="tu-actions">
             <button class="tu-btn tu-btn-primary" type="button" :disabled="busy" @click="refresh">
-                {{ busy ? 'Reading the FBR rate card…' : 'Update slabs from FBR' }}
+                {{ busy ? t('tax.reading') : t('tax.update') }}
             </button>
-            <button v-if="usingSaved" class="tu-btn" type="button" @click="reset">Use shipped slabs</button>
-            <a class="tu-btn" :href="rateCardPage" target="_blank" rel="noopener noreferrer">Open the FBR rate card</a>
+            <button v-if="usingSaved" class="tu-btn" type="button" @click="reset">{{ t('tax.shipped') }}</button>
+            <a class="tu-btn" :href="rateCardPage" target="_blank" rel="noopener noreferrer">{{ t('tax.open') }}</a>
         </div>
         <p class="tu-hint">{{ status }}</p>
         <p v-if="notice" class="tu-error">{{ notice }}</p>
@@ -54,15 +54,15 @@
             v-if="needsFile"
             :model-value="[]"
             accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            title="Drop the FBR .xlsx here"
-            hint="Download the spreadsheet from the rate card page, then drop it. It is parsed and saved in this browser."
+            :title="t('tax.drop')"
+            :hint="t('tax.dropHint')"
             @update:model-value="onWorkbook"
         />
 
-        <div class="slab-table" role="table" aria-label="FBR tax slabs">
+        <div class="slab-table" role="table" :aria-label="t('tax.table')">
             <div class="slab-row slab-head" role="row">
-                <span role="columnheader">Annual taxable income</span>
-                <span role="columnheader">Rate of tax</span>
+                <span role="columnheader">{{ t('tax.band') }}</span>
+                <span role="columnheader">{{ t('tax.rate') }}</span>
             </div>
             <div
                 v-for="slab in activeSlabs"
@@ -87,6 +87,8 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import FileDropzone from '@/components/tools/FileDropzone.vue'
 import { formatSlabRange, formatSlabRate, taxOnIncome } from '@/lib/fbr-tax'
 import {

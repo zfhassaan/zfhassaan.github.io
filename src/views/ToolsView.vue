@@ -3,23 +3,20 @@
         <section class="section">
             <div class="container">
                 <div class="tools-head">
-                    <div class="section-label">Utilities · Free · No signup</div>
-                    <h1 class="section-h2">Tools</h1>
-                    <p class="tools-intro">
-                        {{ tools.length }} free tools for text, images, PDFs, and everyday calculations.
-                        They run in your browser, so files are not uploaded.
-                    </p>
+                    <div class="section-label">{{ t('tools.kicker') }}</div>
+                    <h1 class="section-h2">{{ t('tools.title') }}</h1>
+                    <p class="tools-intro">{{ t('tools.intro', { count: tools.length }) }}</p>
                 </div>
 
                 <div class="tools-controls">
-                    <Input v-model="query" class="tools-search" type="search" placeholder="Search tools" aria-label="Search tools" />
+                    <Input v-model="query" class="tools-search" type="search" :placeholder="t('tools.search')" :aria-label="t('tools.search')" />
                     <div class="tools-filters">
                         <Button type="button" size="sm" :variant="category === 'All' ? 'default' : 'outline'" @click="category = 'All'">
-                            All
+                            {{ t('tools.all') }}
                         </Button>
                         <Button v-for="name in categories" :key="name" type="button" size="sm"
                             :variant="category === name ? 'default' : 'outline'" @click="category = name">
-                            {{ name }}
+                            {{ t(`tools.categories.${name}`) }}
                         </Button>
                     </div>
                 </div>
@@ -28,18 +25,20 @@
                     <router-link v-for="tool in filtered" :key="tool.slug" class="tool-card"
                         :to="{ name: 'tool', params: { slug: tool.slug } }">
                         <div class="tool-card-top">
-                            <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
-                            <Badge variant="outline">{{ tool.category }}</Badge>
+                            <span class="tool-icon" aria-hidden="true">
+                                <component :is="icons[tool.icon]" :size="18" :stroke-width="1.75" />
+                            </span>
+                            <Badge variant="outline">{{ t(`tools.categories.${tool.category}`) }}</Badge>
                         </div>
-                        <h2 class="tool-name">{{ tool.name }}</h2>
-                        <p class="tool-desc">{{ tool.desc }}</p>
+                        <h2 class="tool-name">{{ toolField(tool, 'name') }}</h2>
+                        <p class="tool-desc">{{ toolField(tool, 'desc') }}</p>
                         <span class="tool-cta">
-                            Open
+                            {{ t('tools.open') }}
                             <ArrowRight :size="14" />
                         </span>
                     </router-link>
                 </div>
-                <p v-else class="tools-empty">No tools match that search.</p>
+                <p v-else class="tools-empty">{{ t('tools.empty') }}</p>
             </div>
         </section>
     </main>
@@ -47,12 +46,28 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { ArrowRight } from 'lucide-vue-next'
+import {
+    AppWindow, ArrowLeftRight, ArrowRight, Binary, Blend, Braces, Briefcase, Calculator,
+    CalendarClock, CaseSensitive, Clock, Cuboid, FileCode2, FileImage, Files, Fingerprint,
+    GitCompare, HandCoins, Hash, House, ImageDown, ImageMinus, Images, KeyRound, Landmark,
+    Link2, ListX, Lock, Palette, Percent, QrCode, Receipt, Regex, Ruler, Scale, Scaling,
+    Scissors, Table2, Tags, TextQuote, Timer, TrendingUp, Type, Wallet, WholeWord,
+} from 'lucide-vue-next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { categories, tools } from '@/data/tools'
+import { useCopy } from '@/composables/useCopy'
 
+const icons = {
+    AppWindow, ArrowLeftRight, Binary, Blend, Braces, Briefcase, Calculator, CalendarClock,
+    CaseSensitive, Clock, Cuboid, FileCode2, FileImage, Files, Fingerprint, GitCompare,
+    HandCoins, Hash, House, ImageDown, ImageMinus, Images, KeyRound, Landmark, Link2, ListX,
+    Lock, Palette, Percent, QrCode, Receipt, Regex, Ruler, Scale, Scaling, Scissors, Table2,
+    Tags, TextQuote, Timer, TrendingUp, Type, Wallet, WholeWord,
+}
+
+const { t, toolField } = useCopy()
 const query = ref('')
 const category = ref('All')
 
@@ -61,7 +76,10 @@ const filtered = computed(() => {
     return tools.filter((tool) => {
         if (category.value !== 'All' && tool.category !== category.value) return false
         if (!term) return true
-        return `${tool.name} ${tool.desc} ${tool.category}`.toLowerCase().includes(term)
+        const name = toolField(tool, 'name')
+        const desc = toolField(tool, 'desc')
+        const cat = t(`tools.categories.${tool.category}`)
+        return `${name} ${desc} ${cat} ${tool.name} ${tool.desc}`.toLowerCase().includes(term)
     })
 })
 </script>
@@ -127,9 +145,8 @@ const filtered = computed(() => {
 }
 
 .tool-card:hover {
-    border-color: rgba(45, 212, 191, 0.45);
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px -28px var(--glow-strong);
+    border-color: rgba(45, 212, 191, 0.4);
+    transform: translateY(-2px);
 }
 
 .tool-card-top {
@@ -147,9 +164,10 @@ const filtered = computed(() => {
     border-radius: 10px;
     background: var(--glow);
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 18px;
-    font-weight: 600;
+}
+
+.tool-icon svg {
+    display: block;
 }
 
 .tool-name {
